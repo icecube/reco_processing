@@ -4,14 +4,15 @@ import re
 from simulation_datasets import simulation_datasets
 
 # set the inputs
-reco_version = "v7.0"
+reco_version = "v8.0"
+filter_version = "v1.0"
 icemodel = "ftp-v3"
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/run_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
 
-nfiles = 100 # process x files per subfolder
+nfiles = 1000 # process x files per subfolder
 submit_jobs = True # actually submit the dag jobs
 
 for simulation_name in simulation_datasets:
@@ -23,7 +24,7 @@ for simulation_name in simulation_datasets:
     for simulation_subfolder in simulation_subfolders:
 
         # fixed paths
-        reco_input_path = f"/data/user/tvaneede/GlobalFit/reco_processing/filtering/output/{simulation_dataset}/{simulation_subfolder}"
+        reco_input_path = f"/data/user/tvaneede/GlobalFit/reco_processing/filtering/output/{filter_version}/{simulation_dataset}/{simulation_subfolder}"
 
         reco_out_path = f"{work_path}/output/{reco_version}/{simulation_dataset}/{simulation_subfolder}"
 

@@ -1,0 +1,210 @@
+#!/usr/bin/env python
+import os
+import argparse
+import numpy as np
+from snowflake import library
+from reco import truth
+from icecube import clsim, MuonGun, dataclasses, millipede
+from icecube.dataclasses import I3Double, I3Particle, I3Direction
+
+MED = clsim.MakeIceCubeMediumProperties(
+    iceDataDirectory=os.path.expandvars('$I3_BUILD/ice-models/resources/models/ICEMODEL/spice_ftp-v3/'),
+    )
+
+
+def fensurecc(frame):
+    if not frame.Has('cc'):
+        if frame.Has('I3MCTree'):
+            frame['cc'] = dataclasses.get_most_energetic_inice_cascade(frame['I3MCTree'])
+        else:
+            frame['cc'] = I3Particle()
+
+
+def fenergy(frame):
+    if frame.Has('I3MCTree'):
+        frame['cc'].energy = library.get_deposit_energy(frame['I3MCTree'])
+        epre = library.get_deposit_energy(
+            frame['I3MCTree'],
+            frame['cc'].time + 0.99 * frame['cc'].length / dataclasses.I3Constants.c)
+        etot = frame['cc'].energy
+        frame['cc_easymm'] = I3Double((2 * epre - etot) / etot)
+    else:
+        try:
+            frame['cc'].energy = frame['PreferredFit'].energy
+        except KeyError:
+            pass
+        frame['cc_easymm'] = I3Double(1.)
+
+    try:
+        frame['SplineMPEICSeed'].energy = frame['SplineMPEICMuEXDifferential'].energy
+        frame['SplineMPEIC'].energy = frame['SplineMPEICMuEXDifferential'].energy
+    except KeyError:
+        pass
+    try:
+        erec = 0
+        for p in frame['MillipedeStarting3rdPassParticles']:
+            erec += p.energy
+        frame['MillipedeStarting3rdPass'].energy = erec
+        frame['MillipedeStarting2ndPass'].energy = frame['cc'].energy
+    except KeyError:
+        pass
+
+
+def ftaudec(frame):
+    if not frame.Has('I3MCTree'):
+        frame['cc_tauvis'] = I3Particle()
+        return
+
+    if not truth.is_tau(frame['cc']):
+        frame['cc_tauvis'] = I3Particle()
+        return
+
+    daughters = frame['I3MCTree'].get_daughters(frame['cc'])
+    if frame['cc'].type == I3Particle.TauMinus:
+        okd = [I3Particle.MuMinus,
+               I3Particle.EMinus,
+               I3Particle.PiMinus,
+               I3Particle.Hadrons]
+    else:
+        okd = [I3Particle.MuPlus,
+               I3Particle.EPlus,
+               I3Particle.PiPlus,
+               I3Particle.Hadrons]
+    frame['cc_tauvis'] = I3Particle(truth.get_first(daughters, okd))
+
+
+def fice(frame):
+    pos = frame['cc'].pos
+    if np.any(np.isnan([pos.x, pos.y, pos.z])):
+        return
+
+    zshifter = MED.GetIceTiltZShift()
+    zshift = zshifter.GetValue(pos.x, pos.y, pos.z)
+
+    get_layer = lambda z: int((z-MED.GetLayersZStart())/MED.GetLayersHeight())
+    min_layer = 0
+    max_layer = MED.GetLayersNum()-1
+    layer_notilt = max(min(get_layer(pos.z), min_layer), max_layer)
+    layer_tilted = max(min(get_layer(pos.z-zshift), min_layer), max_layer)
+
+    frame['cc_zshift'] = I3Double(-zshift)
+    frame['cc_b400_notilt'] = I3Double(MED.GetScatteringLength(layer_notilt).b400)
+    frame['cc_b400_tilted'] = I3Double(MED.GetScatteringLength(layer_tilted).b400)
+
+    frame['cc_aDust400_notilt'] = I3Double(MED.GetAbsorptionLength(layer_notilt).aDust400)
+    frame['cc_aDust400_tilted'] = I3Double(MED.GetAbsorptionLength(layer_tilted).aDust400)
+
+
+def flen(frame):
+    """ calculate length inside detector from true position
+    """
+    cc = frame['cc']
+    pos = cc.pos
+    if np.any(np.isnan([pos.x, pos.y, pos.z])):
+        # data event doesn't have set cc
+        return
+
+    # A surface approximating the actual detector (make it smaller if you only care e.g. about DeepCore)
+    surface = MuonGun.Cylinder(1000,500)
+    intersections = surface.intersection(cc.pos, cc.dir)
+    frame['cc_2surf'] = I3Double(intersections.second-max(0, intersections.first))
+
+
+def fdnn(frame):
+    pmap = frame['DNNCascadeAnalysis_version_001_p01']
+    ppar = I3Particle()
+    ppar.dir = I3Direction(pmap['zen'], pmap['azi'])
+    ppar.energy = pmap['energy']
+    ppar.time = pmap['time']
+    ppar.fit_status = I3Particle.FitStatus.OK
+    ppar.shape = I3Particle.ParticleShape.Cascade
+    frame['DNNC_I3Particle'] = ppar
+
+
+def fn(frame):
+    fensurecc(frame)
+    fenergy(frame)
+    ftaudec(frame)
+    fice(frame)
+    flen(frame)
+    if frame.Has('DNNCascadeAnalysis_version_001_p01'):
+        fdnn(frame)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Extract CausalQTot and MJD data from i3 to h5')
+
+    parser.add_argument('i3s', nargs='+', help='input i3s')
+    parser.add_argument('-a', '--add', nargs='+', default=[],
+                        type=str, help='additional keys to save')
+    parser.add_argument('-o', '--out', default='a.h5',
+                        type=str, help='output file')
+    parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
+                        help='which P-frame splits to process')
+    parser.add_argument('--simwrite', default=False,
+                        action='store_true',
+                        help='book objects in DAQ frames')
+    args = parser.parse_args()
+
+    if args.simwrite:
+        library.simhdfwriter(args.i3s, args.out,
+                             keys=['I3MCWeightDict',
+                                   'I3EventHeader']+args.add)
+        return
+
+    library.hdfwriter(args.i3s, args.out,
+                      subeventstreams=args.splits,
+                      fn=fn,
+                      keys=['cc',
+                            'cc_2surf',
+                            'cc_zshift',
+                            'cc_b400_notilt',
+                            'cc_b400_tilted',
+                            'cc_aDust400_notilt',
+                            'cc_aDust400_tilted',
+                            'cc_easymm',
+                            'cc_tauvis',
+                            'CombinedCascadeSeed_L3',
+                            'I3MCWeightDict',
+                            'I3EventHeader',
+                            'PreferredFit',
+                            'MonopodFit_iMIGRAD',
+                            'MonopodFit_iMIGRADFitParams',
+                            'TaupedeFit_iMIGRAD',
+                            'TaupedeFit_iMIGRADParticles',
+                            'TaupedeFit_iMIGRADFitParams',
+                            'MillipedeFit_iMIGRAD',
+                            'MillipedeFit_iMIGRADParticles',
+                            'MillipedeFit_iMIGRADFitParams',
+                            'seed_iMIGRAD_BestMonopod',
+                            'seed_iMIGRAD_BestAltnFit',
+                            'LineFit',
+                            'SPEFit2',
+                            'l2_online_SplineMPE',
+                            'OnlineL2_SplineMPE',
+                            'EventGeneratorFit_I3Particle',
+                            'EventGeneratorSelectedReco_I3Particle',
+                            'EventGeneratorSelectedRecoNN_I3Particle',
+                            'EventGeneratorSelectedRecoNNCircularUncertainty',
+
+                            # thijs
+                            'TaupedeFit_iMIGRAD_PPB0',
+                            'TaupedeFit_iMIGRAD_PPB0FitParams',
+                            'TaupedeFit_iMIGRAD_PPB0Particles',
+                            'MonopodFit_iMIGRAD_PPB0',
+                            'MonopodFit_iMIGRAD_PPB0FitParams',
+                            'CscdL3_SPEFit16',
+                            'CscdL3_SPEFit16FitParams',
+
+
+                            # 'EventGenerator_cascade_7param_noise_ftpv3m_04_I3Particle',
+                            # 'EventGenerator_cascade_7param_noise_ftpv3m__big_model_01_I3Particle',
+                            # 'EventGenerator_cascade_7param_noise_ftpv3m__marginalized_01_I3Particle',
+                            # 'MonopodFit4_PartialExclusion',
+                            # 'PreferredFitSharedSeed',
+                            'DNNC_I3Particle']+args.add)
+
+    
+if __name__ == '__main__':
+    main()

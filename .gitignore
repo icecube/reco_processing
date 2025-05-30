@@ -4,3 +4,9 @@ __pycache__
 output/
 
 filtering/output
+hdf/output
+
+*.h5
+*/*.h5
+
+performance/out

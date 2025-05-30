@@ -1,39 +1,111 @@
 
 simulation_datasets = {}
 
-simulation_datasets["SnowStorm_NuTau_midE"] = {
-    "dataset" : "22634",
-    "subfolders" : ["0000000-0000999"],
-    "flavor" : "NuTau",
+
+# ###
+# ### jsut the test
+# ###
+
+# simulation_datasets["NuTau_midE"] = {
+#     "dataset" : "22634",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuTau",
+# }
+
+# simulation_datasets["NuTau_highE"] = {
+#     "dataset" : "22635",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuTau",
+# }
+
+simulation_datasets["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
 }
 
-simulation_datasets["SnowStorm_NuTau_highE"] = {
-    "dataset" : "22635",
-    "subfolders" : ["0000000-0000999"],
-    "flavor" : "NuTau",
+simulation_datasets["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
 }
 
-# simulation_datasets["SnowStorm_NuE_midE"] = {
+simulation_datasets["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+}
+
+simulation_datasets["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+}
+
+
+
+
+###
+### half of the files
+###
+
+
+# simulation_datasets["NuTau_midE"] = {
+#     "dataset" : "22634",
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
+#     "flavor" : "NuTau",
+# }
+
+# simulation_datasets["NuTau_highE"] = {
+#     "dataset" : "22635",
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999",
+#     "0004000-0004999", "0005000-0005999", "0006000-0006999", "0007000-0007999",
+#     "0008000-0008999", "0009000-0009999", "0010000-0010999", "0011000-0011999",
+#     "0012000-0012999", "0013000-0013999", "0014000-0014999", "0015000-0015999",
+#     "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999"],
+#     "flavor" : "NuTau",
+# }
+
+# simulation_datasets["NuE_midE"] = {
 #     "dataset" : "22613",
-#     "subfolders" : ["0000000-0000999"],
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
 #     "flavor" : "NuE",
 # }
 
-# simulation_datasets["SnowStorm_NuE_highE"] = {
+# simulation_datasets["NuE_highE"] = {
 #     "dataset" : "22612",
-#     "subfolders" : ["0000000-0000999"],
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999",
+#     "0004000-0004999", "0005000-0005999", "0006000-0006999", "0007000-0007999",
+#     "0008000-0008999", "0009000-0009999", "0010000-0010999", "0011000-0011999",
+#     "0012000-0012999", "0013000-0013999", "0014000-0014999", "0015000-0015999",
+#     "0016000-0016999", "0017000-0017999"],
 #     "flavor" : "NuE",
 # }
 
-# simulation_datasets["SnowStorm_NuMu_midE"] = {
+# simulation_datasets["NuMu_midE"] = {
 #     "dataset" : "22645",
-#     "subfolders" : ["0000000-0000999"],
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999","0004000-0004999"],
 #     "flavor" : "NuMu",
 # }
 
-# simulation_datasets["SnowStorm_NuMu_highE"] = {
+# simulation_datasets["NuMu_highE"] = {
 #     "dataset" : "22644",
-#     "subfolders" : ["0000000-0000999"],
+#     "subfolders" : 
+#     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999",
+#     "0004000-0004999", "0005000-0005999", "0006000-0006999", "0007000-0007999",
+#     "0008000-0008999", "0009000-0009999", "0010000-0010999", "0011000-0011999",
+#     "0012000-0012999", "0013000-0013999"],
 #     "flavor" : "NuMu",
 # }
 
