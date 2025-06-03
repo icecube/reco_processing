@@ -9,6 +9,7 @@ from common import calculator
 from matplotlib import pyplot as plt
 from matplotlib.colors import SymLogNorm, LogNorm, Normalize
 import logging
+import argparse
 
 
 logging.getLogger('matplotlib.font_manager').disabled = True
@@ -128,6 +129,44 @@ def fit_node_name(fname):
                'inel.h5': 'MonopodFit_iMIGRAD_PPB0_a'})
     return dd[fname]
 
+def fit_node_name_neha(fname):
+    """ h5 node name for primary line
+    """
+    dd = defaultdict(lambda: 'HESETaupedeFit')
+    dd.update({'skymap_test.h5': 'Millipede3rdPass',
+               'cascades.30TeV.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'a.h5': 'TaupedeFit_iMIGRAD_PPB0',
+               'b.h5': 'PreferredFit',
+               'x.h5': 'TaupedeFit_iMIGRAD',
+               'dnncv1.h5': 'EventGeneratorSelectedRecoNN_I3Particle',
+               'ftpv1.compare.bdthres15.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'ftpv1.vs.mie.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'ftpv1.imigrad.tau.bdthres15.h5': 'PreferredFit',
+               'ftpv1.imigrad.tau.idc.bdthres15.h5': 'PreferredFit',
+               'usetables.ftpv1.h5': 'PreferredFit',
+               'usetables.bfrv2.ideal.h5': 'MonopodFit_iMIGRAD_BS1',
+               'usetables.bfrv2.halfdense.3x.ideal.h5': 'MonopodFit_iMIGRAD_BS1',
+               'usetables.bfrv2.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.ibr.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.halfdense.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.halfdense.domeff3.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.halfdense.domeff5.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.halfdense.domeff10.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'usetables.bfrv2.halfdense.ibr.relerr0.05.h5': 'MonopodFit_iMIGRAD_',
+               'bfrv2.relerr0.05.effdz10.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2flat.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2tilt.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.mie.relerr0.05.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.egen.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.egen.oldwavecal.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.egen.oldwavecal.bfrv1set0.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.bfrv2p10.3p20.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.bfrv2p10.3p2-1.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.bfrv2p10.3p2+1.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.bfrv2p10.3p2-2.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'bfrv2.relerr0.05.bfrv2p10.3p2-3.h5': 'MonopodFit_iMIGRAD_PPB0',
+               'inel.h5': 'MonopodFit_iMIGRAD_PPB0_a'})
+    return dd[fname]
 
 def yscale(norm):
     return 'log' if isinstance(norm, SymLogNorm) or isinstance(norm, LogNorm) else 'linear'
@@ -215,7 +254,8 @@ def get_easymm(node):
     return (_e1 - _e2) / (_e1 + _e2)
 
 
-def lowlevel(nufile):
+def lowlevel(nufile, nufilename, outpath):
+
     iflow = [130, 360-50]
     cth_bins = np.linspace(-1, 1, 50)
     th_bins = calculator.edges(
@@ -435,8 +475,8 @@ def lowlevel(nufile):
         plt.ylim(-0.5, 0.5)
         plt.legend()
         if i == 0:
-            plt.savefig(f'out/lowlevel/{nufile}_mederes_fit.png', bbox_inches='tight')
-    plt.savefig(f'out/lowlevel/{nufile}_mederes.png', bbox_inches='tight')
+            plt.savefig(f'{outpath}/{nufilename}_mederes_fit.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_mederes.png', bbox_inches='tight')
 
     plt.figure()
     for i, (len_rec, label) in enumerate(zip([len_fit, len_alt], [fit, alt])):
@@ -450,7 +490,7 @@ def lowlevel(nufile):
     plt.xlim(0, 50)
     plt.ylim(-0.5, 0.5)
     plt.legend()
-    plt.savefig(f'out/lowlevel/{nufile}_medlenres.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_medlenres.png', bbox_inches='tight')
 
     if len(asm_recs) > 0:
         plt.figure()
@@ -465,7 +505,7 @@ def lowlevel(nufile):
         plt.xlim(0, 50)
         plt.ylim(-0.5, 0.5)
         plt.legend()
-        plt.savefig(f'out/lowlevel/{nufile}_medasmres_len.png', bbox_inches='tight')
+        plt.savefig(f'{outpath}/{nufilename}_medasmres_len.png', bbox_inches='tight')
 
     plt.clf()
     plot_medangres(len_tru, len_bins[::3],
@@ -476,7 +516,7 @@ def lowlevel(nufile):
     plt.xlabel('Length [m] (truth)')
     plt.xlim(xmin=0)
     plt.savefig(
-        f'out/lowlevel/{nufile}_medangres_len.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_medangres_len.png', bbox_inches='tight')
 
     plt.clf()
     plot_medangres(lge_tru, lge_bins,
@@ -484,11 +524,11 @@ def lowlevel(nufile):
                    azi_md_reco, azi_em_reco,
                    cth_tru, azi_tru,
                    [fit, alt], inclowe)
-    plt.savefig(f'out/lowlevel/{nufile}_medangres.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_medangres.png', bbox_inches='tight')
     plt.text(0.05, 0.95, 'IceCube Preliminary', fontsize=14,
              transform=plt.gca().transAxes, color='r')
     plt.savefig(
-        f'out/lowlevel/{nufile}_medangres_prelim.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_medangres_prelim.png', bbox_inches='tight')
 
     plt.clf()
     plot_medangres(lge_neut, lge_bins,
@@ -498,7 +538,7 @@ def lowlevel(nufile):
                    [fit, alt], inclowe,
                    e_xlab=r'\nu')
     plt.savefig(
-        f'out/lowlevel/{nufile}_medangres_enu.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_medangres_enu.png', bbox_inches='tight')
 
     plt.clf()
     plot_medangres(lge_neut, lge_bins,
@@ -509,7 +549,7 @@ def lowlevel(nufile):
                    e_xlab=r'\nu')
     plt.ylabel('Reco-Nu. angular resolution [deg.]')
 
-    plt.savefig(f'out/lowlevel/{nufile}_mednures_enu.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_mednures_enu.png', bbox_inches='tight')
     plt.clf()
     plot_medangres(lge_tru, lge_bins,
                    cth_md_reco, cth_em_reco,
@@ -518,7 +558,7 @@ def lowlevel(nufile):
                    [fit, alt], inclowe)
     plt.ylabel('Reco-Nu. angular resolution [deg.]')
 
-    plt.savefig(f'out/lowlevel/{nufile}_mednures.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_mednures.png', bbox_inches='tight')
 
     # if inclowe:
     #     _ = 'compare/cscd_zz.csv'
@@ -547,7 +587,7 @@ def lowlevel(nufile):
         plt.legend()
     plt.ylim(0,25)
     plt.savefig(
-        f'out/lowlevel/{nufile}_medangres_compare.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_medangres_compare.png', bbox_inches='tight')
 
     plt.clf()
     deepcore = (xps_tru < 200) & (yps_tru < 100) & (
@@ -563,7 +603,7 @@ def lowlevel(nufile):
                    cth_tru[deepcore], azi_tru[deepcore],
                    [f'DeepCore events'], inclowe)
 
-    plt.savefig(f'out/lowlevel/{nufile}_medangres_dc.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_medangres_dc.png', bbox_inches='tight')
 
     plt.clf()
     # from Alina's slides in Aachen
@@ -581,7 +621,7 @@ def lowlevel(nufile):
                    [f'Contained events'], inclowe)
 
     plt.savefig(
-        f'out/lowlevel/{nufile}_medangres_innout.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_medangres_innout.png', bbox_inches='tight')
 
     for dcs_lim in [30, 60]:
         plt.clf()
@@ -601,7 +641,7 @@ def lowlevel(nufile):
                        [f'{fit} dcs$>${dcs_lim}m'], inclowe)
 
         plt.savefig(
-            f'out/lowlevel/{nufile}_medangres_dcs{dcs_lim}m.png', bbox_inches='tight')
+            f'{outpath}/{nufilename}_medangres_dcs{dcs_lim}m.png', bbox_inches='tight')
 
     plt.clf()
     lge_bins_wide = [4, 5, 6, 7]
@@ -618,7 +658,7 @@ def lowlevel(nufile):
     plt.yscale('log')
     plt.legend()
 
-    plt.savefig(f'out/lowlevel/{nufile}_dzen.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dzen.png', bbox_inches='tight')
 
     plt.clf()
     cth_i = np.digitize(cth_tru, cth_bins)
@@ -639,7 +679,7 @@ def lowlevel(nufile):
     # plt.legend()
     # plt.yscale('log')
 
-    plt.savefig(f'out/lowlevel/{nufile}_dzen_cths.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dzen_cths.png', bbox_inches='tight')
 
     plt.clf()
     dzen_md = np.degrees(np.arccos(cth_md_reco)-np.arccos(cth_tru))
@@ -658,7 +698,7 @@ def lowlevel(nufile):
     plt.yscale('log')
     plt.legend(loc='lower center')
 
-    plt.savefig(f'out/lowlevel/{nufile}_dzen_all.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dzen_all.png', bbox_inches='tight')
 
     plt.clf()
     # dpsi = calculator.center_angle(
@@ -680,7 +720,7 @@ def lowlevel(nufile):
     plt.xlim(0, 60)
     plt.legend()
 
-    plt.savefig(f'out/lowlevel/{nufile}_dpsi.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dpsi.png', bbox_inches='tight')
 
     plt.clf()
     cas_md = calculator.center_angle(np.arccos(cth_tru),
@@ -702,10 +742,10 @@ def lowlevel(nufile):
     plt.xlim(0, 60)
     plt.legend()
 
-    plt.savefig(f'out/lowlevel/{nufile}_dpsi_all.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dpsi_all.png', bbox_inches='tight')
     plt.xlim(0, 180)
     plt.yscale('log')
-    plt.savefig(f'out/lowlevel/{nufile}_dpsi_all_pi.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{nufilename}_dpsi_all_pi.png', bbox_inches='tight')
 
     plt.clf()
     plt.scatter(trv_vtx_fit[np.abs(cth_tru) < 0.1],
@@ -717,7 +757,7 @@ def lowlevel(nufile):
     plt.ylabel('True azimuth')
 
     plt.savefig(
-        f'out/lowlevel/{nufile}_fitvtxbias_proj_scatter.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_fitvtxbias_proj_scatter.png', bbox_inches='tight')
 
     plt.clf()
     plt.scatter(trv_vtx_alt[np.abs(cth_tru) < 0.1],
@@ -729,7 +769,7 @@ def lowlevel(nufile):
     plt.ylabel('True azimuth')
 
     plt.savefig(
-        f'out/lowlevel/{nufile}_altvtxbias_proj_scatter.png', bbox_inches='tight')
+        f'{outpath}/{nufilename}_altvtxbias_proj_scatter.png', bbox_inches='tight')
 
     _ = {'m': (dtg, (-400, 400), '_'),
          'Tilt z-correction [m]': (zsf, (-15, 15), '_zsf_'),
@@ -755,7 +795,7 @@ def lowlevel(nufile):
         plt.text(0.05, 0.95, 'IceCube Preliminary', fontsize=14,
                  transform=plt.gca().transAxes, color='r')
         plt.savefig(
-            f'out/lowlevel/{nufile}_recozenith_recoz{_[k][2]}hknot_k9_prelim.png', bbox_inches='tight')
+            f'{outpath}/{nufilename}_recozenith_recoz{_[k][2]}hknot_k9_prelim.png', bbox_inches='tight')
 
         plt.clf()
         hknot = knots_mie[9]
@@ -775,7 +815,7 @@ def lowlevel(nufile):
         plt.text(0.05, 0.95, 'IceCube Preliminary', fontsize=14,
                  transform=plt.gca().transAxes, color='r')
         plt.savefig(
-            f'out/lowlevel/{nufile}_recozenith_recoz{_[k][2]}hknotmie_k9_prelim.png', bbox_inches='tight')
+            f'{outpath}/{nufilename}_recozenith_recoz{_[k][2]}hknotmie_k9_prelim.png', bbox_inches='tight')
     for weights, wlabel, cmax in zip([np.ones(cth_md_reco.shape)], [''], [1e9]):
         for cnorm, clabel in zip([Normalize, LogNorm], ['', '_clog']):
             if do_plot_drlogl:
@@ -795,7 +835,7 @@ def lowlevel(nufile):
                 plt.legend(loc='upper left')
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_drlogl{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_drlogl{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(lon_vtx_fit, histtype='step', label=r'longitudinal shift',
@@ -809,7 +849,7 @@ def lowlevel(nufile):
             plt.legend()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_fitvtxbias_proj{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_fitvtxbias_proj{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(xps_fit-xps_tru, histtype='step', label=r'$\delta x$',
@@ -825,7 +865,7 @@ def lowlevel(nufile):
             plt.legend()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_fitvtxbias{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_fitvtxbias{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(xps_fit-xps_tru, histtype='step', label=r'$\delta x$',
@@ -848,7 +888,7 @@ def lowlevel(nufile):
             plt.legend()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_vtxbias{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_vtxbias{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(lon_vtx_fit, histtype='step', label=r'longitudinal shift',
@@ -871,7 +911,7 @@ def lowlevel(nufile):
             plt.legend()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_vtxbias_proj{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_vtxbias_proj{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(lge_fit, histtype='step', label=fit,
@@ -885,7 +925,7 @@ def lowlevel(nufile):
                 plt.legend()
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_recoenergy{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_recoenergy{clabel}{wlabel}.png', bbox_inches='tight')
             except ValueError:
                 continue
 
@@ -907,12 +947,12 @@ def lowlevel(nufile):
             plt.xlim(-1, 1)
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_recozenith{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_recozenith{clabel}{wlabel}.png', bbox_inches='tight')
             plt.hist(cth_tru, histtype='step', label='Truth',
                      bins=cth_bins, range=(cth_bins[0], cth_bins[-1]), linewidth=1, color='grey')
             plt.legend()
             plt.savefig(
-                f'out/lowlevel/{nufile}_truerecozenith{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_truerecozenith{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.hist(azi_md_reco, histtype='step', label=fit,
@@ -934,12 +974,12 @@ def lowlevel(nufile):
             plt.xlim(0, np.pi*2)
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_recoazimuth{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_recoazimuth{clabel}{wlabel}.png', bbox_inches='tight')
             plt.hist(azi_tru, histtype='step', label='Truth',
                      bins=azi_bins, range=(azi_bins[0], azi_bins[1]), linewidth=1, color='grey')
             plt.legend()
             plt.savefig(
-                f'out/lowlevel/{nufile}_truerecoazimuth{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_truerecoazimuth{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(cth_tru,
@@ -951,7 +991,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_zenith{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_zenith{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.pcolormesh(cth_bins, cth_bins, h2d.T/np.sum(h2d, axis=1), cmap='Blues_r',
@@ -962,7 +1002,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_zenith_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_zenith_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(cth_tru,
@@ -976,7 +1016,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_altzenith_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_altzenith_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(azi_tru,
@@ -988,7 +1028,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_azimuth{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_azimuth{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             plt.pcolormesh(azi_bins, azi_bins, h2d.T/np.sum(h2d, axis=1), cmap='Blues_r',
@@ -999,7 +1039,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_azimuth_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_azimuth_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(azi_tru,
@@ -1013,7 +1053,7 @@ def lowlevel(nufile):
             plt.colorbar()
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_altazimuth_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_altazimuth_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(lge_tru,
@@ -1029,7 +1069,7 @@ def lowlevel(nufile):
                 plt.ylim(ymin=3 if inclowe else 4.5)
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_energy{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_energy{clabel}{wlabel}.png', bbox_inches='tight')
             except ValueError:
                 continue
 
@@ -1044,7 +1084,7 @@ def lowlevel(nufile):
             plt.ylim(ymin=3 if inclowe else 4.5)
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_energy_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_energy_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(lge_tru,
@@ -1058,7 +1098,7 @@ def lowlevel(nufile):
                 plt.xlim(xmin=3 if inclowe else 4.5)
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_evl{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_evl{clabel}{wlabel}.png', bbox_inches='tight')
             except ValueError:
                 continue
 
@@ -1075,7 +1115,7 @@ def lowlevel(nufile):
             plt.ylim(0, 100)
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_evl_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_evl_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             plt.clf()
             h2d, _, _, _ = plt.hist2d(len_tru,
@@ -1089,7 +1129,7 @@ def lowlevel(nufile):
             try:
                 plt.colorbar()
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_length{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_length{clabel}{wlabel}.png', bbox_inches='tight')
             except ValueError:
                 continue
 
@@ -1106,7 +1146,7 @@ def lowlevel(nufile):
             plt.ylim(ymin=0)
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_length_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_length_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
             if len(asm_recs) > 0:
                 asm_sel = asm_recs[0] < 0.3
@@ -1122,7 +1162,7 @@ def lowlevel(nufile):
                 try:
                     plt.colorbar()
                     plt.savefig(
-                        f'out/lowlevel/{nufile}_lenasm{clabel}{wlabel}.png', bbox_inches='tight')
+                        f'{outpath}/{nufilename}_lenasm{clabel}{wlabel}.png', bbox_inches='tight')
                 except ValueError:
                     continue
 
@@ -1139,9 +1179,9 @@ def lowlevel(nufile):
                 plt.ylim(ymin=0)
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_lenasm_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_lenasm_colpdf{clabel}{wlabel}.png', bbox_inches='tight')
 
-                avldir = f'out/lowlevel/{nufile}_avl_tauvis{clabel}{wlabel}'
+                avldir = f'{outpath}/{nufilename}_avl_tauvis{clabel}{wlabel}'
                 os.makedirs(avldir, exist_ok=True)
                 for tdc in np.unique(np.abs(tau_vis)):
                     _pfxs = ['', 'contained_']
@@ -1204,7 +1244,7 @@ def lowlevel(nufile):
                 # plt.colorbar()
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_drlogl{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_drlogl{clabel}{wlabel}.png', bbox_inches='tight')
 
                 plt.clf()
                 hh = plt.hist(mtr_dlogl, bins=llh_bins, histtype='step',
@@ -1229,7 +1269,7 @@ def lowlevel(nufile):
                 plt.legend()
 
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_dllh{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_dllh{clabel}{wlabel}.png', bbox_inches='tight')
 
                 plt.figure(figsize=(6, 6))
                 plot_wilks_coverage(mtr_dlogl, color='k', label='All')
@@ -1241,7 +1281,7 @@ def lowlevel(nufile):
                 plt.xscale(yscale(cnorm()))
                 plt.tight_layout()
                 plt.savefig(
-                    f'out/lowlevel/{nufile}_coverage{clabel}{wlabel}.png', bbox_inches='tight')
+                    f'{outpath}/{nufilename}_coverage{clabel}{wlabel}.png', bbox_inches='tight')
                 plt.close()
 
             plt.clf()
@@ -1260,7 +1300,7 @@ def lowlevel(nufile):
             plt.yscale(yscale(cnorm()))
 
             plt.savefig(
-                f'out/lowlevel/{nufile}_recoazimuthrho{clabel}{wlabel}.png', bbox_inches='tight')
+                f'{outpath}/{nufilename}_recoazimuthrho{clabel}{wlabel}.png', bbox_inches='tight')
 
             for k, hknot in enumerate(knots_std):
                 shknot = (np.arccos(cth_tru) < np.radians(hknot+1)
@@ -1278,7 +1318,7 @@ def lowlevel(nufile):
                     plt.colorbar()
                 plt.grid(False)
 
-                _ = f'out/lowlevel/{nufile}_recozenith_recoz_hknot_hist2d{clabel}{wlabel}'
+                _ = f'{outpath}/{nufilename}_recozenith_recoz_hknot_hist2d{clabel}{wlabel}'
                 os.makedirs(_, exist_ok=True)
                 plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1290,7 +1330,7 @@ def lowlevel(nufile):
                     plt.xlabel(f'x [{fit}]')
                     plt.ylabel(f'y [{fit}]')
 
-                    _ = f'out/lowlevel/{nufile}_recox_recoy_dth_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_recox_recoy_dth_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1302,7 +1342,7 @@ def lowlevel(nufile):
                     plt.ylim(-0.02, 0.02)
                     plt.colorbar()
 
-                    _ = f'out/lowlevel/{nufile}_truee_drlogl_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_truee_drlogl_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1321,7 +1361,7 @@ def lowlevel(nufile):
                     plt.xlim(0, 180)
                     plt.ylim(-650, 400)
 
-                    _ = f'out/lowlevel/{nufile}_recozenith_recoz_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_recozenith_recoz_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1340,7 +1380,7 @@ def lowlevel(nufile):
                     plt.ylim(1e-2, 180)
                     plt.yscale('log')
 
-                    _ = f'out/lowlevel/{nufile}_recozenith_deltaazi_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_recozenith_deltaazi_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1354,7 +1394,7 @@ def lowlevel(nufile):
                     plt.xlim(1e-2, 180)
                     plt.xscale('log')
 
-                    _ = f'out/lowlevel/{nufile}_deltaazi_recoz_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_deltaazi_recoz_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1370,7 +1410,7 @@ def lowlevel(nufile):
                     plt.xlim(-1, 1)
                     plt.ylabel('True E')
 
-                    _ = f'out/lowlevel/{nufile}_recozenith_truee_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_recozenith_truee_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1380,7 +1420,7 @@ def lowlevel(nufile):
                     plt.colorbar(label='m')
                     plt.xlabel('True azimuth')
                     plt.ylabel('True E')
-                    _ = f'out/lowlevel/{nufile}_trueazi_truee_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_trueazi_truee_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1390,7 +1430,7 @@ def lowlevel(nufile):
                     plt.colorbar(label='m')
                     plt.xlabel(f'{fit} x [m]')
                     plt.ylabel(f'{fit} y [m]')
-                    _ = f'out/lowlevel/{nufile}_recox_recoy_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_recox_recoy_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
@@ -1404,16 +1444,34 @@ def lowlevel(nufile):
                                  arrowprops=dict(arrowstyle="->"))
                     plt.text(0.05, 0.95, 'IceCube Preliminary', fontsize=14,
                              transform=plt.gca().transAxes, color='r')
-                    _ = f'out/lowlevel/{nufile}_truex_truey_hknot{clabel}{wlabel}'
+                    _ = f'{outpath}/{nufilename}_truex_truey_hknot{clabel}{wlabel}'
                     os.makedirs(_, exist_ok=True)
                     plt.savefig(f'{_}/k{k}.png', bbox_inches='tight')
 
 
 def main():
-    nufiles = sys.argv[1:]
+    parser = argparse.ArgumentParser(
+        description='Create lowlevel plots')
+    parser.add_argument('inputs', nargs='+', help='input hd5')
+
+    parser.add_argument('-o', '--out', default='/data/user/tvaneede/GlobalFit/reco_processing/performance/output/v8.0',
+                        type=str, help='output path')
+    args = parser.parse_args()
+
+    # nufiles = sys.argv[1:]
+    nufiles = args.inputs
 
     for nufile in nufiles:
-        lowlevel(nufile)
+
+        nufilename = os.path.splitext(os.path.basename(nufile))[0]
+        outpath = f"{args.out}/{nufilename}"
+        os.system(f"mkdir -p {outpath}")
+
+        print("Running nufile", nufile)
+        print("nufilename", nufilename)
+        print("outpath", outpath)
+
+        lowlevel(nufile = nufile, nufilename = nufilename, outpath = outpath)
 
 
 if __name__ == '__main__':
