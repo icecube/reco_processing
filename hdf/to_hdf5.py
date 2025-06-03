@@ -6,6 +6,8 @@ from snowflake import library
 from reco import truth
 from icecube import clsim, MuonGun, dataclasses, millipede
 from icecube.dataclasses import I3Double, I3Particle, I3Direction
+import glob
+
 
 MED = clsim.MakeIceCubeMediumProperties(
     iceDataDirectory=os.path.expandvars('$I3_BUILD/ice-models/resources/models/ICEMODEL/spice_ftp-v3/'),
@@ -14,10 +16,13 @@ MED = clsim.MakeIceCubeMediumProperties(
 
 def fensurecc(frame):
     if not frame.Has('cc'):
-        if frame.Has('I3MCTree'):
-            frame['cc'] = dataclasses.get_most_energetic_inice_cascade(frame['I3MCTree'])
-        else:
-            frame['cc'] = I3Particle()
+        # if frame.Has('I3MCTree'):
+        #     frame['cc'] = dataclasses.get_most_energetic_inice_cascade(frame['I3MCTree'])
+        # else:
+        #     frame['cc'] = I3Particle()
+        truth.truth(frame, "tau")
+
+    # print(frame['cc'])
 
 
 def fenergy(frame):
@@ -135,11 +140,13 @@ def main():
     parser = argparse.ArgumentParser(
         description='Extract CausalQTot and MJD data from i3 to h5')
 
-    parser.add_argument('i3s', nargs='+', help='input i3s')
+    # parser.add_argument('i3s', nargs='+', help='input i3s')
     parser.add_argument('-a', '--add', nargs='+', default=[],
                         type=str, help='additional keys to save')
     parser.add_argument('-o', '--out', default='a.h5',
                         type=str, help='output file')
+    parser.add_argument('-i', '--inpath', default='/test',
+                        type=str, help='input path')
     parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
                         help='which P-frame splits to process')
     parser.add_argument('--simwrite', default=False,
@@ -153,7 +160,12 @@ def main():
                                    'I3EventHeader']+args.add)
         return
 
-    library.hdfwriter(args.i3s, args.out,
+    inputfiles = glob.glob( f"{args.inpath}/*.i3.bz2" )
+
+    print("Writing output to", args.out)
+    print(f"found {len(inputfiles)}")
+
+    library.hdfwriter(inputfiles, args.out,
                       subeventstreams=args.splits,
                       fn=fn,
                       keys=['cc',
@@ -197,12 +209,23 @@ def main():
                             'CscdL3_SPEFit16',
                             'CscdL3_SPEFit16FitParams',
 
+                            # neha
+                            'HESETaupedeFit',
+                            'HESETaupedeFitFitParams',
+                            'HESETaupedeFitParticles',
 
+                            'HESEMonopodFit',
+                            'HESEMonopodFitFitParams',
+                            'HESEMonopodFitParticles',
+
+                            # event generator
                             # 'EventGenerator_cascade_7param_noise_ftpv3m_04_I3Particle',
                             # 'EventGenerator_cascade_7param_noise_ftpv3m__big_model_01_I3Particle',
                             # 'EventGenerator_cascade_7param_noise_ftpv3m__marginalized_01_I3Particle',
                             # 'MonopodFit4_PartialExclusion',
                             # 'PreferredFitSharedSeed',
+
+
                             'DNNC_I3Particle']+args.add)
 
     
