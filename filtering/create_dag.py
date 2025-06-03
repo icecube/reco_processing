@@ -6,7 +6,7 @@ sys.path.append('/data/user/tvaneede/GlobalFit/reco_processing')
 from simulation_datasets import simulation_datasets
 
 # set the inputs
-filter_version = "v1.0"
+filter_version = "v1"
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/filtering"

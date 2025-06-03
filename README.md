@@ -7,5 +7,5 @@
 
 ## Versions
 
-- v7.0: First 100 files of 22635 and 22634 based on filtering v0, which still had a lot of orphaned q frames.
-- v8.0: Based on filtering v1.0, removed orphaned frames. Getting more statistics to check performance, and start playing with the BDT
+- v0: First 100 files of 22635 and 22634 based on filtering v0, which still had a lot of orphaned q frames.
+- v1: Based on filtering v1.0, removed orphaned frames. Getting more statistics to check performance, and start playing with the BDT

@@ -4,8 +4,8 @@ import re
 from simulation_datasets import simulation_datasets
 
 # set the inputs
-reco_version = "v8.0"
-filter_version = "v1.0"
+reco_version = "v1"
+filter_version = "v1"
 icemodel = "ftp-v3"
 
 # fixed paths
