@@ -2,16 +2,16 @@
 simulation_datasets = {}
 
 
-# ###
-# ### jsut the test
-# ###
+###
+### jsut the test
+###
 
-# simulation_datasets["NuTau_midE"] = {
-#     "dataset" : "22634",
-#     "subfolders" : 
-#     ["0000000-0000999"],
-#     "flavor" : "NuTau",
-# }
+simulation_datasets["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+}
 
 # simulation_datasets["NuTau_highE"] = {
 #     "dataset" : "22635",
@@ -20,33 +20,33 @@ simulation_datasets = {}
 #     "flavor" : "NuTau",
 # }
 
-simulation_datasets["NuE_midE"] = {
-    "dataset" : "22613",
-    "subfolders" : 
-    ["0000000-0000999"],
-    "flavor" : "NuE",
-}
+# simulation_datasets["NuE_midE"] = {
+#     "dataset" : "22613",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuE",
+# }
 
-simulation_datasets["NuE_highE"] = {
-    "dataset" : "22612",
-    "subfolders" : 
-    ["0000000-0000999"],
-    "flavor" : "NuE",
-}
+# simulation_datasets["NuE_highE"] = {
+#     "dataset" : "22612",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuE",
+# }
 
-simulation_datasets["NuMu_midE"] = {
-    "dataset" : "22645",
-    "subfolders" : 
-    ["0000000-0000999"],
-    "flavor" : "NuMu",
-}
+# simulation_datasets["NuMu_midE"] = {
+#     "dataset" : "22645",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuMu",
+# }
 
-simulation_datasets["NuMu_highE"] = {
-    "dataset" : "22644",
-    "subfolders" : 
-    ["0000000-0000999"],
-    "flavor" : "NuMu",
-}
+# simulation_datasets["NuMu_highE"] = {
+#     "dataset" : "22644",
+#     "subfolders" : 
+#     ["0000000-0000999"],
+#     "flavor" : "NuMu",
+# }
 
 
 
