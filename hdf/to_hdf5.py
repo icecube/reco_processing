@@ -209,6 +209,11 @@ def main():
                             'CscdL3_SPEFit16',
                             'CscdL3_SPEFit16FitParams',
 
+                            'TaupedeFit_iMIGRAD_PPB0_bright',
+                            'TaupedeFit_iMIGRAD_PPB0_brightFitParams',
+                            'TaupedeFit_iMIGRAD_PPB0_brightParticles',
+                            
+
                             # neha
                             'HESETaupedeFit',
                             'HESETaupedeFitFitParams',
@@ -224,6 +229,9 @@ def main():
                             # 'EventGenerator_cascade_7param_noise_ftpv3m__marginalized_01_I3Particle',
                             # 'MonopodFit4_PartialExclusion',
                             # 'PreferredFitSharedSeed',
+                            'EventGeneratorDC_Max',
+                            'EventGeneratorDC_Thijs',
+                            
 
 
                             'DNNC_I3Particle']+args.add)

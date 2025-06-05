@@ -5,6 +5,7 @@ output/
 
 filtering/output
 hdf/output
+evtgen/output
 
 *.h5
 */*.h5

@@ -2,17 +2,39 @@
 ### v1
 ### 
 
-python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22634_0000000-0000999.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22635_0000000-0000999.h5"
+python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuTau.h5" \
+  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuTau_22634_0000000-0000999.h5" \
+  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuTau_22635_0000000-0000999.h5"
 
-python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22612_0000000-0000999.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22613_0000000-0000999.h5"
+python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuE.h5" \
+  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuE_22612_0000000-0000999.h5" \
+  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v0_rec_v1/NuE_22613_0000000-0000999.h5"
 
-python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22644_0000000-0000999.h5" \
-  "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22645_0000000-0000999.h5"
+# ###
+# ### v1 with bright
+# ### 
+
+# python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/rec_v1_bright/NuTau.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/rec_v1_bright/NuTau_22634_0000000-0000999.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/rec_v1_bright/NuTau_22635_0000000-0000999.h5"
+
+
+
+# ###
+# ### v1
+# ### 
+
+# python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22634_0000000-0000999.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22635_0000000-0000999.h5"
+
+# python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22612_0000000-0000999.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22613_0000000-0000999.h5"
+
+# python merge.py -o "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22644_0000000-0000999.h5" \
+#   "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22645_0000000-0000999.h5"
 
 
 
