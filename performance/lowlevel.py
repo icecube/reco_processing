@@ -253,6 +253,10 @@ def get_easymm(node):
     _e2 = _es[_vs==1]
     return (_e1 - _e2) / (_e1 + _e2)
 
+def get_easymm_evtgen(node):
+    _e1 = node.cols.cascade_energy[:]
+    _e2 = node.cols.cascade_cascade_00001_energy[:]
+    return (_e1 - _e2) / (_e1 + _e2)
 
 def lowlevel(nufile, nufilename, outpath):
 
