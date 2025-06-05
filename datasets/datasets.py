@@ -1,57 +1,118 @@
 
 
+
 ###
-### neha spice files
+### Including bright doms
 ###
 
-v8 = {}
+rec_v1_bright = {}
 
-v8["NuTau_midE"] = {
+rec_v1_bright["NuTau_midE"] = {
     "dataset" : "22634",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuTau",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/celdridg/bright/v1",
 }
 
-v8["NuTau_highE"] = {
+rec_v1_bright["NuTau_highE"] = {
     "dataset" : "22635",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuTau",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/celdridg/bright/v1/",
 }
 
-v8["NuE_midE"] = {
+###
+### evtgen v0, based on recov1
+###
+
+evtgen_v0_rec_v1 = {}
+
+evtgen_v0_rec_v1["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v0",
+}
+
+evtgen_v0_rec_v1["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v0",
+}
+
+evtgen_v0_rec_v1["NuE_midE"] = {
     "dataset" : "22613",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuE",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v0",
 }
 
-v8["NuE_highE"] = {
+evtgen_v0_rec_v1["NuE_highE"] = {
     "dataset" : "22612",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuE",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v0",
 }
 
-v8["NuMu_midE"] = {
+###
+### large reco batch
+###
+
+v1 = {}
+
+v1["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+}
+
+v1["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+}
+
+v1["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+}
+
+v1["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+}
+
+v1["NuMu_midE"] = {
     "dataset" : "22645",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuMu",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
 }
 
-v8["NuMu_highE"] = {
+v1["NuMu_highE"] = {
     "dataset" : "22644",
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuMu",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8.0",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
 }
 
 
