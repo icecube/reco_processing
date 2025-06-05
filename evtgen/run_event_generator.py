@@ -100,8 +100,6 @@ def main():
 
     starttime = datetime.datetime.now()
 
-    input_file = '/data/user/tvaneede/GlobalFit/reco_processing/output/v1/22634/0000000-0000999/Reco_NuTau_NuGenCCNC.022634.000001.i3.zst_out.i3.bz2'
-
     tray = I3Tray()
 
     tray.AddModule('I3Reader', 'reader', filenamelist=[opts.inputfile])
