@@ -6,6 +6,7 @@ output/
 filtering/output
 hdf/output
 evtgen/output
+pid_neha/output
 
 *.h5
 */*.h5
