@@ -42,7 +42,7 @@ def extract_data_evtgen( nufile, key ):
     tf = tables.open_file(nufile)
 
     data = {}
-    data["len_fit"] = tf.get_node( f'/{key}').cols.cascade_cascade_00001_distance[:][slc]
+    data["len_fit"] = np.abs(tf.get_node( f'/{key}').cols.cascade_cascade_00001_distance[:][slc])
     data["len_tru"] = tf.root.cc.cols.length[:][slc]
     data["asm_fit"] = get_easymm_evtgen(tf.get_node(f'/{key}'))[slc]
     data["asm_tru"] = tf.root.cc_easymm[slc]['value']
