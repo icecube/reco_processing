@@ -1,18 +1,24 @@
 import sys, os, glob
 import subprocess
 import re
-from simulation_datasets import simulation_datasets
+
+# Append the custom module path
+sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
+
+# Import the datasets module
+from datasets import datasets
 
 # set the inputs
-reco_version = "v1"
-filter_version = "v1"
-icemodel = "ftp-v3"
+reco_version = "v2"
+
+# Dynamically select the desired dataset
+simulation_datasets = getattr(datasets, reco_version)
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/run_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
 
-nfiles = 1000 # process x files per subfolder
+nfiles = 10000 # process x files per subfolder
 submit_jobs = True # actually submit the dag jobs
 
 for simulation_name in simulation_datasets:
@@ -20,13 +26,15 @@ for simulation_name in simulation_datasets:
     simulation_subfolders = simulation_datasets[simulation_name]['subfolders']
     simulation_flavor = simulation_datasets[simulation_name]["flavor"]
     simulation_dataset = simulation_datasets[simulation_name]['dataset']
+    simulation_reco_base_in_path = simulation_datasets[simulation_name]['reco_base_in_path']
+    simulation_reco_base_out_path = simulation_datasets[simulation_name]['reco_base_out_path']
 
     for simulation_subfolder in simulation_subfolders:
 
         # fixed paths
-        reco_input_path = f"/data/user/tvaneede/GlobalFit/reco_processing/filtering/output/{filter_version}/{simulation_dataset}/{simulation_subfolder}"
+        reco_input_path = f"{simulation_reco_base_in_path}/{simulation_dataset}/{simulation_subfolder}"
 
-        reco_out_path = f"{work_path}/output/{reco_version}/{simulation_dataset}/{simulation_subfolder}"
+        reco_out_path = f"{simulation_reco_base_out_path}/{simulation_dataset}/{simulation_subfolder}"
 
         # fixed dag paths
         dag_name = f"reco_dag_{reco_version}_{simulation_dataset}_{simulation_subfolder}"

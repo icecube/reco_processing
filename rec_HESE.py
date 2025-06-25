@@ -6,6 +6,7 @@ from importlib.metadata import version
 from pprint import pformat
 import numpy as np
 
+from icecube import dataio
 from icecube import (icetray,
                      photonics_service,
                      mue)  # noqa: F401
@@ -133,11 +134,9 @@ def main():
                         help='bright DOMs threshold')
     parser.add_argument('--relerr', type=float, default=0.05,
                         help='relative error for LLH')
-    parser.add_argument('--photonsperbin', default=0., type=float,
-                        help='set the minimum number of photons per bin for binning')
     parser.add_argument('--binsigma', default=np.nan, type=float,
                         help='set the binsigma parameter for BBlocks')
-    parser.add_argument('--mintimewidth', default=12, type=float,
+    parser.add_argument('--mintimewidth', default=16, type=float,
                         help='set the min time width parameter for millipede')
     parser.add_argument('--residual', type=float, default=1500 *
                         I3Units.ns, help='time residual for PulseCleaning')
@@ -195,6 +194,8 @@ def main():
                         help='pick a minimizer to use for the final step in skymap (expert)')
     parser.add_argument('--evegen', default=False, action='store_true',
                         help='try run reco with event-generator (WIP)')
+    parser.add_argument('--HESE', default=False, action='store_true',
+                        help='running HESE Millipede for 3 topologies')
 
     args = parser.parse_args()
     icetray.set_log_level(args.loglevel)
@@ -224,6 +225,13 @@ def main():
     tray = I3Tray()
     tray.Add('I3Reader', Filenamelist=args.infiles)
     tray.Add(sane, split_names=args.splits)
+
+    # apply HESE selection
+    if args.HESE:
+        print("applying hese selection")
+        tray.Add(lambda frame : 'HESE_VHESelfVeto' in frame and not frame['HESE_VHESelfVeto'].value)
+        tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].value >= 6000)
+
     if args.isdata:
         rde_map = library.get_rde_map(os.path.expandvars(
             '$I3_BUILD/ice-models/resources/models/PPCTABLES/misc/eff-f2k.FTP125max'))
@@ -303,13 +311,18 @@ def main():
                         'ExcludedDOMs': excludedDOMs,
                         'ReadoutWindow': f'{pulses_for_reco}PulseCleanedTimeRange',
                         'PartialExclusion': True,
-                        'PhotonsPerBin': args.photonsperbin,
+                        'PhotonsPerBin': 0,
                         'UseUnhitDOMs': not args.nouh,
                         'MinTimeWidth': args.mintimewidth,
                         'BinSigma': args.binsigma,
                         'RelUncertainty': args.relerr,}
     icetray.logging.log_info(pformat(millipede_params),
                              __name__)
+
+    if not np.isnan(args.binsigma):
+        sfx = f'BS{args.binsigma}'
+    else:
+        sfx = 'PPB0'
 
     if args.compare:
         cascade_services = [cascade_service]
@@ -320,7 +333,7 @@ def main():
                                                False,
                                                False,
                                                qepsilon=args.qepsilon))
-        suffixes.append('mie')
+        suffixes.append('_mie')
 
         # ftp-v1 no tilt
         cascade_services.append(define_splines('ftp-v1',
@@ -328,7 +341,7 @@ def main():
                                                True,
                                                True,
                                                qepsilon=args.qepsilon))
-        suffixes.append('flat')
+        suffixes.append('_flat')
 
         # ftp-v1 no tilt no anisotropy
         cascade_services.append(define_splines('ftp-v1',
@@ -336,21 +349,21 @@ def main():
                                                False,
                                                False,
                                                qepsilon=args.qepsilon))
-        suffixes.append('bulk')
+        suffixes.append('_bulk')
 
         for _cs, _trail in zip(cascade_services, suffixes):
             millipede_params['CascadePhotonicsService'] = _cs
             tray.Add(wrapperfn,
-                     f'iMIGRAD_{_trail}',
+                     f'iMIGRAD_{sfx}{_trail}',
                      Seed=Seed,
                      Minimizer='iMIGRAD',
                      Unfold=args.unfold,
                      Chain=args.chain,
                      Iterations=iterations,
                      **millipede_params)
-        _prefs = [f'MillipedeFit_iMIGRAD',
-                  f'TaupedeFit_iMIGRAD',
-                  f'MonopodFit_iMIGRAD']
+        _prefs = [f'MillipedeFit_iMIGRAD_{sfx}',
+                  f'TaupedeFit_iMIGRAD_{sfx}',
+                  f'MonopodFit_iMIGRAD_{sfx}']
         tray.Add(preferred,
                  i3_particles_fitparams=[(_, f'{_}FitParams') for _ in _prefs],
                  If=lambda f: any([f.Has(_) for _ in _prefs]))
@@ -362,7 +375,7 @@ def main():
                          'LBFGSB'] if vars(args)[_.lower()]]
     for mini in minis:
         tray.Add(wrapperfn,
-                 f'{mini}',
+                 f'{mini}_{sfx}',
                  Seed=Seed,
                  Minimizer=mini,
                  Unfold=args.unfold,
@@ -374,7 +387,7 @@ def main():
         seeder = lilliput.segments.add_seed_service(
             tray,
             millipede_params['Pulses'],
-            [f'{specifier}_{mini}'])
+            [f'{specifier}_{mini}_{sfx}'])
         minispec = mini.lower()
         if args.ibr:
             minispec += '.ibr'
@@ -387,8 +400,8 @@ def main():
         if args.gulliview:
             tray.Add(gulliview.GulliView,
                      SeedService=seeder,
-                     Parametrization=f'{specifier}_{mini}_parametrization',
-                     LogLikelihood=f'{specifier}_{mini}_likelihood',
+                     Parametrization=f'{specifier}_{mini}_{sfx}_parametrization',
+                     LogLikelihood=f'{specifier}_{mini}_{sfx}_likelihood',
                      StepSize=0.5,
                      WithGradients=True,
                      Filename=f'out/gulliview/{minispec}')
@@ -401,8 +414,8 @@ def main():
                      NSteps=500,
                      NWalkers=20,
                      SeedService=seeder,
-                     Parametrization=f'{specifier}_{mini}_parametrization',
-                     LogLikelihood=f'{specifier}_{mini}_likelihood',
+                     Parametrization=f'{specifier}_{mini}_{sfx}_parametrization',
+                     LogLikelihood=f'{specifier}_{mini}_{sfx}_likelihood',
                      CornerPlotName=cpn,
                      CornerPlotTruth='cc',
                      OutputName='EMC')
@@ -416,8 +429,8 @@ def main():
                      Tolerance=100.,
                      # DeclineFactor=0.01,
                      MaxIterations=10000,
-                     Parametrization=f'{specifier}_{mini}_parametrization',
-                     LogLikelihood=f'{specifier}_{mini}_likelihood',
+                     Parametrization=f'{specifier}_{mini}_{sfx}_parametrization',
+                     LogLikelihood=f'{specifier}_{mini}_{sfx}_likelihood',
                      CornerPlotName=cpn,
                      CornerPlotTruth='cc',
                      OutputName='NMC')
@@ -427,13 +440,13 @@ def main():
             tray.Add(plotting.plot_pulses,
                      figdir='out/pulses',
                      pulse_type=millipede_params['Pulses'],
-                     exq_key=f'{specifier}_{mini}_{specifier}_{mini}{loss_vector_suffix}_ExQ',
-                     obq_key=f'{specifier}_{mini}_{specifier}_{mini}{loss_vector_suffix}_ObQ',
+                     exq_key=f'{specifier}_{mini}_{sfx}_{specifier}_{mini}_{sfx}{loss_vector_suffix}_ExQ',
+                     obq_key=f'{specifier}_{mini}_{sfx}_{specifier}_{mini}_{sfx}{loss_vector_suffix}_ObQ',
                      min_q=args.plot_minq)
 
-    prefs = [_ for tup in [[f'MillipedeFit_{mini}',
-                            f'TaupedeFit_{mini}',
-                            f'MonopodFit_{mini}']
+    prefs = [_ for tup in [[f'MillipedeFit_{mini}_{sfx}',
+                            f'TaupedeFit_{mini}_{sfx}',
+                            f'MonopodFit_{mini}_{sfx}']
                            for mini in minis]
              for _ in tup]
     tray.Add(preferred,
@@ -510,20 +523,18 @@ def main():
             raise RuntimeError('wtf skyit is negative')
 
         if args.unfold:
-            _params = {k: millipede_params[k] for k in ('ExcludedDOMs',
-                                                        'Pulses',
-                                                        'BinSigma',
-                                                        'PhotonsPerBin',
-                                                        'MinTimeWidth',
-                                                        'CascadePhotonicsService')}
             tray.Add(unfold.Unfold,
                      Loss_Vector_Name=f'{m3p}{loss_vector_suffix}',
                      FitName=m3p,
-                     **_params)
+                     **{k: millipede_params[k] for k in ('ExcludedDOMs',
+                                                         'Pulses',
+                                                         'CascadePhotonicsService')})
             tray.Add(unfold.Unfold,
                      Loss_Vector_Name=f'{s2p}{loss_vector_suffix}',
                      FitName=s2p,
-                     **_params)
+                     **{k: millipede_params[k] for k in ('ExcludedDOMs',
+                                                         'Pulses',
+                                                         'CascadePhotonicsService')})
             tray.Add(dom.dllh,
                      key0=s2p,
                      key1=m3p,
@@ -573,7 +584,7 @@ def main():
             splinempe_seeds = args.seed
         elif len(minis) > 0:
             splinempe_seeds = [
-                f'{specifier}_{mini}' for mini in minis]
+                f'{specifier}_{mini}_{sfx}' for mini in minis]
         else:
             splinempe_seeds = ['OnlineL2_SplineMPE',
                                'l2_online_SplineMPE', 'LineFit']
@@ -674,6 +685,59 @@ def main():
                     'cascade_energy': [0, 1e8]})
         except ImportError as e:
             icetray.logging.log_error(str(e), __name__)
+
+    # taken from Neha
+    if args.HESE:  
+        print("running HESE, with printing modules")      
+        from segments.MillipedeWrapper import MillipedeWrapper
+        from segments.FinalEventClassification import checkfinaltopology
+        from segments.RecoObservables import calculaterecoobservables
+                
+        # energy definition
+        gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
+        gcdfile = dataio.I3File(gcdfilepath)
+        frame = gcdfile.pop_frame()
+        while 'I3Geometry' not in frame:
+            frame = gcdfile.pop_frame()
+        geometry = frame['I3Geometry'].omgeo
+
+        strings = [1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 50, 59, 67, 74, 73, 72, 78, 77, 76, 75, 68, 60, 51, 41, 31, 22, 14, 7]
+
+        outerbounds = {}
+        cx, cy = [], []
+        for string in strings:
+            omkey = icetray.OMKey(string, 1)
+            # if geometry.has_key(omkey):
+            x, y = geometry[omkey].position.x, geometry[omkey].position.y
+            outerbounds[string] = (x, y)
+            cx.append(x)
+            cy.append(y)
+        cx, cy = np.asarray(cx), np.asarray(cy)
+        order = np.argsort(np.arctan2(cx, cy))
+        outeredge_x = cx[order]
+        outeredge_y = cy[order]
+
+        # millipede
+        millipede_params = {'Pulses': 'SplitInIcePulses', 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs}
+        
+        tray.Add(MillipedeWrapper, 'HESEMillipedeFit',
+            Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'CscdL3_SPEFit16'],
+            PhotonsPerBin = 5,
+            ShowerSpacing = 5,
+            innerboundary=550,
+            outerboundary=650,
+            outeredge_x=outeredge_x,
+            outeredge_y=outeredge_y,
+            **millipede_params)
+
+        tray.AddModule(calculaterecoobservables,
+                        'calc_reco_observables',
+                        innerboundary=550,
+                        outeredge_x=outeredge_x,
+                        outeredge_y=outeredge_y)
+
+        tray.Add(checkfinaltopology)
+
 
     if args.loglevel not in ['debug', 'trace']:
         tray.Add('Delete', keystarts=['seed_'])

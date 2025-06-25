@@ -113,6 +113,21 @@ evtgen_v0_rec_v1["NuE_highE"] = {
 }
 
 ###
+### Proper HESE selection, added Millipede reco to reco script 
+###
+
+v2 = {}
+
+v2["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v2",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator",
+}
+
+###
 ### Large batch reconstruction
 ###
 
