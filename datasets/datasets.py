@@ -1,4 +1,55 @@
 
+v1_wpid = {}
+
+v1_wpid["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+v1_wpid["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+v1_wpid["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+v1_wpid["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+v1_wpid["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+v1_wpid["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha/output/v1",
+}
+
+
 
 
 ###
@@ -62,7 +113,7 @@ evtgen_v0_rec_v1["NuE_highE"] = {
 }
 
 ###
-### large reco batch
+### Large batch reconstruction
 ###
 
 v1 = {}
@@ -115,14 +166,114 @@ v1["NuMu_highE"] = {
     "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
 }
 
+###
+### Ftp files
+### Selection: l3 muon
+### Name: ftp_l3muon
+###
+
+ftp_l3muon = {}
+
+ftp_l3muon["NuTau_midE1"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2023/filtered/level3/muon/neutrino-generator/",
+}
 
 ###
-### neha spice files
+### Ftp level2
+### Selection: level
+### Name: ftp_generated
 ###
 
-neha_spice = {}
+ftp_l2 = {}
 
-neha_spice["NuTau_midE1"] = {
+ftp_l2["NuTau_midE1"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+}
+
+
+###
+### Ftp generated files
+### Selection: No selection
+### Name: ftp_generated
+###
+
+ftp_generated = {}
+
+ftp_generated["NuTau_midE1"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2023/generated/neutrino-generator",
+}
+
+###
+### Ftp files
+### Selection: I thought no selection, but I think there is the cascade selection already applied
+### Name: ftp_l3casc, previous: ftp
+###
+
+ftp_l3casc = {}
+
+ftp_l3casc["NuTau_midE1"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
+}
+
+
+###
+### Spice l3 cascade
+### No selection
+### Name: spice_generated
+###
+
+spice_l3casc = {}
+
+spice_l3casc["NuTau_midE1"] = {
+    "dataset" : "22049",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator",
+}
+
+
+###
+### Spice generated files
+### No selection
+### Name: spice_generated
+###
+
+spice_generated = {}
+
+spice_generated["NuTau_midE1"] = {
+    "dataset" : "22049",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_path" : "/data/sim/IceCube/2020/generated/neutrino-generator",
+}
+
+###
+### Reconstructed files by Neha
+### Selection: VHESelfVeto == false, CausalQTot > 6000, no energy cut!!
+### Name: spice_tau_reco, before: neha_spice
+###
+
+spice_tau_reco = {}
+
+spice_tau_reco["NuTau_midE1"] = {
     "dataset" : "22049",
     "subfolders" : 
     ["0000000-0000999"],
@@ -130,7 +281,7 @@ neha_spice["NuTau_midE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuTau_highE1"] = {
+spice_tau_reco["NuTau_highE1"] = {
     "dataset" : "22050",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999"],
@@ -138,7 +289,7 @@ neha_spice["NuTau_highE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuTau_midE2"] = {
+spice_tau_reco["NuTau_midE2"] = {
     "dataset" : "22085",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999"],
@@ -146,7 +297,7 @@ neha_spice["NuTau_midE2"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuTau_highE2"] = {
+spice_tau_reco["NuTau_highE2"] = {
     "dataset" : "22086",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999","0003000-0003999", "0004000-0004999", "0005000-0005999", "0006000-0006999"],
@@ -154,7 +305,7 @@ neha_spice["NuTau_highE2"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuE_midE1"] = {
+spice_tau_reco["NuE_midE1"] = {
     "dataset" : "22046",
     "subfolders" : 
     ["0000000-0000999"],
@@ -162,7 +313,7 @@ neha_spice["NuE_midE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuE_highE1"] = {
+spice_tau_reco["NuE_highE1"] = {
     "dataset" : "22047",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999"],
@@ -170,7 +321,7 @@ neha_spice["NuE_highE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuE_midE2"] = {
+spice_tau_reco["NuE_midE2"] = {
     "dataset" : "22082",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999"],
@@ -178,7 +329,7 @@ neha_spice["NuE_midE2"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuE_highE2"] = {
+spice_tau_reco["NuE_highE2"] = {
     "dataset" : "22083",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999","0003000-0003999", "0004000-0004999", "0005000-0005999", "0006000-0006999"],
@@ -186,7 +337,7 @@ neha_spice["NuE_highE2"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuMu_midE1"] = {
+spice_tau_reco["NuMu_midE1"] = {
     "dataset" : "22043",
     "subfolders" : 
     ["0000000-0000999"],
@@ -194,7 +345,7 @@ neha_spice["NuMu_midE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuMu_highE1"] = {
+spice_tau_reco["NuMu_highE1"] = {
     "dataset" : "22044",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999"],
@@ -202,7 +353,7 @@ neha_spice["NuMu_highE1"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuMu_midE2"] = {
+spice_tau_reco["NuMu_midE2"] = {
     "dataset" : "22079",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999"],
@@ -210,7 +361,7 @@ neha_spice["NuMu_midE2"] = {
     "reco_base_path" : "/data/ana/Diffuse/GlobalFit_Flavor/taupede/SnowStorm/RecowithBfr/Baseline",
 }
 
-neha_spice["NuMu_highE2"] = {
+spice_tau_reco["NuMu_highE2"] = {
     "dataset" : "22080",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999","0003000-0003999", "0004000-0004999", "0005000-0005999"],
