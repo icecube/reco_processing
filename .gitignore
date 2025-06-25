@@ -4,9 +4,13 @@ __pycache__
 output/
 
 filtering/output
+pid_neha/output
+
+attic/filtering/output
+attic/pid_neha/output
+
 hdf/output
 evtgen/output
-pid_neha/output
 
 performance/plots/v*
 
