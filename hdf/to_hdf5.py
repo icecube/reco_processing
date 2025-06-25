@@ -6,6 +6,7 @@ from snowflake import library
 from reco import truth
 from icecube import clsim, MuonGun, dataclasses, millipede
 from icecube.dataclasses import I3Double, I3Particle, I3Direction
+from icecube.icetray import I3Bool
 import glob
 
 
@@ -126,12 +127,27 @@ def fdnn(frame):
     frame['DNNC_I3Particle'] = ppar
 
 
+def reclassify_double(frame):
+    classification = frame['FinalTopology'].value
+    if classification != 2:
+        frame['FinalEventClass']= dataclasses.I3Double(classification)
+    else:
+        if frame['RecoL']<=20 and frame['RecoETot']>=3000000:
+            frame['FinalEventClass']=dataclasses.I3Double(1)
+        else:
+            frame['FinalEventClass']= dataclasses.I3Double(classification)
+
+def store_qfiltermask(frame):
+    frame["QFilterMask_HESEFilter_15_condition_passed"] = I3Bool( frame['QFilterMask']['HESEFilter_15'].condition_passed )
+
 def fn(frame):
     fensurecc(frame)
     fenergy(frame)
     ftaudec(frame)
     fice(frame)
     flen(frame)
+    store_qfiltermask(frame)
+    # reclassify_double(frame)
     if frame.Has('DNNCascadeAnalysis_version_001_p01'):
         fdnn(frame)
 
@@ -160,7 +176,7 @@ def main():
                                    'I3EventHeader']+args.add)
         return
 
-    inputfiles = glob.glob( f"{args.inpath}/*.i3.bz2" )
+    inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
 
     print("Writing output to", args.out)
     print(f"found {len(inputfiles)}")
@@ -223,16 +239,59 @@ def main():
                             'HESEMonopodFitFitParams',
                             'HESEMonopodFitParticles',
 
+                            'HESEMillipedeFit'
+                            'HESEMillipedeFitParticles'
+
+                            'HESEEventclass',
+                            'FinalTopology',
+                            'FinalEventClass',
+                            'MCInteractionEventclass',
+
+                            'ConventionalAtmosphericPassingFractions',
+                            'PromptAtmosphericPassingFractions',
+
+                            'RecoL',
+                            'RecoEConfinement',
+                            'RecoERatio',
+                            'RecoETot',
+                            "RecoAzimuth",
+                            "RecoEConfinement",
+                            "RecoERatio",
+                            "RecoZenith",
+
+                            "TrueAzimuth",
+                            "TrueETot",
+                            "TrueL",
+                            "TrueZenith",
+
                             # event generator
-                            # 'EventGenerator_cascade_7param_noise_ftpv3m_04_I3Particle',
-                            # 'EventGenerator_cascade_7param_noise_ftpv3m__big_model_01_I3Particle',
-                            # 'EventGenerator_cascade_7param_noise_ftpv3m__marginalized_01_I3Particle',
-                            # 'MonopodFit4_PartialExclusion',
-                            # 'PreferredFitSharedSeed',
                             'EventGeneratorDC_Max',
                             'EventGeneratorDC_Thijs',
                             
+                            # bdt
+                            'TauMonoDiff_rlogl',
+                            'Taupede_Asymmetry',
+                            'Taupede_Distance',
+                            'Taupede1_Particles_energy',
+                            'Taupede2_Particles_energy',
+                            'cscdSBU_MonopodFit4_noDC_zenith',
+                            'MonopodFit_iMIGRAD_PPB0_Delay_ice',
+                            'CVStatistics_q_max_doms',
+                            'cscdSBU_VertexRecoDist_CscdLLh',
+                            'MonopodFit_iMIGRAD_PPB0',
+                            'cscdSBU_Qtot_HLC_log',
+                            'Taupede_ftpFitParams_rlogl',
+                            'cscdSBU_MonopodFit4_noDCFitParams_rlogl',
 
+                            # HESE
+                            'HESE_VHESelfVeto',
+                            'HESE_CausalQTot',
+                            'HESE_HomogenizedQTot',
+                            'VHESelfVeto',
+                            'CausalQTot',
+                            'HomogenizedQTot',
+                            'QFilterMask',
+                            'QFilterMask_HESEFilter_15_condition_passed',
 
                             'DNNC_I3Particle']+args.add)
 
