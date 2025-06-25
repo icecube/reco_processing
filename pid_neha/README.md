@@ -1,0 +1,1 @@
+Here I applied the PID, and calculated variables after v1 of the tau reco. Turns out, there was an error thrown that didnt result in a broken i3 file. I should not try to access Veto_SRTOfflinePulses or Veto_SRTInIcePulses, because not every event has it. Now it is removed from bdt_var.py
