@@ -8,6 +8,8 @@ hdf/output
 evtgen/output
 pid_neha/output
 
+performance/plots/v*
+
 *.h5
 */*.h5
 

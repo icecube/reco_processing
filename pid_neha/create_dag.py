@@ -15,7 +15,7 @@ reco_input_version = "v1"
 simulation_datasets = getattr(datasets, reco_input_version)
 
 # fixed paths
-dag_base_path = "/scratch/tvaneede/reco/run_pid_neha_debug_reproduce"
+dag_base_path = "/scratch/tvaneede/reco/run_pid_neha"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/pid_neha"
 
 nfiles = 1 # process x files per subfolder
@@ -35,7 +35,7 @@ for simulation_name in ["NuTau_midE"]:
         # fixed paths
         reco_input_path = f"{simulation_path}/{simulation_dataset}/{simulation_subfolder}"
 
-        reco_out_path = f"{work_path}/output/{reco_input_version}_debug_reproduce/{simulation_dataset}/{simulation_subfolder}"
+        reco_out_path = f"{work_path}/output/{reco_input_version}/{simulation_dataset}/{simulation_subfolder}"
 
         # fixed dag paths
         dag_name = f"run_pid_neha_dag_{reco_input_version}_{simulation_dataset}_{simulation_subfolder}"
