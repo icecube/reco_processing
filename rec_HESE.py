@@ -738,6 +738,19 @@ def main():
 
         tray.Add(checkfinaltopology)
 
+        # add some variables
+        # add Qtot/MaxQtotRatio calculations, 
+        from segments.cscdSBU_misc import misc
+        tray.AddSegment(misc, 'misc', pulses="OfflinePulses")
+
+        # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
+        # and mlb_DelayTime_noNoise.py
+        from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
+        tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name='MonopodFit_iMIGRAD_PPB0',
+                        reconame='MonopodFit_iMIGRAD_PPB0',pulsemapname='OfflinePulsesHLC_noSaturDOMs')
+
+        from segments.bdt_var import taupede_monopod_bdt_var
+        tray.Add(taupede_monopod_bdt_var)
 
     if args.loglevel not in ['debug', 'trace']:
         tray.Add('Delete', keystarts=['seed_'])

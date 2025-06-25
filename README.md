@@ -14,4 +14,4 @@ I am using version with latest commit 7f46745:
 
 - v0: First 100 files of 22635 and 22634 based on filtering v0, which still had a lot of orphaned q frames.
 - v1: Based on filtering v1.0, removed orphaned frames. Getting more statistics to check performance, and start playing with the BDT
-- v2: Make a copy of the rec script, keep it here. Include proper HESE filtering with HESE_CausalQTot > 6000. Also add the HESE Millipede energyfit in the script. 
+- v2: Make a copy of the rec script, keep it here. Include proper HESE filtering with HESE_CausalQTot > 6000. Also add the HESE Millipede energyfit in the script. Also include some variable calculations.

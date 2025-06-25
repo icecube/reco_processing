@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os
+import os,sys
 import argparse
 import numpy as np
 from snowflake import library
@@ -9,6 +9,19 @@ from icecube.dataclasses import I3Double, I3Particle, I3Direction
 from icecube.icetray import I3Bool
 import glob
 
+sys.path.append("/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing")
+# add Qtot/MaxQtotRatio calculations, 
+from segments.cscdSBU_misc import misc
+tray.AddSegment(misc, 'misc', pulses="OfflinePulses")
+
+# taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
+# and mlb_DelayTime_noNoise.py
+from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
+tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name='MonopodFit_iMIGRAD_PPB0',
+                reconame='MonopodFit_iMIGRAD_PPB0',pulsemapname='OfflinePulsesHLC_noSaturDOMs')
+
+from segments.bdt_var import taupede_monopod_bdt_var
+tray.Add(taupede_monopod_bdt_var)
 
 MED = clsim.MakeIceCubeMediumProperties(
     iceDataDirectory=os.path.expandvars('$I3_BUILD/ice-models/resources/models/ICEMODEL/spice_ftp-v3/'),
@@ -17,14 +30,7 @@ MED = clsim.MakeIceCubeMediumProperties(
 
 def fensurecc(frame):
     if not frame.Has('cc'):
-        # if frame.Has('I3MCTree'):
-        #     frame['cc'] = dataclasses.get_most_energetic_inice_cascade(frame['I3MCTree'])
-        # else:
-        #     frame['cc'] = I3Particle()
         truth.truth(frame, "tau")
-
-    # print(frame['cc'])
-
 
 def fenergy(frame):
     if frame.Has('I3MCTree'):
