@@ -2,11 +2,20 @@ import sys, os, glob
 import subprocess
 import re
 
-sys.path.append('/data/user/tvaneede/GlobalFit/reco_processing')
-from simulation_datasets import simulation_datasets
+# Append the custom module path
+sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
+
+# Import the datasets module
+from datasets import datasets
 
 # set the inputs
-filter_version = "v1"
+reco_version = "neha_spice"
+
+# Dynamically select the desired dataset
+simulation_datasets = getattr(datasets, reco_version)
+
+# set the inputs
+filter_version = "v2"
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/filtering"
@@ -15,7 +24,7 @@ work_path = "/data/user/tvaneede/GlobalFit/reco_processing/filtering"
 submit_jobs = True # actually submit the dag jobs
 
 # fixed dag paths
-dag_name = f"filter_dag_{filter_version}_numu_22645_22644_nue_22612_22613"
+dag_name = f"filter_dag_{filter_version}_nutau_22049"
 
 dag_path      = f"{dag_base_path}/{filter_version}/{dag_name}"
 log_dir       = f"{dag_path}/logs"

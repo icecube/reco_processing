@@ -21,6 +21,10 @@ tray.Add("I3Reader", FileNameList=files)
 
 tray.Add( lambda frame: 'QFilterMask' in frame and frame['QFilterMask']['HESEFilter_15'].condition_passed )
 
+# tray.Add(lambda frame : 'HESE_VHESelfVeto' in frame and not frame['HESE_VHESelfVeto'].value)
+# tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].value >= 6000)
+
+
 ################################################################
 ########################### Wrap it up #########################
 ################################################################
