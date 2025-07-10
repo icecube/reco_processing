@@ -1,6 +1,10 @@
 
 datasets = {}
 
+datasets["v2"] = {
+    "NuTau_E2" : {"file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v2/NuTau_22634_0000000-0000999.h5", 'nfiles' : 1000},
+}
+
 datasets["ftp_l3casc"] = {
     "NuTau_E2" : {"file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuTau_22634_0000000-0000999.h5", 'nfiles' : 1000},
 }

@@ -11,3 +11,5 @@ Problems:
 - Still unclear why the HESEFilter_15 has fewer events over the full HESE_CausalQTot spectrum 
 
 I got it!! Turns out, the pid_neha scripts had an error, and just stopped after certain events. Stay away from Veto_SRTOfflinePulses or Veto_SRTInIcePulses in bdt_var. These variables were anyway not used.
+
+Stuff is now solved in `problem_solved.ipynb`.
