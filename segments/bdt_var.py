@@ -30,21 +30,19 @@ def taupede_monopod_bdt_var( frame ):
     frame['TauMonoDiff_rlogl'] = I3Double( frame['TaupedeFit_iMIGRAD_PPB0FitParams'].rlogl - frame['MonopodFit_iMIGRAD_PPB0FitParams'].rlogl )
     frame["Taupede_spice3FitParams_nmini"] = I3Double( frame['TaupedeFit_iMIGRAD_PPB0FitParams'].nmini )
 
+    frame["LineFit_zenith"] = I3Double( frame["LineFit"].dir.zenith )
+
     # obtained using cscdSBU_misc
-    cscdSBU_Qtot_HLC_log = np.log10(frame['cscdSBU_Qtot_HLC'].value)
-    frame['cscdSBU_Qtot_HLC_log']= I3Double( cscdSBU_Qtot_HLC_log )
+    # cscdSBU_Qtot_HLC_log = np.log10(frame['cscdSBU_Qtot_HLC'].value)
+    # frame['cscdSBU_Qtot_HLC_log']= I3Double( cscdSBU_Qtot_HLC_log )
 
     frame["CVStatistics_q_max_doms"] = I3Double( frame['CVStatistics'].q_max_doms )
     frame["CVStatistics_z_travel"] = I3Double( frame['CVStatistics'].z_travel )
 
-    frame["CscdL3_SPEFit16_zenith"] = I3Double( frame['CscdL3_SPEFit16'].dir.zenith )
-    frame["CscdL3_SPEFit16FitParams_rlogl"] = I3Double( frame['CscdL3_SPEFit16FitParams'].rlogl )
+    frame["CscdL3_SPEFit16_zenith"] = I3Double( frame['SPEFit16'].dir.zenith )
+    frame["CscdL3_SPEFit16FitParams_rlogl"] = I3Double( frame['SPEFit16FitParams'].rlogl )
 
-    frame["LineFit_zenith"] = I3Double( frame["LineFit"].dir.zenith )
-
-    # also possible with CascadeLlhVertexFit_L3Params CascadeLlhVertexFit_L2Params CascadeLlhVertexFit_ICParams
-    frame["CascadeLlhVertexFitParams_rlogL"] = I3Double( frame["CscdL3_CascadeLlhVertexFitParams"].ReducedLlh ) 
-
+    frame["CascadeLlhVertexFitParams_rlogL"] = I3Double( frame["CascadeLlhVertexFit_L3Params"].ReducedLlh ) 
 
     frame["cscdSBU_MonopodFit4_noDC_z"] =  I3Double( frame["MonopodFit_iMIGRAD_PPB0"].pos.z )
     frame["cscdSBU_MonopodFit4_noDC_zenith"] =  I3Double( frame["MonopodFit_iMIGRAD_PPB0"].dir.zenith )
