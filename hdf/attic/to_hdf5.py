@@ -7,10 +7,6 @@ from reco import truth
 from icecube import clsim, MuonGun, dataclasses, millipede
 from icecube.dataclasses import I3Double, I3Particle, I3Direction
 from icecube.icetray import I3Bool
-from I3Tray import I3Tray
-from icecube.hdfwriter import I3HDFWriter
-from icecube import dataio
-from icecube import icetray
 import glob
 
 # import nehas functions
@@ -25,44 +21,11 @@ from segments.TrueObservables import calculatetrueobservables # requires work to
 from segments.PassingFraction import penetrating_depth, PassingFraction, add_primary
 from segments.Glashow import glashow_correction
 from segments.TauPol import tau_polarization
-from segments.VHESelfVeto import SelfVetoWrapper
-from segments.FinalEventClassification import checkfinaltopology
-from segments.RecoObservables import calculaterecoobservables
-
-# bdt
-from segments.cscdSBU_misc import misc
-from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
-from segments.bdt_var import taupede_monopod_bdt_var
-
 
 MED = clsim.MakeIceCubeMediumProperties(
     iceDataDirectory=os.path.expandvars('$I3_BUILD/ice-models/resources/models/ICEMODEL/spice_ftp-v3/'),
     )
 
-
-# energy definition
-gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
-gcdfile = dataio.I3File(gcdfilepath)
-frame = gcdfile.pop_frame()
-while 'I3Geometry' not in frame:
-    frame = gcdfile.pop_frame()
-geometry = frame['I3Geometry'].omgeo
-
-strings = [1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 50, 59, 67, 74, 73, 72, 78, 77, 76, 75, 68, 60, 51, 41, 31, 22, 14, 7]
-
-outerbounds = {}
-cx, cy = [], []
-for string in strings:
-    omkey = icetray.OMKey(string, 1)
-    # if geometry.has_key(omkey):
-    x, y = geometry[omkey].position.x, geometry[omkey].position.y
-    outerbounds[string] = (x, y)
-    cx.append(x)
-    cy.append(y)
-cx, cy = np.asarray(cx), np.asarray(cy)
-order = np.argsort(np.arctan2(cx, cy))
-outeredge_x = cx[order]
-outeredge_y = cy[order]
 
 def fensurecc(frame):
     if not frame.Has('cc'):
@@ -180,8 +143,6 @@ def reclassify_double(frame):
             frame['FinalEventClass']= dataclasses.I3Double(classification)
 
 def fn(frame):
-    
-    # tianlu
     fensurecc(frame)
     fenergy(frame)
     ftaudec(frame)
@@ -197,6 +158,7 @@ def fn(frame):
     add_primary(frame)
     penetrating_depth(frame) # problem in this icectray with MuonGun
     PassingFraction(frame)
+    # reclassify_double(frame)
     glashow_correction(frame)
     tau_polarization(frame)
 
@@ -225,7 +187,16 @@ def main():
                         type=str, help='input path')
     parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
                         help='which P-frame splits to process')
+    parser.add_argument('--simwrite', default=False,
+                        action='store_true',
+                        help='book objects in DAQ frames')
     args = parser.parse_args()
+
+    if args.simwrite:
+        library.simhdfwriter(args.i3s, args.out,
+                             keys=['I3MCWeightDict',
+                                   'I3EventHeader']+args.add)
+        return
 
     inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
 
@@ -234,25 +205,10 @@ def main():
 
     inputfiles = remove_corrupt_files(inputfiles)
 
-    gcd = ["/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"]
-
-    inputfiles = gcd + inputfiles
-
-    tray = I3Tray()
-    tray.Add("I3Reader", FileNameList=inputfiles)
-    tray.Add(fn)
-
-    tray.AddModule(calculaterecoobservables,
-                    'calc_reco_observables',
-                    innerboundary=550,
-                    outeredge_x=outeredge_x,
-                    outeredge_y=outeredge_y)
-
-    tray.Add(checkfinaltopology)
-    tray.Add(reclassify_double)
-    tray.Add(taupede_monopod_bdt_var)
-
-    hdfkeys = ['cc',
+    library.hdfwriter(inputfiles, args.out,
+                      subeventstreams=args.splits,
+                      fn=fn,
+                      keys=['cc',
                             'cc_2surf',
                             'cc_zshift',
                             'cc_b400_notilt',
@@ -396,11 +352,8 @@ def main():
                             'y_lep',
                             'y_had',
 
-                            'DNNC_I3Particle']+args.add
+                            'DNNC_I3Particle']+args.add)
 
-    tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=['InIceSplit'])
-    tray.Execute(100000) 
-
-
+    
 if __name__ == '__main__':
     main()

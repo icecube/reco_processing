@@ -9,7 +9,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "ftp_l3casc"
+reco_version = "spice_l3casc"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -17,7 +17,7 @@ simulation_datasets = getattr(datasets, reco_version)
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/hdf_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
-hdf_outpath = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}"
+hdf_outpath = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}_nehaqtot"
 
 os.system(f"mkdir -p {hdf_outpath}")
 
@@ -26,7 +26,7 @@ submit_jobs = True # actually submit the dag jobs
 # fixed dag paths
 dag_name = f"hdf_dag_{reco_version}"
 
-dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}"
+dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}_nehaqtot"
 log_dir       = f"{dag_path}/logs"
 backup_path   = f"{work_path}/backup_scripts/{reco_version}"
 
@@ -44,7 +44,7 @@ for simulation_name in simulation_datasets:
     simulation_subfolders = simulation_datasets[simulation_name]['subfolders']
     simulation_flavor = simulation_datasets[simulation_name]["flavor"]
     simulation_dataset = simulation_datasets[simulation_name]['dataset']
-    simulation_reco_base_path = simulation_datasets[simulation_name]['reco_base_path']
+    simulation_reco_base_path = simulation_datasets[simulation_name]['reco_base_out_path']
 
     for simulation_subfolder in simulation_subfolders:
 
