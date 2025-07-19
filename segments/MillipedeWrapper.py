@@ -235,11 +235,3 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
         frame.Put(Seed + 'TruncatedDepositedEnergy', I3Double(truncetot))
         frame.Put(Seed + 'DepositedEnergy', I3Double(etot))
     tray.Add(adddepositedenergy, Seed=name)
-
-    """
-    clean up
-    """
-    deletekeys = []
-    for seed in Seeds:
-        deletekeys += [seed + 'MillipedeSeed', seed + 'MillipedeFit', seed + 'MillipedeFitFitParams']
-    tray.Add('Delete', keys=deletekeys)
