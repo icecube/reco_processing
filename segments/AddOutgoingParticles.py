@@ -5,7 +5,7 @@ from icecube.icetray import I3Units, I3Frame
 from icecube.sim_services import ShowerParameters
 import numpy as np
 
-def mctreeinfo(frame):
+def AddOutGoingParticles(frame):
     tree = frame['I3MCTree_preMuonProp']
     positions = []
     times = []
