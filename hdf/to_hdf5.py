@@ -17,9 +17,10 @@ import glob
 sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 
 ### Neha's trays, do I actually need them?
-from segments.AddOutgoingParticles import mctreeinfo
+from segments.AddOutgoingParticles import AddOutGoingParticles # previously mctreeinfo
+from segments.AddMCInfo import AddMCInfo # Previously MCInfoWrapper.py with MCInfoWrapper
+
 from segments.MCinfo_NL import mcinfo
-from segments.MCInfoWrapper import MCInfoWrapper
 from segments.TrueObservables import calculatetrueobservables # requires work to reproduce
 
 from segments.PassingFraction import penetrating_depth, PassingFraction, add_primary
@@ -67,6 +68,12 @@ outeredge_y = cy[order]
 def fensurecc(frame):
     if not frame.Has('cc'):
         truth.truth(frame, "tau")
+
+    ### not sure if this is working
+    # truth.truth_key(frame, "tau")
+    # truth.truth_key(frame, "track")
+    # truth.truth_key(frame, "cascade")
+    
 
 def fenergy(frame):
     if frame.Has('I3MCTree'):
@@ -179,26 +186,14 @@ def reclassify_double(frame):
         else:
             frame['FinalEventClass']= dataclasses.I3Double(classification)
 
-def fn(frame):
-    
+def fn(frame):    
     # tianlu
+    
     fensurecc(frame)
     fenergy(frame)
     ftaudec(frame)
     fice(frame)
     flen(frame)
-    
-    # neha's functions HESE_Taupede.py, do I actually need them?
-    # mctreeinfo(frame)
-    # MCInfoWrapper(frame, name="Add MC info")
-    # mcinfo(frame)
-    # calculatetrueobservables(frame) # not working now, do I actually want it?
-
-    add_primary(frame)
-    penetrating_depth(frame) # problem in this icectray with MuonGun
-    PassingFraction(frame)
-    glashow_correction(frame)
-    tau_polarization(frame)
 
     if frame.Has('DNNCascadeAnalysis_version_001_p01'):
         fdnn(frame)
@@ -225,6 +220,7 @@ def main():
                         type=str, help='input path')
     parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
                         help='which P-frame splits to process')
+    parser.add_argument('--nframes', type=int, default=None, help='number of frames to process')
     args = parser.parse_args()
 
     inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
@@ -240,6 +236,25 @@ def main():
 
     tray = I3Tray()
     tray.Add("I3Reader", FileNameList=inputfiles)
+
+    flavor = os.path.basename(inputfiles[-1]).split("_")[1] # does this work for MuonGun and data?
+
+    # neha true HESE_Taupede.py
+    tray.AddModule(AddOutGoingParticles,'AddOutGoingParticles')
+    tray.Add(AddMCInfo,'AddMCInfo')
+    tray.Add(mcinfo, 'mcpreproc_',
+                    outeredge_x=outeredge_x, outeredge_y=outeredge_y,
+                    innerboundary=550.0, outerboundary=650.0,
+                    dataset=flavor,
+                    ethreshold=1e3,
+                    PhotonsPerBin=5,
+                    ShowerSpacing=5)
+    tray.Add(calculatetrueobservables,
+        'calc_true_observables',
+        innerboundary=550.0,
+        outeredge_x=outeredge_x, 
+        outeredge_y=outeredge_y)
+
     tray.Add(fn)
 
     tray.AddModule(calculaterecoobservables,
@@ -250,156 +265,22 @@ def main():
 
     tray.Add(checkfinaltopology)
     tray.Add(reclassify_double)
+
+    # add some bdt variables
+    tray.AddSegment(misc, 'misc', pulses="SplitInIcePulses") # was with OfflinePulses, but should be same as SplitInIcePulses
+
+    # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
+    # and mlb_DelayTime_noNoise.py
+    tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name='MonopodFit_iMIGRAD_PPB0',
+                    reconame='MonopodFit_iMIGRAD_PPB0',pulsemapname='OfflinePulsesHLC_noSaturDOMs')
+
     tray.Add(taupede_monopod_bdt_var)
 
-    hdfkeys = ['cc',
-                            'cc_2surf',
-                            'cc_zshift',
-                            'cc_b400_notilt',
-                            'cc_b400_tilted',
-                            'cc_aDust400_notilt',
-                            'cc_aDust400_tilted',
-                            'cc_easymm',
-                            'cc_tauvis',
-                            'CombinedCascadeSeed_L3',
-                            'I3MCWeightDict',
-                            'I3EventHeader',
-                            'PreferredFit',
-                            'MonopodFit_iMIGRAD',
-                            'MonopodFit_iMIGRADFitParams',
-                            'TaupedeFit_iMIGRAD',
-                            'TaupedeFit_iMIGRADParticles',
-                            'TaupedeFit_iMIGRADFitParams',
-                            'MillipedeFit_iMIGRAD',
-                            'MillipedeFit_iMIGRADParticles',
-                            'MillipedeFit_iMIGRADFitParams',
-                            'seed_iMIGRAD_BestMonopod',
-                            'seed_iMIGRAD_BestAltnFit',
-                            'LineFit',
-                            'SPEFit2',
-                            'l2_online_SplineMPE',
-                            'OnlineL2_SplineMPE',
-                            'EventGeneratorFit_I3Particle',
-                            'EventGeneratorSelectedReco_I3Particle',
-                            'EventGeneratorSelectedRecoNN_I3Particle',
-                            'EventGeneratorSelectedRecoNNCircularUncertainty',
-
-                            # thijs
-                            'TaupedeFit_iMIGRAD_PPB0',
-                            'TaupedeFit_iMIGRAD_PPB0FitParams',
-                            'TaupedeFit_iMIGRAD_PPB0Particles',
-                            'MonopodFit_iMIGRAD_PPB0',
-                            'MonopodFit_iMIGRAD_PPB0FitParams',
-                            'CscdL3_SPEFit16',
-                            'CscdL3_SPEFit16FitParams',
-
-                            'TaupedeFit_iMIGRAD_PPB0_bright',
-                            'TaupedeFit_iMIGRAD_PPB0_brightFitParams',
-                            'TaupedeFit_iMIGRAD_PPB0_brightParticles',
-                            
-
-                            # neha
-                            'HESETaupedeFit',
-                            'HESETaupedeFitFitParams',
-                            'HESETaupedeFitParticles',
-
-                            'HESEMonopodFit',
-                            'HESEMonopodFitFitParams',
-                            'HESEMonopodFitParticles',
-
-                            'SPEFit16',
-                            'SPEFit16FitParams',
-
-                            'HESEMillipedeFit'
-                            'HESEMillipedeFitParticles'
-
-                            'HESEEventclass',
-                            'FinalTopology',
-                            'FinalEventClass',
-                            'MCInteractionEventclass',
-
-                            'ConventionalAtmosphericPassingFractions',
-                            'PromptAtmosphericPassingFractions',
-
-                            'RecoL',
-                            'RecoEConfinement',
-                            'RecoERatio',
-                            'RecoETot',
-                            "RecoAzimuth",
-                            "RecoZenith",
-
-                            "TrueAzimuth",
-                            "TrueETot",
-                            "TrueL",
-                            "TrueZenith",
-
-                            # event generator
-                            'EventGeneratorDC_Max',
-                            'EventGeneratorDC_Thijs',
-                            
-                            # bdt
-                            'TauMonoDiff_rlogl',
-                            'Taupede_Asymmetry',
-                            'Taupede_Distance',
-                            'Taupede1_Particles_energy',
-                            'Taupede2_Particles_energy',
-                            'cscdSBU_MonopodFit4_noDC_zenith',
-                            'MonopodFit_iMIGRAD_PPB0_Delay_ice',
-                            'CVStatistics_q_max_doms',
-                            'cscdSBU_VertexRecoDist_CscdLLh',
-                            'cscdSBU_Qtot_HLC_log',
-                            'Taupede_ftpFitParams_rlogl',
-                            'cscdSBU_MonopodFit4_noDCFitParams_rlogl',
-
-                            # HESE
-                            'HESE_VHESelfVeto',
-                            'HESE_CausalQTot',
-                            'HESE_HomogenizedQTot',
-                            'VHESelfVeto',
-                            'CausalQTot',
-                            'HomogenizedQTot',
-                            'QFilterMask',
-                            'QFilterMask_HESEFilter_15_condition_passed',
-
-                            # more Neha stuff
-                            'Filenum',
-                            'HESEMillipedeFitTruncatedDepositedEnergy',
-                            'HESEMillipedeFitDepositedEnergy',
-                            'RecoLogL',
-                            'RecoLogE1',
-                            'RecoLogE2',
-                            'RecoLogETot',
-                            'TaupedeFitManualFitStatus',
-                            'HESEMillipedeFitFitParams',
-                            'MCInteractionDepth',
-                            'issingle',
-                            'isdouble',
-                            'istrack',
-                            'RecoE1',
-                            'RecoE2',
-                            'RecoLbyE',
-                            'TaupedeFitParticles',
-                            'TaupedeFit',
-                            'TaupedeFitFitParams',
-                            'SnowstormParameterDict',
-                            'RecoParticle',
-                            'RecoEnergy',
-                            'RecoDirection',
-                            'RecoLength',
-                            'TrueLength',
-                            'MCReconstructionEventclass',
-                            'RecoLbyE',
-                            'TotalWeight',
-                            'TotalWeightPol',
-                            'VertexOutgoingHadronNew',
-                            'VertexOutgoingLeptonNew',
-                            'y_lep',
-                            'y_had',
-
-                            'DNNC_I3Particle']+args.add
+    from hdf_keys import hdfkeys
+    hdfkeys+=args.add
 
     tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=['InIceSplit'])
-    tray.Execute(100000) 
+    tray.Execute() 
 
 
 if __name__ == '__main__':

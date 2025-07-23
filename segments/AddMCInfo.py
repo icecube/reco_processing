@@ -17,11 +17,11 @@ import numpy as n
 
 
 @traysegment
-def MCInfoWrapper(tray, name, Pulses='SplitInIcePulses'):
+def AddMCInfo(tray, name, Pulses='SplitInIcePulses'):
     """
     add useful monte carlo information
     """
-    #tray.Add('TauGeneratesMuon', If=lambda f : 'I3MCTree' in f)
+    tray.Add('TauGeneratesMuon', If=lambda f : 'I3MCTree' in f and 'TauGeneratesMuon' not in f)
 
     #tray.Add('VertexInFiducialVolume', If=lambda f : 'I3MCTree' in f)
 
@@ -29,6 +29,8 @@ def MCInfoWrapper(tray, name, Pulses='SplitInIcePulses'):
         """
         Stores an I3Bool, containing True if the MC vertex is from far outside the detector
         """
+        if 'VertexIsFarOutsideTheDetector' in frame: return
+
         if not 'I3MCTree' in frame:
 	        return True
         extra_distance = 50.*I3Units.m
@@ -52,6 +54,9 @@ def MCInfoWrapper(tray, name, Pulses='SplitInIcePulses'):
 
 
     def GetNeutrino(frame):
+
+        if 'MostEnergeticPrimary' in frame: return
+
         if not 'I3MCTree' in frame:
             return True
         def sanitize(particle):
@@ -200,6 +205,9 @@ def MCInfoWrapper(tray, name, Pulses='SplitInIcePulses'):
 
 
     def rawweightcalculator(frame):
+        
+        if 'MCInteractionType' in frame: return
+
         interactiontype = frame['I3MCWeightDict']['InteractionType']
         timerange = frame['ContainedTimeRange']
         if not frame.Has('MCTrack'):

@@ -6,6 +6,9 @@ from icecube.sim_services import ShowerParameters
 import numpy as np
 
 def AddOutGoingParticles(frame):
+
+    if 'NumVerticesInFiducialVolume' in frame: return
+
     tree = frame['I3MCTree_preMuonProp']
     positions = []
     times = []

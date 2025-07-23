@@ -193,6 +193,9 @@ def mcinfo(tray, name,
                                        dataset,
                                        outeredge_x,
                                        outeredge_y):
+
+        if 'MCInteractionEventclass' in frame: return
+
         print('starting interaction classification')
         possible_datasets = ['MuonGun', 'CORSIKA', 'NuE', 'NuMu', 'NuTau']
         if dataset not in possible_datasets:
@@ -440,6 +443,8 @@ def mcinfo(tray, name,
         # get frame objects
         mctree = frame['I3MCTree']
         eventclass = frame['MCInteractionEventclass'+name_suffix]
+
+        if 'MCInteractionDoubleBang' in frame: return
 
         print("addtruedoublebang eventclass", eventclass)
 
@@ -737,6 +742,9 @@ def mcinfo(tray, name,
                                           ethreshold,
                                           outeredge_x,
                                           outeredge_y):
+        
+        if 'MCReconstructionEventclass' in frame: return
+        
         # get frame objects
         eventclass = frame['MCInteractionEventclass'+name_suffix]
         cascade1, cascade2 = frame['MCInteractionDoubleBang'+name_suffix]
@@ -793,6 +801,8 @@ def mcinfo(tray, name,
     def addtrueenergydepositions(frame,
                                  outeredge_x,
                                  outeredge_y):
+
+        if 'MCTrueTruncateddEdx' in frame: return
         # get all interaction particles
         mctree = frame['I3MCTree']
         parents = []

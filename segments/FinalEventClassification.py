@@ -88,6 +88,9 @@ def gettrackfilter(eventclassarr, larr, econfinementarr, eratioarr):
     return combinedmask
 
 def checkfinaltopology(frame):
+
+    if 'FinalTopology' in frame: return
+
     eventclassarr = frame['HESEEventclass'].value
     larr = frame['RecoL'].value
     econfinementarr = frame['RecoEConfinement'].value

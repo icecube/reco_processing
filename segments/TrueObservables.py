@@ -1,7 +1,3 @@
-
-
-
-
 # IceCube imports
 from icecube import dataio, icetray, dataclasses
 from icecube import millipede, MuonGun
@@ -16,29 +12,8 @@ from glob import glob
 from optparse import OptionParser
 import numpy as n
 
-# energy definition
-gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
-gcdfile = dataio.I3File(gcdfilepath)
-frame = gcdfile.pop_frame()
-while 'I3Geometry' not in frame:
-    frame = gcdfile.pop_frame()
-geometry = frame['I3Geometry'].omgeo
 
-strings = [1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 50, 59, 67, 74, 73, 72, 78, 77, 76, 75, 68, 60, 51, 41, 31, 22, 14, 7]
 
-outerbounds = {}
-cx, cy = [], []
-for string in strings:
-    omkey = icetray.OMKey(string, 1)
-    # if geometry.has_key(omkey):
-    x, y = geometry[omkey].position.x, geometry[omkey].position.y
-    outerbounds[string] = (x, y)
-    cx.append(x)
-    cy.append(y)
-cx, cy = n.asarray(cx), n.asarray(cy)
-order = n.argsort(n.arctan2(cx, cy))
-outeredge_x = cx[order]
-outeredge_y = cy[order]
 
 
 """
@@ -109,17 +84,17 @@ def getenergyconfinement(double_particles, track_particles, key):
 """
 calculate true observables
 """
-def calculatetrueobservables(frame):
-    name_suffix = ''
-    innerboundary = 550
+def calculatetrueobservables(frame,innerboundary,outeredge_x, outeredge_y,name_suffix=''):
+
+    if 'TrueContainedSingle' in frame: return
     energythreshold=1e3
     # the single vertex containment
     if not frame.Has('MostEnergeticCascade'):
-        mcTree = frame["I3MCTree"]
-        cascade = dataclasses.get_most_energetic_cascade(mcTree)
-        print('woops, most energetic cascade wasn`t added')
+	      mcTree = frame["I3MCTree"]
+	      cascade = dataclasses.get_most_energetic_cascade(mcTree)
+	      print('woops, most energetic cascade wasn`t added')
     else:
-	      cascade = frame['MostEnergeticCascade']      
+	      cascade = frame['MostEnergeticCascade']
     contained = iscontained(cascade.pos.x, cascade.pos.y, cascade.pos.z, innerboundary,outeredge_x, outeredge_y)
 
     # the double vertex properties and containment

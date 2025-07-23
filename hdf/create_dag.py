@@ -9,7 +9,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "spice_l3casc"
+reco_version = "spice_tau_reco"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -17,7 +17,7 @@ simulation_datasets = getattr(datasets, reco_version)
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/hdf_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
-hdf_outpath = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}_nehaqtot"
+hdf_outpath = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}_allvar2"
 
 os.system(f"mkdir -p {hdf_outpath}")
 
@@ -26,7 +26,7 @@ submit_jobs = True # actually submit the dag jobs
 # fixed dag paths
 dag_name = f"hdf_dag_{reco_version}"
 
-dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}_nehaqtot"
+dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}_allvar2"
 log_dir       = f"{dag_path}/logs"
 backup_path   = f"{work_path}/backup_scripts/{reco_version}"
 

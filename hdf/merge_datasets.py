@@ -14,7 +14,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "spice_l3casc"
+reco_version = "spice_tau_reco"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -30,7 +30,7 @@ for simulation_name in simulation_datasets:
     
     dataset = simulation_datasets[simulation_name]["dataset"]
     flavor = simulation_datasets[simulation_name]["flavor"]
-    hdf_path = simulation_datasets[simulation_name]["hdf_path"]
+    hdf_path = simulation_datasets[simulation_name]["hdf_path"] + "_allvar"
     subfolders = simulation_datasets[simulation_name]["subfolders"]
 
     hdf_out_path = f"{hdf_path}/{flavor}_{dataset}.h5"

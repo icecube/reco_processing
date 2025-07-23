@@ -13,6 +13,9 @@ import numpy as np
 import pandas as pd
 
 def taupede_monopod_bdt_var( frame ):
+
+    if 'Taupede_Distance' in frame: return
+
     taupede1,taupede2 = frame["TaupedeFit_iMIGRAD_PPB0Particles"]
     frame["Taupede_Distance"] = I3Double(taupede1.length)
 
@@ -33,8 +36,8 @@ def taupede_monopod_bdt_var( frame ):
     frame["LineFit_zenith"] = I3Double( frame["LineFit"].dir.zenith )
 
     # obtained using cscdSBU_misc
-    # cscdSBU_Qtot_HLC_log = np.log10(frame['cscdSBU_Qtot_HLC'].value)
-    # frame['cscdSBU_Qtot_HLC_log']= I3Double( cscdSBU_Qtot_HLC_log )
+    cscdSBU_Qtot_HLC_log = np.log10(frame['cscdSBU_Qtot_HLC'].value)
+    frame['cscdSBU_Qtot_HLC_log']= I3Double( cscdSBU_Qtot_HLC_log )
 
     frame["CVStatistics_q_max_doms"] = I3Double( frame['CVStatistics'].q_max_doms )
     frame["CVStatistics_z_travel"] = I3Double( frame['CVStatistics'].z_travel )
@@ -56,6 +59,8 @@ def taupede_monopod_bdt_var( frame ):
     z2 = frame["TaupedeFit_iMIGRAD_PPB0"].pos.z
     distance = np.sqrt( (x1-x2)**2 + (y1-y2)**2 + (z1-z2)**2 )
     frame["cscdSBU_VertexRecoDist_CscdLLh"]= I3Double( distance )
+
+    x = frame["MonopodFit_iMIGRAD_PPB0_Delay_ice"]
 
 
     return True

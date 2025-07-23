@@ -86,6 +86,9 @@ calculate reco observables
 """
 
 def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y):
+    
+    if "RecoContainedSingle" in frame: return
+    
     energythreshold=1e3
     # the single vertex containment
     cascade = frame['MonopodFit_iMIGRAD_PPB0']

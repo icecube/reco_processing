@@ -30,9 +30,9 @@ def misc(tray, name, pulses='OfflinePulses'):
         qtot_out = 0.0
         maxCharge = 0.0
         pulsemap = dataclasses.I3RecoPulseSeriesMap.from_frame(frame, pulses)
-        # for om, thesepulses in pulsemap:
-        for om in pulsemap:
-            thesepulses = pulsemap[om]
+        for om, thesepulses in pulsemap:
+        # for om in pulsemap:
+            # thesepulses = pulsemap[om]
             qt = sum([pulse.charge for pulse in thesepulses])
             qtot_out += qt
             if not om.string in dc_strings:
