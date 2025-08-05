@@ -26,6 +26,8 @@ def extract_data( nufile, key, hypo ):
     data["azi_reco"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
     data["loge_fit"] = np.log10(tf.get_node(f'/{fit_node_name(nufile)}').cols.energy[:][slc])
 
+    print(data["loge_fit"][:3])
+
     if hypo == "tau":
         data["cth_tru"] = np.cos(tf.root.cc.cols.zenith[:][slc])
         data["azi_tru"] = tf.root.cc.cols.azimuth[:][slc]
@@ -35,9 +37,9 @@ def extract_data( nufile, key, hypo ):
         data["azi_tru"] = tf.root.cascade.cols.azimuth[:][slc]
         data["loge_tru"] = np.log10(tf.root.cascade.cols.energy[:][slc])
     elif hypo == "track":
-        data["cth_tru"] = np.cos(tf.root.track.cols.zenith[:][slc])
-        data["azi_tru"] = tf.root.track.cols.azimuth[:][slc]
-        data["loge_tru"] = np.log10(tf.root.track.cols.energy[:][slc])
+        data["cth_tru"] = np.cos( tf.root.TrueZenith[slc]['value'] )
+        data["azi_tru"] = tf.root.TrueAzimuth[slc]['value']
+        data["loge_tru"] = np.log10( tf.root.TrueETot[slc]['value'] )
     else:
         print("hypo not found")
 
@@ -79,12 +81,23 @@ def compare_files_v3_vs_v4( nufiles, keys, labels, outpath, hypo ):
     plot_medangres( data, labels, outpath, bins = np.linspace(4,8,nbins) )
 
 
-# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuTau.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuTau.h5"]
-# keys = ["TaupedeFit_iMIGRAD_PPB0", "TaupedeFit_iMIGRAD_PPB0"] 
-# labels = ["Taupede residual 1500", "Taupede residual 100000"]
-# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuTau_Taupede"
-# hypo = "tau"
-# compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
+###
+### NuTau
+###
+
+nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuTau.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuTau.h5"]
+keys = ["TaupedeFit_iMIGRAD_PPB0", "TaupedeFit_iMIGRAD_PPB0"] 
+labels = ["Taupede residual 1500", "Taupede residual 100000"]
+outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuTau_Taupede"
+hypo = "tau"
+compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
+
+nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuTau.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuTau.h5"]
+keys = ["HESEMillipedeFit", "HESEMillipedeFit"] 
+labels = ["Taupede residual 1500", "Taupede residual 100000"]
+outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuTau_HESEMillipedeFit"
+hypo = "tau"
+compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
 
 # nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuE.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuE.h5"]
 # keys = ["MonopodFit_iMIGRAD_PPB0", "MonopodFit_iMIGRAD_PPB0"] 
@@ -93,11 +106,23 @@ def compare_files_v3_vs_v4( nufiles, keys, labels, outpath, hypo ):
 # hypo = "tau"
 # compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuMu.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuMu.h5"]
-keys = ["SPEFit16", "SPEFit16"] 
-labels = ["v3", "v4"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuMu_SPEFit"
-hypo = "track"
-compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
+###
+### NuMu
+###
+
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuMu.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuMu.h5"]
+# keys = ["SPEFit16", "SPEFit16"] 
+# labels = ["v3", "v4"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuMu_SPEFit"
+# hypo = "track"
+# compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
+
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v3/NuMu.h5", "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v4/NuMu.h5"]
+# keys = ["HESEMillipedeFit", "HESEMillipedeFit"] 
+# labels = ["v3", "v4"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/compare/v3_vs_v4/NuMu_HESEMillipedeFit"
+# hypo = "track"
+# compare_files_v3_vs_v4(nufiles=nufiles, keys=keys, labels = labels,outpath=outpath, hypo=hypo)
+
 
 
