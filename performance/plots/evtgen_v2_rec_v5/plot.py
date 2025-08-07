@@ -137,6 +137,8 @@ def compare( nufiles, outpath ):
     plot_medangres( data, fit_keys = ["Taupede","Millipede"], true_key="neha",
                    labels=["Taupede", "Millipede"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
+    plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_neha",
+                  labels=["Taupede", "Millipede","MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
     plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_RecoETot", "loge_Monopod"], true_key = "loge_tru_neha",
                   labels=["Taupede", "Millipede","RecoETot", "Monopod"], outpath=outpath, bins = np.linspace(4,8,nbins) )
