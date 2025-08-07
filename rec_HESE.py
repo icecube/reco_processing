@@ -14,6 +14,9 @@ from icecube.icetray import I3Tray, I3Units
 from icecube.phys_services.which_split import which_split
 from icecube.millipede import HighEnergyExclusions
 from icecube.spline_reco import SplineMPE
+from icecube.level3_filter_cascade.level3_Recos import SPEFit
+
+from segments.VHESelfVeto import SelfVetoWrapper
 
 # for level 3 muon (pulse cleaning needed for splinempe)
 from icecube import level3_filter_muon  # noqa: F401
@@ -47,6 +50,11 @@ def sane(frame, split_names):
         if which_split(split_name=split_name)(frame):
             return True
     return False
+
+
+def print_frameid(frame):
+    eventid = frame['I3EventHeader'].event_id
+    print("*******Currently processing frame %s*******" %eventid)
 
 
 def fixed_dir(filelist, isdata, hypo, split_names, nframes=None):
@@ -229,8 +237,11 @@ def main():
     # apply HESE selection
     if args.HESE:
         print("applying hese selection")
+        tray.Add(SelfVetoWrapper)
+
         tray.Add(lambda frame : 'HESE_VHESelfVeto' in frame and not frame['HESE_VHESelfVeto'].value)
         tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].value >= 6000)
+        tray.Add(print_frameid)
 
     if args.isdata:
         rde_map = library.get_rde_map(os.path.expandvars(
@@ -269,6 +280,7 @@ def main():
     tray.Add(maskdc, origpulses=args.pulse_type, maskedpulses=f'{args.pulse_type}IC',
              If=lambda frame: not frame.Has(f'{args.pulse_type}IC'))
     pulses_for_reco = args.pulse_type if args.idc else f'{args.pulse_type}IC'
+    print(f"cleaning pulses with {args.residual} residual")
     tray.Add(pulse_cleaning,
              Pulses=pulses_for_reco, Residual=args.residual,
              If=lambda frame: not frame.Has(f"{pulses_for_reco}PulseCleaned"))
@@ -720,8 +732,20 @@ def main():
         # millipede
         millipede_params = {'Pulses': 'SplitInIcePulses', 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs}
         
+        # track reco
+        tray.Add('I3OMSelection<I3RecoPulseSeries>', 'omselection_HESE',
+            InputResponse = 'SRT' + "SplitInIcePulses",
+            OmittedStrings = [79,80,81,82,83,84,85,86], # deepcore strings
+            OutputOMSelection = 'SRT' + "SplitInIcePulses" + '_BadOMSelectionString',
+            OutputResponse = 'SRT' + "SplitInIcePulses" + '_IC_Singles')
+
+        tray.Add(SPEFit, 'SPEFit16',
+                Pulses = 'SRT' + "SplitInIcePulses" + '_IC_Singles',
+                Iterations = 16)
+
+        # HESE millipede
         tray.Add(MillipedeWrapper, 'HESEMillipedeFit',
-            Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'CscdL3_SPEFit16'],
+            Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'SPEFit16'],
             PhotonsPerBin = 5,
             ShowerSpacing = 5,
             innerboundary=550,
@@ -730,28 +754,6 @@ def main():
             outeredge_y=outeredge_y,
             **millipede_params)
 
-        tray.AddModule(calculaterecoobservables,
-                        'calc_reco_observables',
-                        innerboundary=550,
-                        outeredge_x=outeredge_x,
-                        outeredge_y=outeredge_y)
-
-        tray.Add(checkfinaltopology)
-
-        # add some variables
-        # add Qtot/MaxQtotRatio calculations, 
-        from segments.cscdSBU_misc import misc
-        tray.AddSegment(misc, 'misc', pulses="OfflinePulses")
-
-        # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
-        # and mlb_DelayTime_noNoise.py
-        from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
-        tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name='MonopodFit_iMIGRAD_PPB0',
-                        reconame='MonopodFit_iMIGRAD_PPB0',pulsemapname='OfflinePulsesHLC_noSaturDOMs')
-
-        from segments.bdt_var import taupede_monopod_bdt_var
-        tray.Add(taupede_monopod_bdt_var)
-
     if args.loglevel not in ['debug', 'trace']:
         tray.Add('Delete', keystarts=['seed_'])
     if not args.qs:
@@ -759,6 +761,7 @@ def main():
     tray.AddModule('I3Writer',
                    'writer',
                    filename=args.out,
+                   DropOrphanStreams=[icetray.I3Frame.DAQ, icetray.I3Frame.Stream('M'), icetray.I3Frame.TrayInfo],
                    streams=[icetray.I3Frame.TrayInfo,
                             icetray.I3Frame.Physics,
                             icetray.I3Frame.Simulation,
