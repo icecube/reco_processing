@@ -148,9 +148,9 @@ def compare( nufiles, outpath ):
 ### NuTau
 ###
 
-# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuTau.h5"]
-# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v5/NuTau"
-# compare(nufiles=nufiles,outpath=outpath)
+nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuTau.h5"]
+outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v2_rec_v5/NuTau"
+compare(nufiles=nufiles,outpath=outpath)
 
 # nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuTau.h5",
 #            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuTau.h5",
@@ -163,9 +163,9 @@ def compare( nufiles, outpath ):
 ### NuE
 ###
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuE.h5"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v5/NuE"
-compare(nufiles=nufiles,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuE.h5"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v5/NuE"
+# compare(nufiles=nufiles,outpath=outpath)
 
 
 # nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuE.h5",
@@ -179,9 +179,9 @@ compare(nufiles=nufiles,outpath=outpath)
 ### NuMu
 ###
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuMu.h5"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v5/NuMu"
-compare(nufiles=nufiles,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuMu.h5"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v5/NuMu"
+# compare(nufiles=nufiles,outpath=outpath)
 
 # nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuMu.h5",
 #            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v2_rec_v5/NuMu.h5",
