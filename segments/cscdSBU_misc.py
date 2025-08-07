@@ -3,6 +3,12 @@ from icecube import icetray,dataclasses
 @icetray.traysegment
 def misc(tray, name, pulses='OfflinePulses'):
 
+    tray.AddModule("I3LCPulseCleaning", "I3LCPulseCleaning",
+                    Input=pulses,
+                    OutputHLC= f"{pulses}HLC",
+                    OutputSLC= f"{pulses}SLC",
+                    IF = lambda f: f"{pulses}HLC" not in f)
+
     def removeSaturatedDOMs(frame,pulses):
 
         mask = dataclasses.I3RecoPulseSeriesMapMask(frame, pulses)
@@ -20,7 +26,7 @@ def misc(tray, name, pulses='OfflinePulses'):
 
         frame['%s_noSaturDOMs' %(pulses)] = mask
 
-    tray.AddModule(removeSaturatedDOMs,'cleanOffHLC',pulses='OfflinePulsesHLC')
+    tray.AddModule(removeSaturatedDOMs,'cleanOffHLC',pulses=f'{pulses}HLC')
 
     def qtotCalculation(frame,pulses):
         dc_strings = range(79, 87)
@@ -55,6 +61,6 @@ def misc(tray, name, pulses='OfflinePulses'):
         return True    
      
     tray.AddModule(qtotCalculation, 'qtotal', pulses=pulses) 
-    tray.AddModule(qtotCalculation, 'qtotalHLC', pulses='OfflinePulsesHLC')
+    tray.AddModule(qtotCalculation, 'qtotalHLC', pulses=f'{pulses}HLC')
 
    

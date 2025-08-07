@@ -85,17 +85,17 @@ def getenergyconfinement(double_particles, track_particles, key):
 calculate reco observables
 """
 
-def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y):
+def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopod_key,taupede_key):
     
     if "RecoContainedSingle" in frame: return
     
     energythreshold=1e3
     # the single vertex containment
-    cascade = frame['MonopodFit_iMIGRAD_PPB0']
+    cascade = frame[monopod_key] # MonopodFit_iMIGRAD_PPB0
     contained = iscontained(cascade.pos.x, cascade.pos.y, cascade.pos.z, innerboundary,outeredge_x, outeredge_y)
 
     # the double vertex properties and containment
-    cascade1, cascade2 = frame['TaupedeFit_iMIGRAD_PPB0Particles']
+    cascade1, cascade2 = frame[f"{taupede_key}Particles"] # TaupedeFit_iMIGRAD_PPB0Particles
     contained1 = iscontained(cascade1.pos.x, cascade1.pos.y, cascade1.pos.z, innerboundary,outeredge_x, outeredge_y)
     contained2 = iscontained(cascade2.pos.x, cascade2.pos.y, cascade2.pos.z, innerboundary,outeredge_x, outeredge_y)
     length = n.log10((cascade1.pos-cascade2.pos).magnitude)
@@ -174,7 +174,7 @@ def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y):
     frame.Put('HESETaupedeFit2_z', I3Double(cascade2.pos.z))
 
     # add fit params information
-    for key in ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0Fit', 'HESEMillipedeFit']:
+    for key in [monopod_key, taupede_key, 'HESEMillipedeFit']:
         if key in frame:
             frame.Put(key + 'Logl', I3Double(frame[key + 'FitParams'].logl))
             frame.Put(key + 'LoglNdof', I3Double(frame[key + 'FitParams'].ndof))

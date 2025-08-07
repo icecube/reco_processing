@@ -91,13 +91,13 @@ def calc_dt_nearly_ice(frame, name, reconame, pulsemapname):
 
     if len(noisy_early_DOMs)>0:
         if not frame.Has('OfflinePulsesHLC_CleanedFirstPulses'):
-                frame['OfflinePulsesHLC_CleanedFirstPulses'] = dataclasses.I3RecoPulseSeriesMapMask(frame, "OfflinePulsesHLC_noSaturDOMs", lambda om, idx, pulse: idx==0 and om not in early_DOMs)
+            frame['OfflinePulsesHLC_CleanedFirstPulses'] = dataclasses.I3RecoPulseSeriesMapMask(frame, pulsemapname, lambda om, idx, pulse: idx==0 and om not in early_DOMs)
     else:
         if not frame.Has('OfflinePulsesHLC_CleanedFirstPulses'):
-                frame['OfflinePulsesHLC_CleanedFirstPulses'] = dataclasses.I3RecoPulseSeriesMapMask(frame, "OfflinePulsesHLC_noSaturDOMs")
+            frame['OfflinePulsesHLC_CleanedFirstPulses'] = dataclasses.I3RecoPulseSeriesMapMask(frame, pulsemapname)
     pmap_withEarly = dataclasses.I3RecoPulseSeriesMap.from_frame(frame, 'OfflinePulsesHLC_CleanedFirstPulses')
 
-############ calculate delay time for a cleaned pulses
+    ############ calculate delay time for a cleaned pulses
     pmap_Cleaned = dataclasses.I3RecoPulseSeriesMap.from_frame(frame, 'OfflinePulsesHLC_CleanedFirstPulses')
     for i,(omkey, pseries) in enumerate(pmap_Cleaned.iteritems()):
     # for i,omkey in enumerate(pmap_Cleaned):
