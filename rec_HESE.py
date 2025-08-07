@@ -8,6 +8,7 @@ import numpy as np
 
 from icecube import dataio
 from icecube import (icetray,
+                     dataclasses,
                      photonics_service,
                      mue)  # noqa: F401
 from icecube.icetray import I3Tray, I3Units
@@ -43,7 +44,6 @@ from reco.mlpd import (MonopodWrapper,
                        preferred,
                        define_splines)
 from reco.seed import default_seeds
-
 
 def sane(frame, split_names):
     for split_name in split_names:
@@ -729,8 +729,22 @@ def main():
         outeredge_x = cx[order]
         outeredge_y = cy[order]
 
+        
+
         # millipede
-        millipede_params = {'Pulses': 'SplitInIcePulses', 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs}
+        pulses_for_reco_millipede = "SplitInIcePulses" 
+
+        excludedDOMs_millipede = tray.Add(HighEnergyExclusions,
+                                Pulses=pulses_for_reco_millipede,
+                                BrightDOMThreshold=args.bdthres,
+                                ExcludeDeepCore='DeepCoreDOMs_redo',
+                                ExcludeBrightDOMs='BrightDOMs_redo',
+                                ExcludeSaturatedDOMs='SaturatedDOMs_redo',
+                                BadDomsList='BadDomsList_redo',
+                                CalibrationErrata='CalibrationErrata_redo',
+                                SaturationWindows='SaturationWindows_redo')
+
+        millipede_params = {'Pulses': pulses_for_reco_millipede, 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs_millipede}
         
         # track reco
         tray.Add('I3OMSelection<I3RecoPulseSeries>', 'omselection_HESE',
@@ -769,8 +783,10 @@ def main():
                             icetray.I3Frame.Stream('X'),
                             icetray.I3Frame.DAQ])
     if args.nframes is None:
+        print("processing all frames")
         tray.Execute()
     else:
+        print("processing nframes", args.nframes)
         tray.Execute(args.nframes)
     tray.PrintUsage()
 

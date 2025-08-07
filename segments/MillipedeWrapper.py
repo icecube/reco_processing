@@ -21,7 +21,7 @@ import numpy as n
 
 @traysegment
 def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outeredge_y,
-                     Seeds=['HESEMonopodFit', 'HESETaupedeFit', 'SPEFit16'], PhotonsPerBin=5, ShowerSpacing=5, ethreshold=1e3, **millipede_params):
+                     Seeds=['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'SPEFit16'], PhotonsPerBin=5, ShowerSpacing=5, ethreshold=1e3, **millipede_params):
     
     """
     helper method to calculate the opening angle between two directions (input angles given in radians, return angle in degrees)
@@ -133,7 +133,7 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
 
         # add hese event class
         eventclass = 0
-        print(frame[Fitstatus])
+        print("frame[Fitstatus]",frame[Fitstatus])
         if not Fitstatus in frame:
             frame.Put(Eventclass, I3Double(eventclass))
             print('No FitStatus In Frame')
@@ -154,7 +154,7 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
         print('FinalEvent Class',I3Double(eventclass))
         
         
-        print(bestseedtag)
+        print("bestseedtag",bestseedtag)
         
   
         # reset shape of millipede fit particle to default
@@ -166,9 +166,20 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
 
         # add frame content
         frame.Put(Eventclass, I3Double(eventclass))
-        frame.Rename(bestseedtag, Output)
-        frame.Rename(bestfittag, Output + 'Particles')
-        frame.Rename(bestfittag + 'FitParams', Output + 'FitParams')
+        # frame.Rename(bestseedtag, Output)
+        # frame.Rename(bestfittag, Output + 'Particles')
+        # frame.Rename(bestfittag + 'FitParams', Output + 'FitParams')
+
+        frame[Output] = frame[bestseedtag]
+        frame[Output + 'Particles'] = frame[bestfittag]
+        frame[Output + 'FitParams'] = frame[bestfittag + 'FitParams']
+
+        for seed in Seeds:
+            seedtag = seed + 'MillipedeSeed'
+            fittag = seed + 'MillipedeFit'
+            fitparamstag = seed + 'MillipedeFitFitParams'
+
+            frame[fittag + 'Particles'] = frame[fittag]
 
     def isgoodfit(cascade1, cascade2):
         goodfit = True
@@ -220,7 +231,7 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
     calculate truncated deposited energy
     """
     def adddepositedenergy(frame, Seed):
-        print(seed)
+        print("adddepositedenergy seed",Seed)
         if not frame.Has(Seed + 'Particles'):
             print(f'frame does not contain key {Seed + "Particles"}. '
                   f'Skipping deposited energy calc.')
@@ -235,3 +246,10 @@ def MillipedeWrapper(tray, name,innerboundary, outerboundary,outeredge_x,outered
         frame.Put(Seed + 'TruncatedDepositedEnergy', I3Double(truncetot))
         frame.Put(Seed + 'DepositedEnergy', I3Double(etot))
     tray.Add(adddepositedenergy, Seed=name)
+
+    for Seed in Seeds:
+        fittag = Seed + 'MillipedeFit'
+        tray.Add(adddepositedenergy, Seed=fittag)
+
+
+    
