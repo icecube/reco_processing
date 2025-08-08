@@ -266,6 +266,11 @@ def main():
     tray.Add(checkfinaltopology)
     tray.Add(reclassify_double)
 
+    # passing fractions
+    tray.Add(add_primary)
+    tray.Add(penetrating_depth)
+    tray.Add(PassingFraction)
+
     # add some bdt variables
     tray.AddSegment(misc, 'misc', pulses="SplitInIcePulses") # was with OfflinePulses, but should be same as SplitInIcePulses
 
