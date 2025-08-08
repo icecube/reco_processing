@@ -3,3 +3,4 @@
 ## versions
 
 - v0: 100 files of 22635 and 100 files of 22634 of v1 of taupede reco.
+- v1: 2000 files of all datasets from v2 Taupede reco

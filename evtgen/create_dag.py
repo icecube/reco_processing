@@ -9,8 +9,8 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_input_version = "v1"
-evtgen_version = "v0"
+reco_input_version = "v5"
+evtgen_version = "v2"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_input_version)
@@ -19,17 +19,18 @@ simulation_datasets = getattr(datasets, reco_input_version)
 dag_base_path = "/scratch/tvaneede/reco/run_evtgen_ftp"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/evtgen"
 
-nfiles = 500 # process x files per subfolder
-submit_jobs = False # actually submit the dag jobs
+nfiles = 10000 # process x files per subfolder
+submit_jobs = True # actually submit the dag jobs
 
-# for simulation_name in ["NuTau_midE", "NuTau_highE", "NuE_midE", "NuE_highE"]:
-for simulation_name in ["NuTau_midE","NuTau_highE"]:
+for simulation_name in ["NuMu_midE", "NuMu_highE", "NuE_midE", "NuE_highE"]:
+# for simulation_name in ["NuTau_midE","NuTau_highE"]:
 # for simulation_name in ["NuE_midE","NuE_highE"]:
+# for simulation_name in ["NuMu_midE","NuMu_highE"]:
     
     simulation_subfolders = simulation_datasets[simulation_name]['subfolders']
     simulation_flavor = simulation_datasets[simulation_name]["flavor"]
     simulation_dataset = simulation_datasets[simulation_name]['dataset']
-    simulation_path = simulation_datasets[simulation_name]['reco_base_path']
+    simulation_path = simulation_datasets[simulation_name]['reco_base_out_path']
 
     for simulation_subfolder in simulation_subfolders:
 
@@ -41,7 +42,7 @@ for simulation_name in ["NuTau_midE","NuTau_highE"]:
         # fixed dag paths
         dag_name = f"reco_evtgen_dag_{evtgen_version}_{simulation_dataset}_{simulation_subfolder}"
 
-        dag_path      = f"{dag_base_path}/{evtgen_version}/{dag_name}_batch2"
+        dag_path      = f"{dag_base_path}/{evtgen_version}/{dag_name}"
         log_dir       = f"{dag_path}/logs"
         backup_path   = f"{work_path}/backup_scripts/{evtgen_version}"
 
@@ -70,8 +71,6 @@ for simulation_name in ["NuTau_midE","NuTau_highE"]:
         )
         
         for i,INFILES in enumerate(infiles_list):
-
-            if i < 100: continue
 
             filename = os.path.basename(INFILES)
             JOBID = filename.split("_")[2] # gives the run number
