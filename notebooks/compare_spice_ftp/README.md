@@ -40,3 +40,7 @@ Many variables are very similar:
 But the length and energy asymmetry are different.
 - Energy asymmetry: I like Neha's implementation better. She actually counts the deposited energy from the different cascades.
 - Length: I like Tianlu's definition better. It is the length of the tau lepton, instead of the difference between the shower maxima (Neha)
+
+## Purity efficiency
+
+I tried to recreate Neha's plots: impossible, see neha_purity folder. 
