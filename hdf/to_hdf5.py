@@ -224,7 +224,7 @@ def main():
                         type=str, help='input path')
     parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
                         help='which P-frame splits to process')
-    parser.add_argument('--spice', default=False, action='store_true',
+    parser.add_argument('--spice', default=True, action='store_true',
                         help='creating hdf from spice files')
     parser.add_argument('--nframes', type=int, default=None, help='number of frames to process')
     args = parser.parse_args()

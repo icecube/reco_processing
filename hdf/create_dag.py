@@ -16,7 +16,7 @@ simulation_datasets = getattr(datasets, reco_version)
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/hdf_taupede_tianlu"
-work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
+work_path = "/data/user/tvaneede/GlobalFit/reco_processing/hdf"
 hdf_outpath = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}"
 
 os.system(f"mkdir -p {hdf_outpath}")
@@ -24,11 +24,8 @@ os.system(f"mkdir -p {hdf_outpath}")
 submit_jobs = True # actually submit the dag jobs
 
 # fixed dag paths
-dag_name = f"hdf_dag_{reco_version}"
-
-dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}"
+dag_path      = f"{dag_base_path}/{reco_version}"
 log_dir       = f"{dag_path}/logs"
-backup_path   = f"{work_path}/backup_scripts/{reco_version}"
 
 # creating folders and copying scripts
 print("creating", dag_path)
