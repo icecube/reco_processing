@@ -30,7 +30,7 @@ for simulation_name in simulation_datasets:
     
     dataset = simulation_datasets[simulation_name]["dataset"]
     flavor = simulation_datasets[simulation_name]["flavor"]
-    hdf_path = simulation_datasets[simulation_name]["hdf_path"] + "_allvar"
+    hdf_path = simulation_datasets[simulation_name]["hdf_path"]
     subfolders = simulation_datasets[simulation_name]["subfolders"]
 
     hdf_out_path = f"{hdf_path}/{flavor}_{dataset}.h5"
