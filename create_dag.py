@@ -9,7 +9,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "v2"
+reco_version = "v6"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -18,7 +18,7 @@ simulation_datasets = getattr(datasets, reco_version)
 dag_base_path = "/scratch/tvaneede/reco/run_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
 
-nfiles = 10000 # process x files per subfolder
+nfiles = 200 # process x files per subfolder
 submit_jobs = True # actually submit the dag jobs
 
 for simulation_name in simulation_datasets:
@@ -54,11 +54,12 @@ for simulation_name in simulation_datasets:
         # backup scripts
         os.system(f"cp {work_path}/reco.sub {backup_path}")
         os.system(f"cp {work_path}/wrapper.sh {backup_path}")
+        os.system(f"cp {work_path}/rec_HESE.py {backup_path}")
 
         # create the dag job
         outfile = open(f"{dag_path}/submit.dag", 'w')
 
-        infiles_list = glob.glob(f"{reco_input_path}/Level3_{simulation_flavor}_*.i3.zst")
+        infiles_list = glob.glob(f"{reco_input_path}/Level2_{simulation_flavor}_*.i3.zst")
         print(f"found {len(infiles_list)} files")
 
         infiles_list = sorted(infiles_list, key=lambda x: int(re.search(r'\.(\d{6})\.i3\.zst$', x).group(1)))

@@ -144,7 +144,7 @@ def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopo
     elif length >= 3.3:
          length = n.maximum(3.3 - n.abs(n.random.normal(loc=0., scale=0.05)),3.2)
          reco_l = 10**length
-
+         
     # save it to the frame
     frame.Put('RecoContainedSingle', icetray.I3Bool(contained))
     frame.Put('RecoContained1', icetray.I3Bool(contained1))
