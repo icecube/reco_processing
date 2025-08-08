@@ -64,7 +64,6 @@ def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
 
     x = frame["MonopodFit_iMIGRAD_PPB0_Delay_ice"]
 
-
     return True
 
 

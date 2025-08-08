@@ -35,6 +35,10 @@ from segments.cscdSBU_misc import misc
 from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
 from segments.bdt_var import taupede_monopod_bdt_var
 
+# cv statistics
+from icecube.filterscripts.offlineL2.Globals import muon_wg, wimp_wg
+from icecube.filterscripts.offlineL2.level2_Reconstruction_Muon import add_hit_verification_info_muon_and_wimp
+from icecube.phys_services.which_split import which_split
 
 MED = clsim.MakeIceCubeMediumProperties(
     iceDataDirectory=os.path.expandvars('$I3_BUILD/ice-models/resources/models/ICEMODEL/spice_ftp-v3/'),
@@ -65,15 +69,15 @@ order = np.argsort(np.arctan2(cx, cy))
 outeredge_x = cx[order]
 outeredge_y = cy[order]
 
+def print_frameid(frame):
+    eventid = frame['I3EventHeader'].event_id
+    print("*******Currently processing frame %s*******" %eventid)
+
+
 def fensurecc(frame):
     if not frame.Has('cc'):
         truth.truth(frame, "tau")
 
-    ### not sure if this is working
-    # truth.truth_key(frame, "tau")
-    # truth.truth_key(frame, "track")
-    # truth.truth_key(frame, "cascade")
-    
 
 def fenergy(frame):
     if frame.Has('I3MCTree'):
@@ -220,13 +224,25 @@ def main():
                         type=str, help='input path')
     parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
                         help='which P-frame splits to process')
+    parser.add_argument('--spice', default=False, action='store_true',
+                        help='creating hdf from spice files')
     parser.add_argument('--nframes', type=int, default=None, help='number of frames to process')
     args = parser.parse_args()
+
+    if args.spice:
+        monopod_key = "HESEMonopodFit"
+        taupede_key = "HESETaupedeFit"
+        pulses      = "SplitInIcePulses"
+    else:
+        monopod_key = "MonopodFit_iMIGRAD_PPB0"
+        taupede_key = "TaupedeFit_iMIGRAD_PPB0"
+        pulses      = "SplitInIcePulses"
 
     inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
 
     print("Writing output to", args.out)
     print(f"found {len(inputfiles)}")
+    print("using args.spice", args.spice)
 
     inputfiles = remove_corrupt_files(inputfiles)
 
@@ -236,6 +252,7 @@ def main():
 
     tray = I3Tray()
     tray.Add("I3Reader", FileNameList=inputfiles)
+    tray.Add(print_frameid)
 
     flavor = os.path.basename(inputfiles[-1]).split("_")[1] # does this work for MuonGun and data?
 
@@ -261,7 +278,9 @@ def main():
                     'calc_reco_observables',
                     innerboundary=550,
                     outeredge_x=outeredge_x,
-                    outeredge_y=outeredge_y)
+                    outeredge_y=outeredge_y,
+                    monopod_key=monopod_key,
+                    taupede_key=taupede_key)
 
     tray.Add(checkfinaltopology)
     tray.Add(reclassify_double)
@@ -272,14 +291,23 @@ def main():
     tray.Add(PassingFraction)
 
     # add some bdt variables
-    tray.AddSegment(misc, 'misc', pulses="SplitInIcePulses") # was with OfflinePulses, but should be same as SplitInIcePulses
+    tray.AddSegment(misc, 'misc', pulses=pulses) # was with OfflinePulses, but should be same as SplitInIcePulses
 
     # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
     # and mlb_DelayTime_noNoise.py
-    tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name='MonopodFit_iMIGRAD_PPB0',
-                    reconame='MonopodFit_iMIGRAD_PPB0',pulsemapname='OfflinePulsesHLC_noSaturDOMs')
+    tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name="MonopodFit_iMIGRAD_PPB0",
+                    reconame=monopod_key,pulsemapname=f'{pulses}HLC_noSaturDOMs')
 
-    tray.Add(taupede_monopod_bdt_var)
+    # add cv statistics if we dont have it yet
+    tray.AddSegment(add_hit_verification_info_muon_and_wimp, 'CommonVariablesMuonAndWimp',
+                    Pulses= pulses,
+                    If = which_split(split_name='InIceSplit') & (lambda f: (muon_wg(f) or wimp_wg(f)) and 'CVStatistics' not in f),
+                    OutputI3HitMultiplicityValuesName=  "CVMultiplicity",
+                    OutputI3HitStatisticsValuesName= "CVStatistics",
+                    suffix = '')
+
+    tray.AddModule(taupede_monopod_bdt_var,"taupede_monopod_bdt_var",
+                   monopod_key=monopod_key, taupede_key=taupede_key)
 
     from hdf_keys import hdfkeys
     hdfkeys+=args.add
