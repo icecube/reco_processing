@@ -32,7 +32,6 @@ hdfkeys += [
     'HESETaupedeFit', 'HESETaupedeFitFitParams', 'HESETaupedeFitParticles',
     'HESEMonopodFit', 'HESEMonopodFitFitParams', 'HESEMonopodFitParticles',
     'SPEFit16', 'SPEFit16FitParams',
-    'HESEMillipedeFit', 'HESEMillipedeFitParticles',
 
     'HESEEventclass', 'FinalTopology', 'FinalEventClass', 'MCInteractionEventclass',
     'TauDecayLength','TauEnergy','TauNeutrinoEnergy','MCInteractionDoubleBang', 'MCReconstructionEventclass', 
@@ -40,7 +39,17 @@ hdfkeys += [
     'ConventionalAtmosphericPassingFractions', 'PromptAtmosphericPassingFractions',
 
     'RecoL', 'RecoEConfinement', 'RecoERatio', 'RecoETot', 'RecoLogE1', 'RecoLogE2',
-    'RecoAzimuth', 'RecoZenith',
+    'RecoAzimuth', 'RecoZenith', 'RecoE1', 'RecoE2', 'RecoLbyE',
+
+    # millipede
+    'HESEMillipedeFit',
+    'HESEMillipedeFitTruncatedDepositedEnergy','HESEMillipedeFitDepositedEnergy','HESEMillipedeFitFitParams',
+    'MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','MonopodFit_iMIGRAD_PPB0MillipedeFitFitParams',
+    'TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','TaupedeFit_iMIGRAD_PPB0MillipedeFitFitParams',
+
+    'HESEMonopodFitMillipedeFitDepositedEnergy', 'HESEMonopodFitMillipedeFitTruncatedDepositedEnergy','HESEMonopodFitMillipedeFitFitParams',
+    'HESETaupedeFitMillipedeFitDepositedEnergy', 'HESETaupedeFitMillipedeFitTruncatedDepositedEnergy','HESETaupedeFitMillipedeFitFitParams',
+    'SPEFit16MillipedeFitDepositedEnergy', 'SPEFit16MillipedeFitTruncatedDepositedEnergy','SPEFit16MillipedeFitFitParams',
 
     # neha true variables
     'TrueAzimuth', 'TrueETot', 'TrueL', 'TrueZenith', 'TrueERatio', 'TrueEConfinement', 'TrueE1', 'TrueE2',
@@ -73,11 +82,8 @@ hdfkeys += [
     'MCInteractionDoubleBang1', 'MCInteractionDoubleBang2',
 
     # more Neha stuff
-    'Filenum', 'HESEMillipedeFitTruncatedDepositedEnergy',
-    'HESEMillipedeFitDepositedEnergy', 'TaupedeFitManualFitStatus',
-    'HESEMillipedeFitFitParams', 'issingle', 'isdouble', 'istrack',
-    'RecoE1', 'RecoE2', 'RecoLbyE', 'TaupedeFitParticles',
-    'TaupedeFit', 'TaupedeFitFitParams',
+    'Filenum', 'TaupedeFitManualFitStatus', 'issingle', 'isdouble', 'istrack',
+    'TaupedeFitParticles','TaupedeFit', 'TaupedeFitFitParams',
 
     # weight, polarization, more
     'TotalWeight', 'TotalWeightPol',
