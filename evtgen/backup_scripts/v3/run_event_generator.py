@@ -87,7 +87,7 @@ def main():
 
     # initialize timers
     starttimes, stoptimes = {}, {}
-    timekeys = ['EventGeneratorDC_Max','EventGeneratorDC_Thijs']
+    timekeys = ['EventGeneratorDC_Max','EventGeneratorDC_Thijs', 'EventGeneratorDC_Combined']
     for timekey in timekeys:
         starttimes[timekey] = []
         stoptimes[timekey] = []
