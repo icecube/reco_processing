@@ -23,6 +23,7 @@ def extract_data_combined(nufile):
     data = {}
 
     is_ftp = False if "spice" in nufile else True
+    is_evtgen = True if "evtgen" in nufile else False
 
     print(20*"-")
     print("Opening", nufile, "is_ftp", is_ftp)
@@ -50,7 +51,7 @@ def extract_data_combined(nufile):
     data["loge_SPEFit16"] = np.log10(tf.get_node(f'/{key}').cols.energy[:][slc])
 
     # EventGenerator only for FTP
-    if is_ftp:
+    if is_evtgen:
         for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max"]:
             data[f"len_{key}"] = np.abs(tf.get_node(f'/{key}').cols.cascade_cascade_00001_distance[:][slc])
             data[f"asm_{key}"] = get_easymm_evtgen(tf.get_node(f'/{key}'))[slc]
@@ -65,6 +66,16 @@ def extract_data_combined(nufile):
     data["azi_Millipede"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
     data["loge_Millipede"] = np.log10(tf.root.HESEMillipedeFitDepositedEnergy[slc]['value'])
     data["loge_MillipedeTrun"] = np.log10(tf.root.HESEMillipedeFitTruncatedDepositedEnergy[slc]['value'])
+
+    # extra millipede stuff from v6
+    if "v6" in nufile:
+        data["loge_MonoMillipede"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
+        data["loge_MonoMillipedeTrun"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+        data["loge_SPEMillipede"] = np.log10(tf.root.SPEFit16MillipedeFitDepositedEnergy[slc]['value'])
+        data["loge_SPEMillipedeTrun"] = np.log10(tf.root.SPEFit16MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+        data["loge_TauMillipede"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
+        data["loge_TauMillipedeTrun"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+
 
     # Reco information neha
     data["loge_RecoETot"] = np.log10(tf.root.RecoETot[slc]['value'])
