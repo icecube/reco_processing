@@ -78,6 +78,78 @@ rec_v1_bright["NuTau_highE"] = {
 ### evtgen v2, based on reco v5
 ###
 
+evtgen_v3_rec_v5 = {}
+
+evtgen_v3_rec_v5["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuTau_22634.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 2000,
+}
+
+evtgen_v3_rec_v5["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 201,
+}
+
+evtgen_v3_rec_v5["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuE_22613.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 200,
+}
+
+evtgen_v3_rec_v5["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"], 
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuE_22612.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 200,
+}
+
+evtgen_v3_rec_v5["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuMu_22645.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 200,
+}
+
+evtgen_v3_rec_v5["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999"], 
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v3",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5/NuMu_22644.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v3_rec_v5",
+    "nfiles" : 200,
+}
+
+###
+### evtgen v2, based on reco v5
+###
+
 evtgen_v2_rec_v5 = {}
 
 evtgen_v2_rec_v5["NuTau_midE"] = {
@@ -254,6 +326,35 @@ evtgen_v0_rec_v1["NuE_highE"] = {
     ["0000000-0000999"],
     "flavor" : "NuE",
     "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v0",
+}
+
+###
+### v7, trying to fix the Millipedefit
+###
+v7 = {}
+
+v7["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v7",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v7/NuTau_22634.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v7",
+    "nfiles" : 200,
+}
+
+v7["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v7",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v7/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v7",
+    "nfiles" : 200,
 }
 
 ###

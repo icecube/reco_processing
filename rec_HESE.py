@@ -729,19 +729,17 @@ def main():
         outeredge_x = cx[order]
         outeredge_y = cy[order]
 
-        
 
         # millipede
         pulses_for_reco_millipede = "SplitInIcePulses" 
 
         excludedDOMs_millipede = tray.Add(HighEnergyExclusions,
                                 Pulses=pulses_for_reco_millipede,
-                                BrightDOMThreshold=args.bdthres,
-                                ExcludeDeepCore='DeepCoreDOMs_redo',
-                                ExcludeBrightDOMs='BrightDOMs_redo',
-                                ExcludeSaturatedDOMs='SaturatedDOMs_redo',
                                 BadDomsList='BadDomsList_redo',
                                 CalibrationErrata='CalibrationErrata_redo',
+                                ExcludeBrightDOMs='BrightDOMs_redo',
+                                ExcludeDeepCore=False,
+                                ExcludeSaturatedDOMs='SaturatedDOMs_redo',
                                 SaturationWindows='SaturationWindows_redo')
 
         millipede_params = {'Pulses': pulses_for_reco_millipede, 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs_millipede}

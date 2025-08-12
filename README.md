@@ -18,4 +18,5 @@ I am using version with latest commit 7f46745:
 - v3: again, i made a mistake in v2 with the hese selection. I should start from level2. I update the reco script, now I also run the SPEFit16 reco. I removed the bdt variables and other bullshit, will be in the hdf scripts from now. I only run a small subsample (100 files per flavor/energy) to check if I get the right event rate, followed by setting the late pulse cleaning off by setting a large residual argument (v4)
 - v4: See v3, I set a large --residual 100000 to turn off late pulse cleaning
 - v5: actual hese selection, all variables
-- v6: trying to fix problems with HESEMillipede fit
+- v6: trying to fix problems with HESEMillipede fit.
+- v7: still found a shitty performance of HESEMillipede fit in v6. I saw 2 other differences with Neha in the HESEMillipede Fit params. ExcludeDeepCore = False and I shouldnt have had a BrightDOMThreshold=args.bdthres=15. Let's try again.
