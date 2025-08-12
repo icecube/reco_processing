@@ -14,7 +14,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "spice_tau_reco"
+reco_version = "v5"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
