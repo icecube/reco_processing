@@ -31,20 +31,23 @@ def compare( nufiles, outpath ):
 
     nbins = 20
 
-    plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_neha",
+    # plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_neha",
+    #               labels=["Taupede", "Millipede","MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+
+    plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_tianlu",
                   labels=["Taupede", "Millipede","MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
-    plot_mederes( data, fit_keys = ["loge_Taupede","loge_MonoMillipede","loge_MonoMillipedeTrun"], true_key = "loge_tru_neha",
-                  labels=["Taupede", "MonoMillipede","MonoMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+    # plot_mederes( data, fit_keys = ["loge_Taupede","loge_MonoMillipede","loge_MonoMillipedeTrun"], true_key = "loge_tru_neha",
+    #               labels=["Taupede", "MonoMillipede","MonoMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
-    plot_mederes( data, fit_keys = ["loge_Taupede","loge_TauMillipede","loge_TauMillipedeTrun"], true_key = "loge_tru_neha",
-                  labels=["Taupede", "TauMillipede","TauMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+    # plot_mederes( data, fit_keys = ["loge_Taupede","loge_TauMillipede","loge_TauMillipedeTrun"], true_key = "loge_tru_neha",
+    #               labels=["Taupede", "TauMillipede","TauMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
-    plot_mederes( data, fit_keys = ["loge_Taupede","loge_SPEMillipede","loge_SPEMillipedeTrun"], true_key = "loge_tru_neha",
-                  labels=["Taupede", "SPEMillipede","SPEMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+    # plot_mederes( data, fit_keys = ["loge_Taupede","loge_SPEMillipede","loge_SPEMillipedeTrun"], true_key = "loge_tru_neha",
+    #               labels=["Taupede", "SPEMillipede","SPEMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
-    plot_mederes( data, fit_keys = ["loge_Millipede","loge_MillipedeTrun", "loge_MonoMillipede","loge_MonoMillipedeTrun", "loge_SPEMillipede","loge_SPEMillipedeTrun", "loge_TauMillipede","loge_TauMillipedeTrun"], true_key = "loge_tru_neha",
-                  labels=["Millipede","MillipedeTrun","MonoMillipede","MonoMillipedeTrun","SPEMillipede","SPEMillipedeTrun","TauMillipede","TauMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+    # plot_mederes( data, fit_keys = ["loge_Millipede","loge_MillipedeTrun", "loge_MonoMillipede","loge_MonoMillipedeTrun", "loge_SPEMillipede","loge_SPEMillipedeTrun", "loge_TauMillipede","loge_TauMillipedeTrun"], true_key = "loge_tru_neha",
+    #               labels=["Millipede","MillipedeTrun","MonoMillipede","MonoMillipedeTrun","SPEMillipede","SPEMillipedeTrun","TauMillipede","TauMillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
 
 
