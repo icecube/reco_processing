@@ -20,3 +20,4 @@ I am using version with latest commit 7f46745:
 - v5: actual hese selection, all variables
 - v6: trying to fix problems with HESEMillipede fit.
 - v7: still found a shitty performance of HESEMillipede fit in v6. I saw 2 other differences with Neha in the HESEMillipede Fit params. ExcludeDeepCore = False and I shouldnt have had a BrightDOMThreshold=args.bdthres=15. Let's try again.
+- v8: after discussing with tianlu, trying the exact exact same millipede settings as for the seeds. I am doubtful.

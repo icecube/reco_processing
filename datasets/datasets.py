@@ -329,6 +329,24 @@ evtgen_v0_rec_v1["NuE_highE"] = {
 }
 
 ###
+### v8
+###
+
+v8 = {}
+
+v8["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v8/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v8",
+    "nfiles" : 200,
+}
+
+###
 ### v7, trying to fix the Millipedefit
 ###
 v7 = {}

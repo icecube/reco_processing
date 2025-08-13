@@ -730,19 +730,19 @@ def main():
         outeredge_y = cy[order]
 
 
-        # # millipede
-        # pulses_for_reco_millipede = "SplitInIcePulses" 
+        # millipede
+        pulses_for_reco_millipede = "SplitInIcePulses" 
 
-        # excludedDOMs_millipede = tray.Add(HighEnergyExclusions,
-        #                         Pulses=pulses_for_reco_millipede,
-        #                         BadDomsList='BadDomsList_redo',
-        #                         CalibrationErrata='CalibrationErrata_redo',
-        #                         ExcludeBrightDOMs='BrightDOMs_redo',
-        #                         ExcludeDeepCore=False,
-        #                         ExcludeSaturatedDOMs='SaturatedDOMs_redo',
-        #                         SaturationWindows='SaturationWindows_redo')
+        excludedDOMs_millipede = tray.Add(HighEnergyExclusions,
+                                Pulses=pulses_for_reco_millipede,
+                                BadDomsList='BadDomsList_redo',
+                                CalibrationErrata='CalibrationErrata_redo',
+                                ExcludeBrightDOMs='BrightDOMs_redo',
+                                ExcludeDeepCore=False,
+                                ExcludeSaturatedDOMs='SaturatedDOMs_redo',
+                                SaturationWindows='SaturationWindows_redo')
 
-        # millipede_params = {'Pulses': pulses_for_reco_millipede, 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs_millipede}
+        millipede_params = {'Pulses': pulses_for_reco_millipede, 'PartialExclusion' : False , 'CascadePhotonicsService' : cascade_service, 'ExcludedDOMs': excludedDOMs_millipede}
         
         # track reco
         tray.Add('I3OMSelection<I3RecoPulseSeries>', 'omselection_HESE',
@@ -755,14 +755,10 @@ def main():
                 Pulses = 'SRT' + "SplitInIcePulses" + '_IC_Singles',
                 Iterations = 16)
 
-        del millipede_params["PhotonsPerBin"]
-
-        print(millipede_params['Pulses'])
-
         # HESE millipede
         tray.Add(MillipedeWrapper, 'HESEMillipedeFit',
             Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'SPEFit16'],
-            PhotonsPerBin = 0,
+            PhotonsPerBin = 5,
             ShowerSpacing = 5,
             innerboundary=550,
             outerboundary=650,
