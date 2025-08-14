@@ -55,7 +55,7 @@ hdfkeys += [
     'TrueAzimuth', 'TrueETot', 'TrueL', 'TrueZenith', 'TrueERatio', 'TrueEConfinement', 'TrueE1', 'TrueE2',
 
     # event generator
-    'EventGeneratorDC_Max', 'EventGeneratorDC_Thijs',
+    'EventGeneratorDC_Max', 'EventGeneratorDC_Thijs', 'EventGeneratorDC_Combined',
 
     # bdt
     'TauMonoDiff_rlogl', 'Taupede_Asymmetry', 'Taupede_Distance',

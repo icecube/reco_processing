@@ -329,7 +329,84 @@ evtgen_v0_rec_v1["NuE_highE"] = {
 }
 
 ###
-### v8
+### v9, cleaned up from v8, larger dataset
+###
+v9 = {}
+
+v9["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuTau_22634.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+v9["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+v9["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 997
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuE_22613.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+v9["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuE_22612.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+v9["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuMu_22645.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+v9["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999"], # 1000 + 1000
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
+    "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuMu_22644.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
+    "nfiles" : 200,
+}
+
+###
+### v8 I think that the problem is fixed, let's create a larger dataset
 ###
 
 v8 = {}

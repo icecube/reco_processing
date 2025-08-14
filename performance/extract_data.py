@@ -52,7 +52,7 @@ def extract_data_combined(nufile):
 
     # EventGenerator only for FTP
     if is_evtgen:
-        for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max"]:
+        for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max", "EventGeneratorDC_Combined"]:
             data[f"len_{key}"] = np.abs(tf.get_node(f'/{key}').cols.cascade_cascade_00001_distance[:][slc])
             data[f"asm_{key}"] = get_easymm_evtgen(tf.get_node(f'/{key}'))[slc]
             data[f"cth_{key}"] = np.cos(tf.get_node(f'/{key}').cols.cascade_zenith[:][slc])
@@ -68,7 +68,7 @@ def extract_data_combined(nufile):
     data["loge_MillipedeTrun"] = np.log10(tf.root.HESEMillipedeFitTruncatedDepositedEnergy[slc]['value'])
 
     # extra millipede stuff from v6
-    if "v6" in nufile or "v7" in nufile:
+    if "v6" in nufile or "v7" in nufile or "v8" in nufile:
         data["loge_MonoMillipede"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
         data["loge_MonoMillipedeTrun"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
         data["loge_SPEMillipede"] = np.log10(tf.root.SPEFit16MillipedeFitDepositedEnergy[slc]['value'])
