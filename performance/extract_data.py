@@ -45,10 +45,11 @@ def extract_data_combined(nufile):
     data["loge_Monopod"] = np.log10(tf.get_node(f'/{monopod_key}').cols.energy[:][slc])
 
     # SPEFit (same in both cases)
-    key = "SPEFit16"
-    data["cth_SPEFit16"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
-    data["azi_SPEFit16"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
-    data["loge_SPEFit16"] = np.log10(tf.get_node(f'/{key}').cols.energy[:][slc])
+    if "v1" not in nufile and "v2" not in nufile and "v3" not in nufile:
+        key = "SPEFit16"
+        data["cth_SPEFit16"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
+        data["azi_SPEFit16"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
+        data["loge_SPEFit16"] = np.log10(tf.get_node(f'/{key}').cols.energy[:][slc])
 
     # EventGenerator only for FTP
     if is_evtgen:
@@ -93,6 +94,9 @@ def extract_data_combined(nufile):
     data["loge_tru_neha"] = np.log10(tf.root.TrueETot[slc]['value'])
     data["asm_tru_neha"] = tf.root.TrueERatio[slc]['value']
     data["len_tru_neha"] = tf.root.TrueL[slc]['value']
+
+    # # store some extra info for checking
+    # data["HESE_CausalQTot"] = tf.root.HESE_CausalQTot[slc]['value']
 
     tf.close()
     print(f"dataset {nufile} has {len(data['cth_tru_tianlu'])} evts")
