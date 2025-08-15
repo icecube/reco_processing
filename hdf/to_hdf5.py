@@ -181,6 +181,7 @@ def fdnn(frame):
 
 
 def reclassify_double(frame):
+    if 'FinalTopology' not in frame: return # for old reco
     classification = frame['FinalTopology'].value
     if classification != 2:
         frame['FinalEventClass']= dataclasses.I3Double(classification)

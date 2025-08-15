@@ -14,7 +14,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "evtgen_v3_rec_v5"
+reco_version = "v9"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
