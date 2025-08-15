@@ -10,3 +10,5 @@ Does it really matter? No, we already have much better energy reconstruction wit
 - compare_spice_fit.ipynb. It seems that for v6, we actually do a lot better. Why are the performance plots from `performance` so much worse then? Let's make some 2D plots, and look at those performance plots again. It's really true: we systematically underestimate at larger energies.
 
 Let's take another look at the pulses selection. It seems I had another difference in the millipede params. Let's try again.. v7.
+
+In v8/v9 everything is fixed. I just need the exact same parameters as the input seeds. Distributions are different than with Neha, but our performance is much better.
