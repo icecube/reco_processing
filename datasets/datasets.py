@@ -350,7 +350,7 @@ v9["NuTau_highE"] = {
     "subfolders" : 
     ["0000000-0000999"], # 1000 + 1000
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v8",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
     "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuTau_22635.h5",
     "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9",
@@ -852,7 +852,6 @@ v2["NuMu_highE"] = {
 ###
 ### Large batch reconstruction
 ###
-
 v1 = {}
 
 v1["NuTau_midE"] = {
@@ -860,7 +859,9 @@ v1["NuTau_midE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuTau",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22634.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 v1["NuTau_highE"] = {
@@ -868,7 +869,9 @@ v1["NuTau_highE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuTau",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 v1["NuE_midE"] = {
@@ -876,7 +879,9 @@ v1["NuE_midE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuE",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22613.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 v1["NuE_highE"] = {
@@ -884,7 +889,9 @@ v1["NuE_highE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuE",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuE_22612.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 v1["NuMu_midE"] = {
@@ -892,7 +899,9 @@ v1["NuMu_midE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuMu",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22645.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 v1["NuMu_highE"] = {
@@ -900,7 +909,9 @@ v1["NuMu_highE"] = {
     "subfolders" : 
     ["0000000-0000999"],
     "flavor" : "NuMu",
-    "reco_base_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v1",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1/NuMu_22644.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v1",
 }
 
 ###
