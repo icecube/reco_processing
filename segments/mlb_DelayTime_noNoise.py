@@ -26,6 +26,8 @@ def getobject(frame,name):
     
 def calc_dt_nearly_ice(frame, name, reconame, pulsemapname):
 
+    if '%s_Delay_ice' % name in frame: return
+
     try:
         mask = dataclasses.I3RecoPulseSeriesMapMask(frame, pulsemapname)
     except:

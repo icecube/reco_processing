@@ -88,6 +88,8 @@ calculate reco observables
 def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopod_key,taupede_key):
     
     if "RecoContainedSingle" in frame: return
+
+    if "HESEMillipedeFit" not in frame: return # for old reco versions
     
     energythreshold=1e3
     # the single vertex containment

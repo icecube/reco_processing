@@ -91,6 +91,8 @@ def checkfinaltopology(frame):
 
     if 'FinalTopology' in frame: return
 
+    if 'HESEEventclass' not in frame: return # for old reco versions
+
     eventclassarr = frame['HESEEventclass'].value
     larr = frame['RecoL'].value
     econfinementarr = frame['RecoEConfinement'].value

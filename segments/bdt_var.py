@@ -16,6 +16,8 @@ def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
 
     if 'Taupede_Distance' in frame: return
     
+    if 'SPEFit16' not in frame: return # for old reco
+
     # variables
     taupede1,taupede2 = frame[f"{taupede_key}Particles"]
     frame["Taupede_Distance"] = I3Double(taupede1.length)

@@ -29,6 +29,9 @@ def misc(tray, name, pulses='OfflinePulses'):
     tray.AddModule(removeSaturatedDOMs,'cleanOffHLC',pulses=f'{pulses}HLC')
 
     def qtotCalculation(frame,pulses):
+
+        if 'cscdSBU_MaxQtotRatio_HLC' in frame: return
+
         dc_strings = range(79, 87)
         qtot_out_IC = 0.0
         qtot_out = 0.0
