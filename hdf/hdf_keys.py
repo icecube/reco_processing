@@ -85,6 +85,10 @@ hdfkeys += [
     'Filenum', 'TaupedeFitManualFitStatus', 'issingle', 'isdouble', 'istrack',
     'TaupedeFitParticles','TaupedeFit', 'TaupedeFitFitParams',
 
+    # add extra variables for Kevin
+    'RecoContainedSingle', 'RecoContained1', 'RecoContained2',
+    'TrueContainedSingle', 'TrueContained1', 'TrueContained2',
+
     # weight, polarization, more
     'TotalWeight', 'TotalWeightPol',
     'y_lep', 'y_had','SnowstormParameterDict',

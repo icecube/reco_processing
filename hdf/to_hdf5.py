@@ -314,8 +314,12 @@ def main():
     hdfkeys+=args.add
 
     tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=['InIceSplit'])
-    tray.Execute() 
-
+    if args.nframes is None:
+        print("processing all frames")
+        tray.Execute()
+    else:
+        print("processing nframes", args.nframes)
+        tray.Execute(args.nframes)
 
 if __name__ == '__main__':
     main()
