@@ -9,8 +9,8 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_input_version = "v5"
-evtgen_version = "v3"
+reco_input_version = "v9"
+evtgen_version = "v4"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_input_version)
@@ -19,12 +19,12 @@ simulation_datasets = getattr(datasets, reco_input_version)
 dag_base_path = "/scratch/tvaneede/reco/run_evtgen_ftp"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/evtgen"
 
-nfiles = 200 # process x files per subfolder
+nfiles = 10000 # process x files per subfolder
 submit_jobs = True # actually submit the dag jobs
 
 for simulation_name in simulation_datasets:
 # for simulation_name in ["NuMu_midE", "NuMu_highE", "NuE_midE", "NuE_highE"]:
-# for simulation_name in ["NuTau_midE","NuTau_highE"]:
+# for simulation_name in ["NuTau_highE"]:
 # for simulation_name in ["NuE_midE","NuE_highE"]:
 # for simulation_name in ["NuMu_midE","NuMu_highE"]:
     
@@ -33,7 +33,7 @@ for simulation_name in simulation_datasets:
     simulation_dataset = simulation_datasets[simulation_name]['dataset']
     simulation_path = simulation_datasets[simulation_name]['reco_base_out_path']
 
-    for simulation_subfolder in simulation_subfolders[:1]:
+    for simulation_subfolder in simulation_subfolders:
 
         # fixed paths
         reco_input_path = f"{simulation_path}/{simulation_dataset}/{simulation_subfolder}"
