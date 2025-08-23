@@ -35,6 +35,7 @@ def check_missing_logs(dag_path, jobs):
     missing_jobs = {}
     error_jobs = {}
     gulliver_error_jobs = {}
+    non_gulliver_error_jobs = {}
 
     for jobname, info in jobs.items():
         jobid = info.get("JOBID")
@@ -55,11 +56,13 @@ def check_missing_logs(dag_path, jobs):
                     error_jobs[jobname] = info
                     if "I3Gulliver" in line:
                         gulliver_error_jobs[jobname] = info
+                    else:
+                        non_gulliver_error_jobs[jobname] = info
 
 
 
 
-    return missing_jobs, error_jobs, gulliver_error_jobs
+    return missing_jobs, error_jobs, gulliver_error_jobs, non_gulliver_error_jobs
 
 
 # Example usage:
@@ -76,9 +79,10 @@ if __name__ == "__main__":
         print(dag_path)
 
         job_dict = read_jobs(dag_path)
-        missing_job_dicts, error_job_dicts, gulliver_error_jobs = check_missing_logs(dag_path, job_dict)
+        missing_job_dicts, error_job_dicts, gulliver_error_jobs, non_gulliver_error_jobs = check_missing_logs(dag_path, job_dict)
 
         print(f"\nMissing jobs: {len(missing_job_dicts)}")
         print(f"\nError jobs: {len(error_job_dicts)}")
         print(f"\nGulliver error jobs: {len(gulliver_error_jobs)}")
-        # print(error_job_dicts)
+        print(f"\nNon Gulliver error jobs: {len(non_gulliver_error_jobs)}")
+        print(non_gulliver_error_jobs)
