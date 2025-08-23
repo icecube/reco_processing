@@ -37,7 +37,7 @@ for simulation_name in simulation_datasets:
         reco_out_path = f"{simulation_reco_base_out_path}/{simulation_dataset}/{simulation_subfolder}"
 
         # fixed dag paths
-        dag_name = f"reco_dag_{reco_version}_{simulation_dataset}_{simulation_subfolder}_2ndbatch"
+        dag_name = f"reco_dag_{reco_version}_{simulation_dataset}_{simulation_subfolder}"
 
         dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}"
         log_dir       = f"{dag_path}/logs"
@@ -69,7 +69,7 @@ for simulation_name in simulation_datasets:
 
             i+=1
 
-            if i <= 200: continue
+            # if i <= 200: continue
 
             filename = os.path.basename(INFILES)
             JOBID = filename.split("_")[2] # gives the run number

@@ -78,6 +78,78 @@ rec_v1_bright["NuTau_highE"] = {
 ### evtgen v2, based on reco v5
 ###
 
+evtgen_v4_rec_v9 = {}
+
+evtgen_v4_rec_v9["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuTau_22634.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 2000,
+}
+
+evtgen_v4_rec_v9["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuTau",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuTau_22635.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 2000,
+}
+
+evtgen_v4_rec_v9["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE_22613.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 1997,
+}
+
+evtgen_v4_rec_v9["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuE",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE_22612.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 2000,
+}
+
+evtgen_v4_rec_v9["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu_22645.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 2000,
+}
+
+evtgen_v4_rec_v9["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    "flavor" : "NuMu",
+    "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/v4",
+    "hdf_file_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu_22644.h5",
+    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9",
+    "nfiles" : 2000,
+}
+
+###
+### evtgen v2, based on reco v5
+###
+
 evtgen_v3_rec_v5 = {}
 
 evtgen_v3_rec_v5["NuTau_midE"] = {
@@ -336,7 +408,9 @@ v9 = {}
 v9["NuTau_midE"] = {
     "dataset" : "22634",
     "subfolders" : 
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
     ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuTau",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
@@ -348,7 +422,9 @@ v9["NuTau_midE"] = {
 v9["NuTau_highE"] = {
     "dataset" : "22635",
     "subfolders" : 
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
     ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuTau",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
@@ -360,7 +436,9 @@ v9["NuTau_highE"] = {
 v9["NuE_midE"] = {
     "dataset" : "22613",
     "subfolders" : 
-    ["0000000-0000999"], # 1000 + 997
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
+    ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuE",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
@@ -372,7 +450,9 @@ v9["NuE_midE"] = {
 v9["NuE_highE"] = {
     "dataset" : "22612",
     "subfolders" : 
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
     ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuE",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
@@ -384,7 +464,9 @@ v9["NuE_highE"] = {
 v9["NuMu_midE"] = {
     "dataset" : "22645",
     "subfolders" : 
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
     ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuMu",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
@@ -396,7 +478,9 @@ v9["NuMu_midE"] = {
 v9["NuMu_highE"] = {
     "dataset" : "22644",
     "subfolders" : 
+    # ["0000000-0000999","0001000-0001999"], # 1000 + 1000
     ["0000000-0000999"], # 1000 + 1000
+    # ["0001000-0001999"], # 1000 + 1000
     "flavor" : "NuMu",
     "reco_base_out_path" : "/data/user/tvaneede/GlobalFit/reco_processing/output/v9",
     "reco_base_in_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator",
