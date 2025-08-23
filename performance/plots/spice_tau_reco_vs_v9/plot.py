@@ -80,28 +80,28 @@ def compare_spice_ftp( nufiles, labels, outpath ):
 ### NuTau
 ###
 
-# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuTau.h5", 
-#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuTau.h5"]
-# labels = ["spice", "ftp"]
-# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuTau"
-# compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
+nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuTau.h5", 
+           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuTau.h5"]
+labels = ["spice", "ftp"]
+outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuTau"
+compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
 
 ###
 ### NuE
 ###
 
-# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuE.h5", 
-#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuE.h5"]
-# labels = ["spice", "ftp"]
-# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuE"
-# compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
+nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuE.h5", 
+           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5"]
+labels = ["spice", "ftp"]
+outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuE"
+compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
 
 ###
 ### NuMu
 ###
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuMu.h5", 
-           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuMu.h5"]
-labels = ["spice", "ftp"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuMu"
-compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/spice_tau_reco/NuMu.h5", 
+#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5"]
+# labels = ["spice", "ftp"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/spice_tau_reco_vs_v9/NuMu"
+# compare_spice_ftp(nufiles=nufiles, labels = labels,outpath=outpath)
