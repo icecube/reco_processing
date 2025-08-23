@@ -30,6 +30,7 @@ hdfkeys += [
 
     # neha reco var
     'HESETaupedeFit', 'HESETaupedeFitFitParams', 'HESETaupedeFitParticles',
+    'HESETaupedeFit1', 'HESETaupedeFit2',
     'HESEMonopodFit', 'HESEMonopodFitFitParams', 'HESEMonopodFitParticles',
     'SPEFit16', 'SPEFit16FitParams',
 

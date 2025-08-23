@@ -14,7 +14,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "v9"
+reco_version = "evtgen_v4_rec_v9"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -27,7 +27,9 @@ flavor_datasets = {
 }
 
 for simulation_name in simulation_datasets:
-    
+# for simulation_name in ["NuE_midE","NuE_highE"]:
+
+
     dataset = simulation_datasets[simulation_name]["dataset"]
     flavor = simulation_datasets[simulation_name]["flavor"]
     hdf_path = simulation_datasets[simulation_name]["hdf_path"]

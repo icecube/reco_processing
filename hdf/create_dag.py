@@ -9,7 +9,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "v9"
+reco_version = "evtgen_v4_rec_v9"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -37,6 +37,8 @@ os.system(f"cp to_hdf5.sub {dag_path}")
 outfile = open(f"{dag_path}/submit.dag", 'w')
 
 for simulation_name in simulation_datasets:
+# for simulation_name in ["NuMu_midE","NuMu_highE","NuTau_midE","NuTau_highE"]:
+# for simulation_name in ["NuE_midE","NuE_highE"]:
     
     simulation_subfolders = simulation_datasets[simulation_name]['subfolders']
     simulation_flavor = simulation_datasets[simulation_name]["flavor"]
