@@ -6,6 +6,8 @@ Here I am comparing my batch of reco files with the spice simulations.
 
 the actual notebook to compare the simulations. I ran into a lot of problems, that are fixed now with v5 reco and evtgen_v2_rec_v5.
 
+Then I had problems with the HESEMillipedeFit, which is now fixed in evtgen_v4_rec_v9
+
 ## Lower muon rate
 
 First problem I ran into in compare_spice_ftp.ipynb is that the muon rate is significantly lower:
@@ -44,3 +46,6 @@ But the length and energy asymmetry are different.
 ## Purity efficiency
 
 I tried to recreate Neha's plots: impossible, see neha_purity folder. 
+
+FinalTopology: without Neha's extra energy/length cut to remove nue from double cascade channel.
+FinalEventClass: Neha's final result. 
