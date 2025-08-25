@@ -152,6 +152,9 @@ def compare( nufiles, outpath ):
     plot_medangres( data, fit_keys = ["Taupede","Monopod","Millipede"], true_key="neha",
                    labels=["Taupede", "Monopod", "Millipede"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
+    plot_mederes( data, fit_keys = ["loge_Monopod","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_neha",
+                  labels=["Monopod","Millipede","MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+
 
 ###
 ### NuTau
