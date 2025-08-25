@@ -137,6 +137,9 @@ def compare( nufiles, outpath ):
     plot_medangres( data, fit_keys = ["Taupede","Millipede"], true_key="neha",
                    labels=["Taupede", "Millipede"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
+    plot_medangres( data, fit_keys = ["Monopod","Millipede"], true_key="neha",
+                   labels=["Monopod", "Millipede"], outpath=outpath, bins = np.linspace(4,8,nbins) )
+
     plot_mederes( data, fit_keys = ["loge_Taupede","loge_Millipede","loge_MillipedeTrun"], true_key = "loge_tru_neha",
                   labels=["Taupede", "Millipede","MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
@@ -174,25 +177,25 @@ outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtge
 compare(nufiles=nufiles,outpath=outpath)
 
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5",
-           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5",
-           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5"]
-labels = ["Taupede", "EvtGen Thijs", "EvtGen Max"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuE_EvtGen"
-compare_evtgen(nufiles=nufiles, labels = labels,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5",
+#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5",
+#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuE.h5"]
+# labels = ["Taupede", "EvtGen Thijs", "EvtGen Max"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuE_EvtGen"
+# compare_evtgen(nufiles=nufiles, labels = labels,outpath=outpath)
 
-###
-### NuMu
-###
+# ###
+# ### NuMu
+# ###
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuMu"
-compare(nufiles=nufiles,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuMu"
+# compare(nufiles=nufiles,outpath=outpath)
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5",
-           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5",
-           "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5"]
-labels = ["Taupede", "EvtGen Thijs", "EvtGen Max"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuMu_EvtGen"
-compare_evtgen(nufiles=nufiles, labels = labels,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5",
+#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5",
+#            "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/evtgen_v4_rec_v9/NuMu.h5"]
+# labels = ["Taupede", "EvtGen Thijs", "EvtGen Max"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/evtgen_v4_rec_v9/NuMu_EvtGen"
+# compare_evtgen(nufiles=nufiles, labels = labels,outpath=outpath)
 
