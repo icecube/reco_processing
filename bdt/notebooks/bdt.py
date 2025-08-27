@@ -2,10 +2,10 @@
 import joblib
 import numpy as np
 
-model1 = joblib.load( "/data/user/zchen/bdt_training/models/ftp/ftp_13features/bdt1_model.pkl" )
-model2 = joblib.load( "/data/user/zchen/bdt_training/models/ftp/ftp_13features/bdt2_model.pkl" )
+# model1 = joblib.load( "/data/user/zchen/bdt_training/models/ftp/ftp_13features/bdt1_model.pkl" )
+# model2 = joblib.load( "/data/user/zchen/bdt_training/models/ftp/ftp_13features/bdt2_model.pkl" )
 
-def Append_BDT(weighter):
+def Append_BDT(weighter, model1, model2):
 
     var_names = [
         ['TauMonoDiff_rlogl','value'],
