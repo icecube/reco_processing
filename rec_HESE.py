@@ -17,8 +17,6 @@ from icecube.millipede import HighEnergyExclusions
 from icecube.spline_reco import SplineMPE
 from icecube.level3_filter_cascade.level3_Recos import SPEFit
 
-from segments.VHESelfVeto import SelfVetoWrapper
-
 # for level 3 muon (pulse cleaning needed for splinempe)
 from icecube import level3_filter_muon  # noqa: F401
 
@@ -202,8 +200,6 @@ def main():
                         help='pick a minimizer to use for the final step in skymap (expert)')
     parser.add_argument('--evegen', default=False, action='store_true',
                         help='try run reco with event-generator (WIP)')
-    parser.add_argument('--HESE', default=False, action='store_true',
-                        help='running HESE Millipede for 3 topologies')
 
     args = parser.parse_args()
     icetray.set_log_level(args.loglevel)
@@ -233,15 +229,6 @@ def main():
     tray = I3Tray()
     tray.Add('I3Reader', Filenamelist=args.infiles)
     tray.Add(sane, split_names=args.splits)
-
-    # apply HESE selection
-    if args.HESE:
-        print("applying hese selection")
-        tray.Add(SelfVetoWrapper)
-
-        tray.Add(lambda frame : 'HESE_VHESelfVeto' in frame and not frame['HESE_VHESelfVeto'].value)
-        tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].value >= 6000)
-        tray.Add(print_frameid)
 
     if args.isdata:
         rde_map = library.get_rde_map(os.path.expandvars(
@@ -698,60 +685,58 @@ def main():
         except ImportError as e:
             icetray.logging.log_error(str(e), __name__)
 
-    # taken from Neha
-    if args.HESE:  
-        print("running HESE, with printing modules")      
-        from segments.MillipedeWrapper import MillipedeWrapper
-        from segments.FinalEventClassification import checkfinaltopology
-        from segments.RecoObservables import calculaterecoobservables
-                
-        # energy definition
-        gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
-        gcdfile = dataio.I3File(gcdfilepath)
+    print("running HESE, with printing modules")      
+    from segments.MillipedeWrapper import MillipedeWrapper
+    from segments.FinalEventClassification import checkfinaltopology
+    from segments.RecoObservables import calculaterecoobservables
+            
+    # energy definition
+    gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
+    gcdfile = dataio.I3File(gcdfilepath)
+    frame = gcdfile.pop_frame()
+    while 'I3Geometry' not in frame:
         frame = gcdfile.pop_frame()
-        while 'I3Geometry' not in frame:
-            frame = gcdfile.pop_frame()
-        geometry = frame['I3Geometry'].omgeo
+    geometry = frame['I3Geometry'].omgeo
 
-        strings = [1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 50, 59, 67, 74, 73, 72, 78, 77, 76, 75, 68, 60, 51, 41, 31, 22, 14, 7]
+    strings = [1, 2, 3, 4, 5, 6, 13, 21, 30, 40, 50, 59, 67, 74, 73, 72, 78, 77, 76, 75, 68, 60, 51, 41, 31, 22, 14, 7]
 
-        outerbounds = {}
-        cx, cy = [], []
-        for string in strings:
-            omkey = icetray.OMKey(string, 1)
-            # if geometry.has_key(omkey):
-            x, y = geometry[omkey].position.x, geometry[omkey].position.y
-            outerbounds[string] = (x, y)
-            cx.append(x)
-            cy.append(y)
-        cx, cy = np.asarray(cx), np.asarray(cy)
-        order = np.argsort(np.arctan2(cx, cy))
-        outeredge_x = cx[order]
-        outeredge_y = cy[order]
+    outerbounds = {}
+    cx, cy = [], []
+    for string in strings:
+        omkey = icetray.OMKey(string, 1)
+        # if geometry.has_key(omkey):
+        x, y = geometry[omkey].position.x, geometry[omkey].position.y
+        outerbounds[string] = (x, y)
+        cx.append(x)
+        cy.append(y)
+    cx, cy = np.asarray(cx), np.asarray(cy)
+    order = np.argsort(np.arctan2(cx, cy))
+    outeredge_x = cx[order]
+    outeredge_y = cy[order]
 
-        # track reco
-        tray.Add('I3OMSelection<I3RecoPulseSeries>', 'omselection_HESE',
-            InputResponse = 'SRT' + "SplitInIcePulses",
-            OmittedStrings = [79,80,81,82,83,84,85,86], # deepcore strings
-            OutputOMSelection = 'SRT' + "SplitInIcePulses" + '_BadOMSelectionString',
-            OutputResponse = 'SRT' + "SplitInIcePulses" + '_IC_Singles')
+    # track reco
+    tray.Add('I3OMSelection<I3RecoPulseSeries>', 'omselection_HESE',
+        InputResponse = 'SRT' + "SplitInIcePulses",
+        OmittedStrings = [79,80,81,82,83,84,85,86], # deepcore strings
+        OutputOMSelection = 'SRT' + "SplitInIcePulses" + '_BadOMSelectionString',
+        OutputResponse = 'SRT' + "SplitInIcePulses" + '_IC_Singles')
 
-        tray.Add(SPEFit, 'SPEFit16',
-                Pulses = 'SRT' + "SplitInIcePulses" + '_IC_Singles',
-                Iterations = 16)
+    tray.Add(SPEFit, 'SPEFit16',
+            Pulses = 'SRT' + "SplitInIcePulses" + '_IC_Singles',
+            Iterations = 16)
 
-        del millipede_params["PhotonsPerBin"] # also input to MillipedeWrapper next, gives error if entered twice
+    del millipede_params["PhotonsPerBin"] # also input to MillipedeWrapper next, gives error if entered twice
 
-        # HESE millipede
-        tray.Add(MillipedeWrapper, 'HESEMillipedeFit',
-            Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'SPEFit16'],
-            PhotonsPerBin = 0,
-            ShowerSpacing = 5,
-            innerboundary=550,
-            outerboundary=650,
-            outeredge_x=outeredge_x,
-            outeredge_y=outeredge_y,
-            **millipede_params)
+    # HESE millipede
+    tray.Add(MillipedeWrapper, 'HESEMillipedeFit',
+        Seeds = ['MonopodFit_iMIGRAD_PPB0', 'TaupedeFit_iMIGRAD_PPB0', 'SPEFit16'],
+        PhotonsPerBin = 0,
+        ShowerSpacing = 5,
+        innerboundary=550,
+        outerboundary=650,
+        outeredge_x=outeredge_x,
+        outeredge_y=outeredge_y,
+        **millipede_params)
 
     if args.loglevel not in ['debug', 'trace']:
         tray.Add('Delete', keystarts=['seed_'])
