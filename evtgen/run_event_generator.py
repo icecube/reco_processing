@@ -87,7 +87,7 @@ def main():
 
     # initialize timers
     starttimes, stoptimes = {}, {}
-    timekeys = ['EventGeneratorDC_Max','EventGeneratorDC_Thijs', 'EventGeneratorDC_Combined']
+    timekeys = ['EventGeneratorDC_Max','EventGeneratorDC_Thijs']
     for timekey in timekeys:
         starttimes[timekey] = []
         stoptimes[timekey] = []
@@ -140,20 +140,6 @@ def main():
     )
     tray.Add(timer, tag='stop', key='EventGeneratorDC_Thijs')
 
-    tray.Add(timer, tag='start', key='EventGeneratorDC_Combined')
-    tray.AddSegment(
-        ApplyEventGeneratorReconstruction,
-        'apply_egen_reco_dc_combined',
-        pulse_key='SplitInIceDSTPulses',
-        dom_and_tw_exclusions=['BadDomsList', 'CalibrationErrata', 'SaturationWindows'],
-        partial_exclusion=True,
-        exclude_bright_doms=True,
-        model_names=['starting_multi_cascade_7param_noise_ftpv3m__big_n002_01'],
-        seed_keys=['dc_from_MonopodFit_iMIGRAD_PPB0','dc_from_TaupedeFit_iMIGRAD_PPB0', 'MonopodSeed_length0'],
-        model_base_dir='/data/user/mhuennefeld/exported_models/egenerator/v2_0',
-        output_key='EventGeneratorDC_Combined',
-    )
-    tray.Add(timer, tag='stop', key='EventGeneratorDC_Combined')
 
     tray.AddModule('I3Writer', 'writer_i3',
                    filename=opts.outputfile,
