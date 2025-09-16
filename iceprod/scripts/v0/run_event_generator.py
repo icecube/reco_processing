@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from icecube import icetray, dataio, dataclasses
 from I3Tray import I3Tray
 import datetime

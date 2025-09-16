@@ -230,6 +230,8 @@ def main():
     tray.Add('I3Reader', Filenamelist=args.infiles)
     tray.Add(sane, split_names=args.splits)
 
+    tray.Add(print_frameid)
+
     if args.isdata:
         rde_map = library.get_rde_map(os.path.expandvars(
             '$I3_BUILD/ice-models/resources/models/PPCTABLES/misc/eff-f2k.FTP125max'))

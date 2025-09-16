@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from icecube import dataio, icetray, dataclasses, simclasses
 from icecube.icetray import I3Tray
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
