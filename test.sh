@@ -1,7 +1,31 @@
-# source /data/user/tvaneede/GlobalFit/reco_processing/setenv.sh
 
-# rec -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/Reco_NuTau_NuGenCCNC.022635.000001.i3.zst --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz /data/user/tvaneede/GlobalFit/reco_processing/filtering/output/test/Level3_NuTau_NuGenCCNC.022635.000001.i3.zst --nframes 20
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+#     /data/user/tvaneede/software/py_venvs/py3-v4.4.1_reco-v1.1.0/bin/python \
+#     /data/user/tvaneede/GlobalFit/reco_processing/rec_tau.py \
+#     -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst \
+#     --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --nframes 9 \
+#     --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz \
+#     /data/user/tvaneede/GlobalFit/reco_processing/filter/output/test/HESE_NuTau_NuGenCCNC.022634.000000.i3.zst
 
-# problematic event
-/data/user/tvaneede/GlobalFit/reco_processing/rec_HESE.py -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --HESE --nframes 150 --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz /data/sim/IceCube/2023/filtered/level2/neutrino-generator/22634/0000000-0000999/Level2_NuTau_NuGenCCNC.022634.000000.i3.zst
-# rec -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/test_2.i3.zst --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz /data/sim/IceCube/2023/filtered/level2/neutrino-generator/22634/0000000-0000999/Level2_NuTau_NuGenCCNC.022634.000001.i3.zst
+
+###
+### trying to get cvmfs to work
+###
+
+# # using test environment
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+#     /mnt/ceph1-npx/user/tvaneede/software/py_venvs/test_iceprod_reco/py3-v4.4.1_reco-v1.1.0/bin/python \
+#     /data/user/tvaneede/GlobalFit/reco_processing/rec_tau.py \
+#     -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst \
+#     --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --nframes 9 \
+#     --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz \
+#     /data/user/tvaneede/GlobalFit/reco_processing/filter/output/test/HESE_NuTau_NuGenCCNC.022634.000000.i3.zst
+
+# using test environment
+/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v0/rec_tau.py \
+    -o /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst \
+    --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --nframes 9 \
+    --qs $I3_DATA/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz \
+    /data/user/tvaneede/GlobalFit/reco_processing/filter/output/test/HESE_NuTau_NuGenCCNC.022634.000000.i3.zst
