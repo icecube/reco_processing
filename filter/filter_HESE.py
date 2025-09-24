@@ -14,7 +14,7 @@ parser.add_argument("--Inputfile",type=str,help='Input file',dest="inputfile")
 parser.add_argument("--Outputfile",type=str,help='Output file',dest="outputfile")
 opts = parser.parse_args()
 
-gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
+gcdfilepath = "/cvmfs/icecube.opensciencegrid.org/data/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
 
 files = [gcdfilepath, opts.inputfile]
 
