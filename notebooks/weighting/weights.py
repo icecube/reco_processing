@@ -5,51 +5,6 @@ import pickle
 
 spline_file = '/data/ana/Diffuse/NNMFit/MCEq_splines/v1.2.1/MCEq_splines_PRI-Gaisser-H4a_INT-SIBYLL23c_allfluxes.pickle'
 
-def Append_Weights(file, gamma_astro = 2.87, per_flavor_norm = 2.12):
-    
-    hdf_file = file['hdf_file']
-    nfiles   = file['nfiles']
-    file["weighters"] = {}
-
-    # conventional            
-    flux_keys_conv =  ['conv_antinumu','conv_numu','conv_antinue','conv_nue','conv_antinutau','conv_nutau']
-    spline_object_conv = SplineHandler(spline_file, flux_keys_conv)
-    conv_flux = spline_object_conv.return_weight
-    
-    generator_conv = lambda pdgid, energy, cos_zen: conv_flux(pdgid, energy, cos_zen)
-    
-    file["weighters"]["conventional"] = simweights.NuGenWeighter(hdf_file,nfiles=nfiles)
-    # file['variables']['Weights_Conventional'] = weighter.get_weights(generator_conv)
-    # file['variables']['Weights_Conventional_PassedVeto'] = file['variables']['Weights_Conventional']*file['variables']['ConventionalAtmosphericPassingFractions']
-            
-    # prompt
-    flux_keys_pr =  ['pr_antinumu','pr_numu','pr_antinue','pr_nue','pr_antinutau','pr_nutau']
-    spline_object_pr = SplineHandler(spline_file, flux_keys_pr)
-    pr_flux = spline_object_pr.return_weight
-    
-    generator_pr = lambda pdgid, energy, cos_zen: pr_flux(pdgid, energy, cos_zen)
-    
-    # weighter = simweights.NuGenWeighter(hdf_file,nfiles=nfiles)
-    file["weighters"]["prompt"] = simweights.NuGenWeighter(hdf_file,nfiles=nfiles)
-    # file['variables']['Weights_Prompt'] = weighter.get_weights(generator_pr)
-    # file['variables']['Weights_Prompt_PassedVeto'] = file['variables']['Weights_Prompt']*file['variables']['PromptAtmosphericPassingFractions']
-
-    # combine atmospheric
-    # file['variables']['Weights_Atmospheric'] = file['variables']['Weights_Conventional_PassedVeto'] + file['variables']['Weights_Prompt_PassedVeto']
-    # file['variables']['Weights_Atmospheric'] = file['variables']['Weights_Conventional'] + file['variables']['Weights_Prompt']
-
-    # astro
-    def AstroFluxModel(pdgid, energy, cos_zen):
-        flux = 0.5*(per_flavor_norm*1e-18)*(energy/1e5)**-gamma_astro
-        return flux
-
-    # weighter = simweights.NuGenWeighter(hdf_file,nfiles=nfiles)
-    # file['variables']['Weights_Astro'] = weighter.get_weights(AstroFluxModel)
-
-    return file
-
-
-
 
 class SplineHandler(object):
     """
@@ -153,6 +108,50 @@ class SplineHandler(object):
             ##correct for the E**mag factor from MCEq
             weights[pid_idcs] /= energys[pid_idcs]**self.mag
         return weights
+
+# conventional            
+flux_keys_conv =  ['conv_antinumu','conv_numu','conv_antinue','conv_nue','conv_antinutau','conv_nutau']
+spline_object_conv = SplineHandler(spline_file, flux_keys_conv)
+conv_flux = spline_object_conv.return_weight
+generator_conv = lambda pdgid, energy, cos_zen: conv_flux(pdgid, energy, cos_zen)
+
+# prompt
+flux_keys_pr =  ['pr_antinumu','pr_numu','pr_antinue','pr_nue','pr_antinutau','pr_nutau']
+spline_object_pr = SplineHandler(spline_file, flux_keys_pr)
+pr_flux = spline_object_pr.return_weight
+generator_pr = lambda pdgid, energy, cos_zen: pr_flux(pdgid, energy, cos_zen)
+
+# astro
+def create_AstroFluxModel(per_flavor_norm, gamma_astro):
+
+    def AstroFluxModel(pdgid, energy, cos_zen):
+        flux = 0.5*(per_flavor_norm*1e-18)*(energy/1e5)**-gamma_astro
+        return flux
+    
+    return AstroFluxModel
+
+def Append_Weights(file, gamma_astro = 2.87, per_flavor_norm = 2.12, livetime_s = 11.687 * 365.25 * 24 * 3600):
+    
+    file["weighters"] = {}
+
+    file['weighter_conv'] = simweights.NuGenWeighter( file['hdf_file'] ,nfiles=file['nfiles'])
+    file['weights_conv'] = file["weighter_conv"].get_weights(generator_conv) * livetime_s
+
+    file['weighter_pr'] = simweights.NuGenWeighter( file['hdf_file'] ,nfiles=file['nfiles'])
+    file['weights_pr'] = file["weighter_pr"].get_weights(generator_pr) * livetime_s
+
+    AstroFluxModel = create_AstroFluxModel( per_flavor_norm=per_flavor_norm, gamma_astro=gamma_astro )
+
+    file['weighter_astro'] = simweights.NuGenWeighter( file['hdf_file'] ,nfiles=file['nfiles'])
+    file['weights_astro'] = file["weighter_astro"].get_weights(AstroFluxModel) * livetime_s
+
+    # sum
+    file['weight'] = file['weights_astro'] + file['weights_pr'] + file['weights_conv']
+
+    return file
+
+
+
 
 
 
