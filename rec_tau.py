@@ -693,7 +693,7 @@ def main():
     from segments.RecoObservables import calculaterecoobservables
             
     # energy definition
-    gcdfilepath = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
+    gcdfilepath = "/cvmfs/icecube.opensciencegrid.org/data/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
     gcdfile = dataio.I3File(gcdfilepath)
     frame = gcdfile.pop_frame()
     while 'I3Geometry' not in frame:
