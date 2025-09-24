@@ -7,6 +7,8 @@ from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 
 from egenerator.ic3.segments import ApplyEventGeneratorReconstruction
 
+model_base_dir = "/cvmfs/icecube.opensciencegrid.org/users/tvaneede/exported_models/egenerator/v2_0/"
+
 def generate_egen_seed_from_cascade(frame, seed_key):
     seed_particle = frame[seed_key]
 
@@ -118,7 +120,7 @@ def main():
         exclude_bright_doms=True,
         model_names=['starting_multi_cascade_7param_noise_ftpv3m__big_n002_01'],
         seed_keys=['dc_from_MonopodFit_iMIGRAD_PPB0'],
-        model_base_dir='/data/user/mhuennefeld/exported_models/egenerator/v2_0',
+        model_base_dir=model_base_dir,
         output_key='EventGeneratorDC_Max',
     )
     tray.Add(timer, tag='stop', key='EventGeneratorDC_Max')
@@ -136,7 +138,7 @@ def main():
         exclude_bright_doms=True,
         model_names=['starting_multi_cascade_7param_noise_ftpv3m__big_n002_01'],
         seed_keys=['dc_from_TaupedeFit_iMIGRAD_PPB0', 'MonopodSeed_length0'],
-        model_base_dir='/data/user/mhuennefeld/exported_models/egenerator/v2_0',
+        model_base_dir=model_base_dir,
         output_key='EventGeneratorDC_Thijs',
     )
     tray.Add(timer, tag='stop', key='EventGeneratorDC_Thijs')
