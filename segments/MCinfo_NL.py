@@ -95,8 +95,8 @@ def mcinfo(tray, name,
                         np.round(cascade.length, 2)):
                     if particle.type not in invisibletypes:
                        if ShowerParameters(particle.type,particle.energy).b==0:
-                          energy.append(0)
-                          shower_max.append(0)
+                            energy.append(0.0)
+                            shower_max.append(0.0)
                        else:
                             energy.append(particle.energy*\
                                       ((ShowerParameters(particle.type,particle.energy).emScale)))
@@ -105,8 +105,9 @@ def mcinfo(tray, name,
                     
         shower_max = np.array(shower_max)
         energy = np.array(energy)
-        ShowerMaxCombined = (np.dot(shower_max,energy)/np.sum(energy))
         e  = np.sum(energy)
+        if e > 0: ShowerMaxCombined = (np.dot(shower_max,energy)/e)
+        else: ShowerMaxCombined = 0.0 
 
         return ShowerMaxCombined, e, particle
     
@@ -581,7 +582,8 @@ def mcinfo(tray, name,
         elif eventclass == 2:
             hadron = frame['VertexOutgoingHadron']
             lepton = frame['VertexOutgoingLepton']
-            #print('lepton is',lepton)
+            # print('hadron is',hadron)
+            # print('lepton is',lepton)
             # the hadronic cascade
             cascade1 = I3Particle(hadron)
             cascade1.energy = hadron.energy*((ShowerParameters(hadron.type,hadron.energy).emScale))
