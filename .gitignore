@@ -18,3 +18,5 @@ performance/plots/v*
 */*.h5
 
 performance/out
+
+notebooks/benchmark_tau_reco_iceprod/requirements/data/
