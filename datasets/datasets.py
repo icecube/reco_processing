@@ -1,4 +1,219 @@
 
+###
+### checking my iceprod datasets
+###
+
+
+snowstorm_iceprod_benchmark = {}
+
+snowstorm_iceprod_benchmark["NuTau_lowE"] = {
+    "dataset" : "23458",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuTau_midE"] = {
+    "dataset" : "23459",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuTau_highE"] = {
+    "dataset" : "23460",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuE_lowE"] = {
+    "dataset" : "23455",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuE_midE"] = {
+    "dataset" : "23456",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuE_highE"] = {
+    "dataset" : "23457",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuMu_lowlowE"] = {
+    "dataset" : "23451",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuMu_lowE"] = {
+    "dataset" : "23452",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuMu_midE"] = {
+    "dataset" : "23453",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+snowstorm_iceprod_benchmark["NuMu_highE"] = {
+    "dataset" : "23454",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+}
+
+###
+
+taureco_iceprod_benchmark = {}
+
+taureco_iceprod_benchmark["NuTau_lowE"] = {
+    "dataset" : "22633",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level6_cascade", "level7_cascade", "level8_cascade"]
+    "levels" : ["level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuTau_midE"] = {
+    "dataset" : "22634",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuTau_highE"] = {
+    "dataset" : "22635",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuE_lowE"] = {
+    "dataset" : "22614",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level6_cascade", "level7_cascade", "level8_cascade"]
+    "levels" : ["level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuE_midE"] = {
+    "dataset" : "22613",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuE_highE"] = {
+    "dataset" : "22612",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuE",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuMu_lowE"] = {
+    "dataset" : "22646",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level6_cascade", "level7_cascade", "level8_cascade"]
+    "levels" : ["level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuMu_midE"] = {
+    "dataset" : "22645",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+taureco_iceprod_benchmark["NuMu_highE"] = {
+    "dataset" : "22644",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuMu",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2", "HESE_taupede","HESE_evtgen","level6_cascade","level7_cascade", "level8_cascade"]
+    "levels" : ["HESE_taupede","HESE_evtgen","level7_cascade", "level8_cascade"]
+}
+
+###
+###
+###
+
+
 v1_wpid = {}
 
 v1_wpid["NuTau_midE"] = {
@@ -1053,31 +1268,27 @@ ftp_generated["NuTau_midE1"] = {
 ### Name: ftp_l3casc, previous: ftp
 ###
 
-ftp_l3casc = {}
+ftp_baseline = {}
 
-ftp_l3casc["NuTau_midE1"] = {
+ftp_baseline["NuTau_midE1"] = {
     "dataset" : "22634",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuTau_22634.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 4000,
 }
 
-ftp_l3casc["NuTau_midE2"] = {
+ftp_baseline["NuTau_midE2"] = {
     "dataset" : "22667",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuTau_22667.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 3764,
 }
 
-ftp_l3casc["NuTau_highE1"] = {
+ftp_baseline["NuTau_highE1"] = {
     "dataset" : "22635",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1085,13 +1296,11 @@ ftp_l3casc["NuTau_highE1"] = {
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999",
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuTau_22635.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 19997,
 }
 
-ftp_l3casc["NuTau_highE2"] = {
+ftp_baseline["NuTau_highE2"] = {
     "dataset" : "22668",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1099,35 +1308,29 @@ ftp_l3casc["NuTau_highE2"] = {
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999",
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuTau_22668.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 16563,
 }
 
-ftp_l3casc["NuE_midE1"] = {
+ftp_baseline["NuE_midE1"] = {
     "dataset" : "22613",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuE_22613.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 3987,
 }
 
-ftp_l3casc["NuE_midE2"] = {
+ftp_baseline["NuE_midE2"] = {
     "dataset" : "22664",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuE_22664.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 3747,
 }
 
-ftp_l3casc["NuE_highE1"] = {
+ftp_baseline["NuE_highE1"] = {
     "dataset" : "22612",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1135,13 +1338,11 @@ ftp_l3casc["NuE_highE1"] = {
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999",
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuE_22612.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 19960,
 }
 
-ftp_l3casc["NuE_highE2"] = {
+ftp_baseline["NuE_highE2"] = {
     "dataset" : "22663",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1149,58 +1350,49 @@ ftp_l3casc["NuE_highE2"] = {
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999",
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuE_22663.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 19693,
 }
 
 
-ftp_l3casc["NuMu_midE1"] = {
+ftp_baseline["NuMu_midE1"] = {
     "dataset" : "22645",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuMu_22645.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 5000,
 }
 
-ftp_l3casc["NuMu_midE2"] = {
+ftp_baseline["NuMu_midE2"] = {
     "dataset" : "22671",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuMu_22671.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 4687,
 }
 
-ftp_l3casc["NuMu_highE1"] = {
+ftp_baseline["NuMu_highE1"] = {
     "dataset" : "22644",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
      "0005000-0005999", "0006000-0006999", "0007000-0007999", "0008000-0008999", "0009000-0009999",
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuMu_22644.h5',
+    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
     'nfiles' : 14998,
 }
 
-ftp_l3casc["NuMu_highE2"] = {
+ftp_baseline["NuMu_highE2"] = {
     "dataset" : "22670",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
      "0005000-0005999", "0006000-0006999", "0007000-0007999", "0008000-0008999", "0009000-0009999",
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2023/filtered/level3/cascade/neutrino-generator/",
-    'hdf_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/',
-    'hdf_file_path' : '/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc/NuMu_22670.h5',
+    "level2_path" : "/data/sim/IceCube/2023/filtered/level2/neutrino-generator/",
+    "level6_path" : "/data/sim/IceCube/2020/filtered/level6/cascade/neutrino-generator/",
     'nfiles' : 9688,
 }
 
@@ -1210,18 +1402,19 @@ ftp_l3casc["NuMu_highE2"] = {
 ### Name: ftp_l3casc_ensemble, previous: ftp
 ###
 
-ftp_l3casc_ensemble = {}
+ftp_l2_ensemble = {}
 
-ftp_l3casc_ensemble["NuTau_midE"] = {
+ftp_l2_ensemble["NuTau_midE"] = {
     "dataset" : "22859",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
-ftp_l3casc_ensemble["NuTau_highE"] = {
+ftp_l2_ensemble["NuTau_highE"] = {
     "dataset" : "22860",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1230,20 +1423,22 @@ ftp_l3casc_ensemble["NuTau_highE"] = {
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999",
      "0020000-0020999", "0021000-0021999"],
     "flavor" : "NuTau",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
-ftp_l3casc_ensemble["NuE_midE"] = {
+ftp_l2_ensemble["NuE_midE"] = {
     "dataset" : "22856",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
-ftp_l3casc_ensemble["NuE_highE"] = {
+ftp_l2_ensemble["NuE_highE"] = {
     "dataset" : "22857",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1252,20 +1447,22 @@ ftp_l3casc_ensemble["NuE_highE"] = {
      "0015000-0015999", "0016000-0016999", "0017000-0017999", "0018000-0018999", "0019000-0019999",
      "0020000-0020999", "0021000-0021999", "0022000-0022999", "0023000-0023999"],
     "flavor" : "NuE",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
-ftp_l3casc_ensemble["NuMu_midE"] = {
+ftp_l2_ensemble["NuMu_midE"] = {
     "dataset" : "22853",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999", "0005000-0005999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
-ftp_l3casc_ensemble["NuMu_highE"] = {
+ftp_l2_ensemble["NuMu_highE"] = {
     "dataset" : "22854",
     "subfolders" : 
     ["0000000-0000999", "0001000-0001999", "0002000-0002999", "0003000-0003999", "0004000-0004999",
@@ -1273,8 +1470,9 @@ ftp_l3casc_ensemble["NuMu_highE"] = {
      "0010000-0010999", "0011000-0011999", "0012000-0012999", "0013000-0013999", "0014000-0014999",
      "0015000-0015999", "0016000-0016999", "0017000-0017999"],
     "flavor" : "NuMu",
-    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level3/cascade/neutrino-generator/",
-    "hdf_path" : "/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/ftp_l3casc_ensemble_wtrackreco/",
+    "reco_base_out_path" : "/data/sim/IceCube/2020/filtered/level2/neutrino-generator/",
+    "year" : "2020",
+    "hdf_path" : "",
 }
 
 ###
