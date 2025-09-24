@@ -19,9 +19,16 @@
 #         --Outputfile /data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/test/test.i3.bz2
 
 
-# using cvmfs
+# # using cvmfs
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.3.0/RHEL_7_x86_64/metaprojects/icetray/v1.12.0/env-shell.sh \
+#         /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/tensorflow_gpu_py3-v4.3.0/bin/python \
+#         /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v0/run_event_generator.py \
+#         --Inputfile /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst \
+#         --Outputfile /data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/test/test.i3.bz2
+
+# using cvmfs, test new model locations
 /cvmfs/icecube.opensciencegrid.org/py3-v4.3.0/RHEL_7_x86_64/metaprojects/icetray/v1.12.0/env-shell.sh \
         /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/tensorflow_gpu_py3-v4.3.0/bin/python \
-        /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v0/run_event_generator.py \
+        /data/user/tvaneede/GlobalFit/reco_processing/evtgen/run_event_generator.py \
         --Inputfile /data/user/tvaneede/GlobalFit/reco_processing/output/test/test.i3.zst \
         --Outputfile /data/user/tvaneede/GlobalFit/reco_processing/evtgen/output/test/test.i3.bz2
