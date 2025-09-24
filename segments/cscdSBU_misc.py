@@ -1,7 +1,7 @@
 from icecube import icetray,dataclasses
 
 @icetray.traysegment
-def misc(tray, name, pulses='OfflinePulses'):
+def misc(tray, name, pulses='SplitInIcePulses'):
 
     tray.AddModule("I3LCPulseCleaning", "I3LCPulseCleaning",
                     Input=pulses,
