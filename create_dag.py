@@ -52,9 +52,9 @@ for simulation_name in simulation_datasets:
         os.system(f"cp reco.sub {dag_path}")
 
         # backup scripts
-        os.system(f"cp {work_path}/reco.sub {backup_path}")
+        os.system(f"cp {work_path}/rec_tau.sub {backup_path}")
         os.system(f"cp {work_path}/wrapper.sh {backup_path}")
-        os.system(f"cp {work_path}/rec_HESE.py {backup_path}")
+        os.system(f"cp {work_path}/rec_tau.py {backup_path}")
 
         # create the dag job
         outfile = open(f"{dag_path}/submit.dag", 'w')
