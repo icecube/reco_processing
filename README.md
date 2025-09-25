@@ -22,3 +22,7 @@ I am using version with latest commit 7f46745:
 - v7: still found a shitty performance of HESEMillipede fit in v6. I saw 2 other differences with Neha in the HESEMillipede Fit params. ExcludeDeepCore = False and I shouldnt have had a BrightDOMThreshold=args.bdthres=15. Let's try again.
 - v8: after discussing with tianlu, trying the exact exact same millipede settings as for the seeds. I am doubtful. But.. It seems to fix my problem. 
 - v9: same as v8, but all flavors and energy ranges. I copied the hdf high energy tau files from v8.
+- v10: do a check with new gcd from christopher/tianlu
+
+## iceprod
+- v0: copy of the scripts. remove filtering from script, ready for l6 cascade or l2 files
