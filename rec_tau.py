@@ -230,6 +230,17 @@ def main():
     tray.Add('I3Reader', Filenamelist=args.infiles)
     tray.Add(sane, split_names=args.splits)
 
+    ###
+    ### remove for iceprod
+    ###
+    import sys
+    sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
+    from segments.VHESelfVeto import SelfVetoWrapper
+    tray.Add(SelfVetoWrapper)
+    tray.Add(lambda frame : 'HESE_VHESelfVeto' in frame and not frame['HESE_VHESelfVeto'].value)
+    tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].value >= 6000)
+
+
     tray.Add(print_frameid)
 
     if args.isdata:

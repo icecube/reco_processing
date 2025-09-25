@@ -9,7 +9,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 from datasets import datasets
 
 # set the inputs
-reco_version = "v9"
+reco_version = "v10"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -18,7 +18,7 @@ simulation_datasets = getattr(datasets, reco_version)
 dag_base_path = "/scratch/tvaneede/reco/run_taupede_tianlu"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/"
 
-nfiles = 10000 # process x files per subfolder
+nfiles = 200 # process x files per subfolder
 submit_jobs = True # actually submit the dag jobs
 
 for simulation_name in simulation_datasets:
@@ -49,7 +49,7 @@ for simulation_name in simulation_datasets:
         os.system(f"mkdir -p {log_dir}")
         os.system(f"mkdir -p {reco_out_path}")
         os.system(f"mkdir -p {backup_path}")
-        os.system(f"cp reco.sub {dag_path}")
+        os.system(f"cp rec_tau.sub {dag_path}")
 
         # backup scripts
         os.system(f"cp {work_path}/rec_tau.sub {backup_path}")
@@ -75,7 +75,7 @@ for simulation_name in simulation_datasets:
             JOBID = filename.split("_")[2] # gives the run number
             OUTFILE = f"{reco_out_path}/Reco_{simulation_flavor}_{JOBID}_out.i3.bz2"
 
-            outfile.write(f"JOB {JOBID} reco.sub\n")
+            outfile.write(f"JOB {JOBID} rec_tau.sub\n")
             outfile.write(f'VARS {JOBID} LOGDIR="{log_dir}"\n')
             outfile.write(f'VARS {JOBID} JOBID="{JOBID}"\n')
             outfile.write(f'VARS {JOBID} INFILES="{INFILES}"\n')
