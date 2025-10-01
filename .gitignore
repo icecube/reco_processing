@@ -20,3 +20,4 @@ performance/plots/v*
 performance/out
 
 notebooks/benchmark_tau_reco_iceprod/requirements/data/
+notebooks/benchmark_snowstorm_iceprod/requirements/data/
