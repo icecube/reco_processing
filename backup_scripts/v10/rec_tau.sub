@@ -1,0 +1,15 @@
+universe = vanilla
+executable = /data/user/tvaneede/GlobalFit/reco_processing/wrapper.sh
+notification = Never
+IWD = $ENV(HOME)
+request_memory = 8.0 GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT_OR_EVICT
+transfer_output_files = ""
++FileSystemDomain = "notarealdomain"
+arguments = -o $(OUTFILE) --imigrad --hypo tau --icemodel ftp-v1 --tilt --effd --effp --qs /data/user/tvaneede/GlobalFit/reco_processing/GCD/gcd_pass2_rde.i3.gz $(INFILES)
+output = $(LOGDIR)/$(JOBID).out
+error = $(LOGDIR)/$(JOBID).err
+log = $(LOGDIR)/$(JOBID).log
+requirements = (TARGET.has_ssse3) && (TARGET.has_avx2)
+queue 1
