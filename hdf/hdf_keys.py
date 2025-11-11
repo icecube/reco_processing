@@ -11,10 +11,16 @@ hdfkeys += ['I3MCWeightDict','I3EventHeader']
 # tianlu reco
 hdfkeys += ['CombinedCascadeSeed_L3','PreferredFit','MonopodFit_iMIGRAD', 'MonopodFit_iMIGRADFitParams','TaupedeFit_iMIGRAD', 'TaupedeFit_iMIGRADParticles', 'TaupedeFit_iMIGRADFitParams']
 hdfkeys += ['MillipedeFit_iMIGRAD','MillipedeFit_iMIGRADParticles', 'MillipedeFit_iMIGRADFitParams', 'seed_iMIGRAD_BestMonopod','seed_iMIGRAD_BestAltnFit']
-                                               
+
 # track reco
 hdfkeys += ['LineFit','SPEFit2','l2_online_SplineMPE','OnlineL2_SplineMPE']     
-                            
+            
+# level 3
+hdfkeys += ["L3_MonopodFit4_AmptFit"]
+
+# level3 track
+hdfkeys += ["BestTrack"]
+
 # evtgen tianlu
 hdfkeys += ['EventGeneratorFit_I3Particle', 'EventGeneratorSelectedReco_I3Particle', 'EventGeneratorSelectedRecoNN_I3Particle','EventGeneratorSelectedRecoNNCircularUncertainty']
                             

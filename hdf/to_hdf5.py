@@ -71,7 +71,8 @@ outeredge_y = cy[order]
 
 def print_frameid(frame):
     eventid = frame['I3EventHeader'].event_id
-    print("*******Currently processing frame %s*******" %eventid)
+    runid = frame['I3EventHeader'].run_id
+    print(f"*******Currently processing frame {eventid} run {runid} *******")
 
 
 def fensurecc(frame):
@@ -223,7 +224,7 @@ def main():
                         type=str, help='output file')
     parser.add_argument('-i', '--inpath', default='/test',
                         type=str, help='input path')
-    parser.add_argument('-S', '--splits', default=['InIceSplit',], nargs='+',
+    parser.add_argument('-S', '--splits', default=['InIceSplit',"Final"], nargs='+',
                         help='which P-frame splits to process')
     parser.add_argument('--spice', default=False, action='store_true',
                         help='creating hdf from spice files')
@@ -256,7 +257,9 @@ def main():
     tray.Add(print_frameid)
 
     flavor = os.path.basename(inputfiles[-1]).split("_")[1] # does this work for MuonGun and data?
-
+    if flavor == "HESE": flavor = os.path.basename(inputfiles[-1]).split("_")[2]
+    print("flavor", flavor)
+    
     # neha true HESE_Taupede.py
     tray.AddModule(AddOutGoingParticles,'AddOutGoingParticles')
     tray.Add(AddMCInfo,'AddMCInfo')
@@ -291,7 +294,7 @@ def main():
     tray.Add(penetrating_depth)
     tray.Add(PassingFraction)
 
-    # add some bdt variables
+    # # add some bdt variables
     tray.AddSegment(misc, 'misc', pulses=pulses) # was with OfflinePulses, but should be same as SplitInIcePulses
 
     # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
@@ -303,7 +306,7 @@ def main():
     tray.AddSegment(add_hit_verification_info_muon_and_wimp, 'CommonVariablesMuonAndWimp',
                     Pulses= pulses,
                     If = which_split(split_name='InIceSplit') & (lambda f: (muon_wg(f) or wimp_wg(f)) and 'CVStatistics' not in f),
-                    OutputI3HitMultiplicityValuesName=  "CVMultiplicity",
+                    OutputI3HitMultiplicityValuesName= "CVMultiplicity",
                     OutputI3HitStatisticsValuesName= "CVStatistics",
                     suffix = '')
 
@@ -313,7 +316,7 @@ def main():
     from hdf_keys import hdfkeys
     hdfkeys+=args.add
 
-    tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=['InIceSplit'])
+    tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=args.splits)
     if args.nframes is None:
         print("processing all frames")
         tray.Execute()
