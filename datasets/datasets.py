@@ -1,5 +1,173 @@
 
 ###
+### muongun spice v3.2.1
+###
+
+muongun = {}
+
+muongun["MuonGun_lowlowlowE"] = { # 700 GeV - 1 TeV
+    "dataset" : "21319",
+    "subfolders" : [f"{i:07d}-{i+999:07d}" for i in range(0, 100000, 1000)],
+    "flavor" : "MuonGun",
+    "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
+    "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
+    "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
+}
+
+muongun["MuonGun_lowlowE"] = { # 1 TeV - 5 TeV
+    "dataset" : "21318",
+    "subfolders" : [f"{i:07d}-{i+999:07d}" for i in range(0, 100000, 1000)],
+    "flavor" : "MuonGun",
+    "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
+    "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
+    "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
+}
+
+muongun["MuonGun_lowE"] = { # 5 TeV - 10 TeV
+    "dataset" : "21317",
+    "subfolders" : [f"{i:07d}-{i+999:07d}" for i in range(0, 20000, 1000)],
+    "flavor" : "MuonGun",
+    "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
+    "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
+    "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
+}
+
+muongun["MuonGun_midE"] = { # 10 TeV - 100 TeV
+    "dataset" : "21316",
+    "subfolders" : [f"{i:07d}-{i+999:07d}" for i in range(0, 40000, 1000)],
+    "flavor" : "MuonGun",
+    "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
+    "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
+    "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
+}
+
+muongun["MuonGun_highE"] = { # 100 TeV - 1 EeV
+    "dataset" : "21315",
+    "subfolders" : [f"{i:07d}-{i+999:07d}" for i in range(0, 15000, 1000)],
+    "flavor" : "MuonGun",
+    "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
+    "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
+    "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
+}
+
+
+
+###
+### test crystal density 2
+###
+test_crystal_density_low_2 = {}
+
+test_crystal_density_low_2["NuTau_midE"] = {
+    "dataset" : "23501",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 20,
+    # "levels" : ["level2","level3_cascade", "level3_muon"]
+    "levels" : ["HESE"]
+}
+
+test_crystal_density_low_2["NuTau_highE"] = {
+    "dataset" : "23500",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 20,
+    # "levels" : ["level2","level3_cascade", "level3_muon"]
+    "levels" : ["HESE"]
+}
+
+test_crystal_density_high_2 = {}
+
+test_crystal_density_high_2["NuTau_midE"] = {
+    "dataset" : "23499",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 20,
+    # "levels" : ["level2","level3_cascade", "level3_muon"]
+    "levels" : ["HESE"]
+}
+
+test_crystal_density_high_2["NuTau_highE"] = {
+    "dataset" : "23498",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 20,
+    # "levels" : ["level2","level3_cascade", "level3_muon"]
+    "levels" : ["HESE"]
+}
+
+
+###
+### testing crystal density
+###
+
+
+test_crystal_density_low = {}
+
+test_crystal_density_low["NuTau_midE"] = {
+    "dataset" : "23492",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2","level3_cascade", "level3_muon","HESE"]
+    "levels" : ["level3_muon"]
+}
+
+test_crystal_density_low["NuTau_highE"] = {
+    "dataset" : "23493",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2","level3_cascade", "level3_muon","HESE"]
+    "levels" : ["level3_muon"]
+}
+
+test_crystal_density_high = {}
+
+test_crystal_density_high["NuTau_midE"] = {
+    "dataset" : "23494",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2","level3_cascade", "level3_muon","HESE"]
+    "levels" : ["level3_muon"]
+}
+
+test_crystal_density_high["NuTau_highE"] = {
+    "dataset" : "23495",
+    "subfolders" : 
+    ["0000000-0000999"],
+    "flavor" : "NuTau",
+    "year" : "2023",
+    "nfiles" : 10,
+    # "levels" : ["level2","level3_cascade", "level3_muon","HESE"]
+    "levels" : ["level3_muon"]
+}
+
+###
 ### checking my iceprod datasets
 ###
 
@@ -13,7 +181,7 @@ snowstorm_iceprod_benchmark["NuTau_lowE"] = {
     "flavor" : "NuTau",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade"]
 }
 
 snowstorm_iceprod_benchmark["NuTau_midE"] = {
@@ -23,7 +191,7 @@ snowstorm_iceprod_benchmark["NuTau_midE"] = {
     "flavor" : "NuTau",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]
 }
 
 snowstorm_iceprod_benchmark["NuTau_highE"] = {
@@ -33,7 +201,7 @@ snowstorm_iceprod_benchmark["NuTau_highE"] = {
     "flavor" : "NuTau",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]
 }
 
 snowstorm_iceprod_benchmark["NuE_lowE"] = {
@@ -43,7 +211,7 @@ snowstorm_iceprod_benchmark["NuE_lowE"] = {
     "flavor" : "NuE",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade"]
 }
 
 snowstorm_iceprod_benchmark["NuE_midE"] = {
@@ -53,7 +221,7 @@ snowstorm_iceprod_benchmark["NuE_midE"] = {
     "flavor" : "NuE",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]    
 }
 
 snowstorm_iceprod_benchmark["NuE_highE"] = {
@@ -63,7 +231,7 @@ snowstorm_iceprod_benchmark["NuE_highE"] = {
     "flavor" : "NuE",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]    
 }
 
 snowstorm_iceprod_benchmark["NuMu_lowlowE"] = {
@@ -73,7 +241,7 @@ snowstorm_iceprod_benchmark["NuMu_lowlowE"] = {
     "flavor" : "NuMu",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade"]    
 }
 
 snowstorm_iceprod_benchmark["NuMu_lowE"] = {
@@ -83,7 +251,7 @@ snowstorm_iceprod_benchmark["NuMu_lowE"] = {
     "flavor" : "NuMu",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade"]    
 }
 
 snowstorm_iceprod_benchmark["NuMu_midE"] = {
@@ -93,7 +261,7 @@ snowstorm_iceprod_benchmark["NuMu_midE"] = {
     "flavor" : "NuMu",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]
 }
 
 snowstorm_iceprod_benchmark["NuMu_highE"] = {
@@ -103,7 +271,7 @@ snowstorm_iceprod_benchmark["NuMu_highE"] = {
     "flavor" : "NuMu",
     "year" : "2023",
     "nfiles" : 10,
-    "levels" : ["level2", "HESE_evtgen","level3_cascade","level8_cascade"]
+    "levels" : ["level2","level3_cascade", "level3_muon","level8_cascade","HESE_evtgen"]
 }
 
 ###
