@@ -182,7 +182,7 @@ def project_vtx_dir(reco, true, true_zen, true_azi):
     return l, rho, r
 
 
-def plot_quartiles_vs_x(deltas, lge_tru, lge_bins, label):
+def plot_quartiles_vs_x(deltas, lge_tru, lge_bins, label, color, plot_quartiles = True):
     if np.any(np.isnan(deltas)):
         print(
             f'WARN: {len(deltas[np.isnan(deltas)])} nan events. Ignored in quartiles.')
@@ -194,8 +194,12 @@ def plot_quartiles_vs_x(deltas, lge_tru, lge_bins, label):
         ca) > 0 else np.nan for ca in digitized_deltas]
     per75 = [np.nanpercentile(ca, 75) if len(
         ca) > 0 else np.nan for ca in digitized_deltas]
-    plt.plot(calculator.centers(lge_bins), per50, label=label+' quartiles')
-    plt.fill_between(calculator.centers(lge_bins), per25, per75, alpha=0.5)
+    if plot_quartiles:
+        plt.plot(calculator.centers(lge_bins), per50, label=label+' quartiles', color=color)
+        plt.fill_between(calculator.centers(lge_bins), per25, per75, alpha=0.5, color=color)
+    else:
+        plt.plot(calculator.centers(lge_bins), per50, label=label+' median', color=color)
+        plt.plot(calculator.centers(lge_bins), (np.array(per75)-np.array(per25))/2, "--",label=label+' (q75-q25)/2', color=color)
     return per25, per50, per75
 
 

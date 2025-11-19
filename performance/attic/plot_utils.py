@@ -16,75 +16,35 @@ from lowlevel import *
 # general
 slc = np.s_[:]
 
-def extract_data( nufile, key ):
+colors = ["C0", "C3", "C2", "C1", "C4", "C5", "C6", "C7"]
 
-    tf = tables.open_file(nufile)
-
-    data = {}
-    data["cth_reco"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
-    data["azi_reco"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
-    data["cth_tru"] = np.cos(tf.root.cc.cols.zenith[:][slc])
-    data["azi_tru"] = tf.root.cc.cols.azimuth[:][slc]
-    data["loge_tru"] = np.log10(tf.root.cc.cols.energy[:][slc])
-    data["loge_fit"] = np.log10(tf.get_node(f'/{fit_node_name(nufile)}').cols.energy[:][slc])
-
-    if "Taupede" in key:
-        data["len_fit"] = tf.get_node( f'/{key}').cols.length[:][slc]
-        data["len_tru"] = tf.root.cc.cols.length[:][slc]
-        data["asm_fit"] = get_easymm(tf.get_node(f'/{key}Particles'))[slc]
-        data["asm_tru"] = tf.root.cc_easymm[slc]['value']
-
-    tf.close()
-    print(f"dataset {key} has {len(data["cth_reco"])} evts")
-
-    return data
-
-def extract_data_evtgen( nufile, key ):
-
-    tf = tables.open_file(nufile)
-
-    data = {}
-    data["len_fit"] = np.abs(tf.get_node( f'/{key}').cols.cascade_cascade_00001_distance[:][slc])
-    data["len_tru"] = tf.root.cc.cols.length[:][slc]
-    data["asm_fit"] = get_easymm_evtgen(tf.get_node(f'/{key}'))[slc]
-    data["asm_tru"] = tf.root.cc_easymm[slc]['value']
-    data["cth_reco"] = np.cos(tf.get_node(f'/{key}').cols.cascade_zenith[:][slc])
-    data["azi_reco"] = tf.get_node(f'/{key}').cols.cascade_azimuth[:][slc]
-    data["cth_tru"] = np.cos(tf.root.cc.cols.zenith[:][slc])
-    data["azi_tru"] = tf.root.cc.cols.azimuth[:][slc]
-    data["loge_tru"] = np.log10(tf.root.cc.cols.energy[:][slc])
-    data["loge_fit"] = np.log10(tf.get_node(f'/{fit_node_name(nufile)}').cols.energy[:][slc])
-
-    tf.close()
-    print(f"dataset {key} has {len(data["cth_reco"])} evts")
-
-    return data
-
-def plot_mederes(data, labels, outpath, bins = np.linspace(1, np.linspace(1, 7, 39)[26]+3, 46)):
+def plot_mederes(data, fit_keys, true_key, labels, outpath, bins = np.linspace(1, np.linspace(1, 7, 39)[26]+3, 46), plot_quartiles = True):
     
     print("plot_mederes")
 
     plt.figure(figsize=(6, 4))
 
     for i, label in enumerate(labels):
-        loge_fit = data[i]["loge_fit"]
-        loge_tru = data[i]["loge_tru"]
+        loge_fit = data[i][fit_keys[i]]
+        loge_tru = data[i][true_key]
         
         plot_quartiles_vs_x((10**(loge_fit)-10**(loge_tru))/10**(loge_tru),
                             loge_tru,
                             bins,
-                            label)
+                            label,
+                            color=colors[i],
+                            plot_quartiles=plot_quartiles)
         plt.axhline(0, linewidth=0.5, color='gray', linestyle='--')
         plt.xlabel(r'$\log_{10}(E_{dep}$ [GeV]$)$')
         plt.ylabel('$(E_{rec}-E_{dep})/E_{dep}$')
         plt.ylim(-0.2, 0.2)
-        plt.legend()
-
-    plt.savefig(f'{outpath}/mederes.png', bbox_inches='tight')
+    plt.legend() if plot_quartiles else plt.legend(ncols=2)
+    plt.tight_layout()
+    plt.savefig(f'{outpath}/mederes_{"-".join(fit_keys)}_vs_{true_key}.png', bbox_inches='tight')
     plt.clf()
 
 
-def plot_medangres(data, labels, outpath, bins = np.linspace(1, np.linspace(1, 7, 39)[26]+3, 46)):
+def plot_medangres(data, fit_keys,true_key,labels, outpath, bins = np.linspace(1, np.linspace(1, 7, 39)[26]+3, 46), plot_quartiles = True):
     
     print("plot_medangres")
 
@@ -92,15 +52,15 @@ def plot_medangres(data, labels, outpath, bins = np.linspace(1, np.linspace(1, 7
 
     meanmed = []
     for i, label in enumerate(labels):
-        reco_zen = np.arccos(data[i]["cth_reco"])
-        reco_azi = data[i]["azi_reco"]
-        cth_tru = data[i]["cth_tru"]
-        azi_tru = data[i]["azi_tru"]
-        loge_tru = data[i]["loge_tru"]
+        reco_zen = np.arccos(data[i][f"cth_{fit_keys[i]}"])
+        reco_azi = data[i][f"azi_{fit_keys[i]}"]
+        cth_tru = data[i][f"cth_tru_{true_key}"]
+        azi_tru = data[i][f"azi_tru_{true_key}"]
+        loge_tru = data[i][f"loge_tru_{true_key}"]
         cas = np.degrees(calculator.center_angle(
             np.arccos(cth_tru), azi_tru,
             reco_zen, reco_azi))
-        _, per50, _ = plot_quartiles_vs_x(cas, loge_tru, bins, label)
+        _, per50, _ = plot_quartiles_vs_x(cas, loge_tru, bins, label, color=colors[i],plot_quartiles=plot_quartiles)
         meanmed.append(np.nanmean(per50))
 
     yup = 20
@@ -111,29 +71,29 @@ def plot_medangres(data, labels, outpath, bins = np.linspace(1, np.linspace(1, 7
     plt.ylabel('Median angular resolution [deg.]')
     plt.ylim(ylo, yup)
     plt.yscale(ysc)
-    plt.legend()
-    plt.savefig(f'{outpath}/medangres.png', bbox_inches='tight')
+    plt.legend() if plot_quartiles else plt.legend(ncols=2)
+    plt.tight_layout()
+    plt.savefig(f'{outpath}/medangres_{"-".join(fit_keys)}_vs_{true_key}.png', bbox_inches='tight')
     plt.clf()
 
-def plot_medangres_len(data, labels, outpath, bins = np.linspace(0,100, 40) ):
+def plot_medangres_len(data, fit_keys, true_key, labels, outpath, bins = np.linspace(0,100, 40), plot_quartiles = True ):
 
     print("plot_medangres_len")
     
     plt.figure(figsize=(6, 4))
     
-
     meanmed = []
     for i, label in enumerate(labels):
-        reco_zen = np.arccos(data[i]["cth_reco"])
-        reco_azi = data[i]["azi_reco"]
-        cth_tru = data[i]["cth_tru"]
-        azi_tru = data[i]["azi_tru"]
-        len_tru = data[i]["len_tru"]
+        reco_zen = np.arccos(data[i][f"cth_{fit_keys[i]}"])
+        reco_azi = data[i][f"azi_{fit_keys[i]}"]
+        cth_tru = data[i][f"cth_tru_{true_key}"]
+        azi_tru = data[i][f"azi_tru_{true_key}"]
+        len_tru = data[i][f"len_tru_{true_key}"]
         cas = np.degrees(calculator.center_angle(
             np.arccos(cth_tru), azi_tru,
             reco_zen, reco_azi))
 
-        _, per50, _ = plot_quartiles_vs_x(cas, len_tru, bins, label)
+        _, per50, _ = plot_quartiles_vs_x(cas, len_tru, bins, label, color=colors[i], plot_quartiles=plot_quartiles)
         meanmed.append(np.nanmean(per50))
 
     yup = 10
@@ -146,15 +106,16 @@ def plot_medangres_len(data, labels, outpath, bins = np.linspace(0,100, 40) ):
     plt.ylim(ylo, yup)
     plt.yscale(ysc)
     plt.xlim(xmin=xlo)
-    plt.legend()
-    plt.savefig(f'{outpath}/medangres_len.png', bbox_inches='tight')
+    plt.legend() if plot_quartiles else plt.legend(ncols=2)
+    plt.tight_layout()
+    plt.savefig(f'{outpath}/medangres_len_{"-".join(fit_keys)}_vs_{true_key}.png', bbox_inches='tight')
     plt.clf()
 
-def plot_len_fit(data, labels, outpath, bins = np.linspace(0,100, 40) ):
+def plot_len_fit(data, fit_keys,labels, outpath, bins = np.linspace(0,100, 40) ):
     plt.figure(figsize=(6, 4))
 
     for i, label in enumerate(labels):
-        plt.hist(data[i]["len_fit"], bins=bins, density=True,
+        plt.hist(data[i][fit_keys[i]], bins=bins, density=True,
                  histtype='step', label=label, linewidth=1.5)
 
     plt.xlabel(r'Length [m]')
@@ -162,42 +123,52 @@ def plot_len_fit(data, labels, outpath, bins = np.linspace(0,100, 40) ):
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.5)
     plt.tight_layout()
-    plt.savefig(f'{outpath}/len_fit.png', bbox_inches='tight')
+    plt.savefig(f'{outpath}/{"-".join(fit_keys)}.png', bbox_inches='tight')
     plt.clf()
 
-def plot_lenres_len( data, labels, outpath, bins = np.linspace(0, 100,35) ):
+def plot_lenres_len( data, fit_keys, true_key, labels, outpath, bins = np.linspace(0, 100,35), plot_quartiles = True ):
 
     plt.figure()
     for i, label in enumerate(labels):
-        plot_quartiles_vs_x( (data[i]["len_fit"] - data[i]["len_tru"]) / data[i]["len_tru"],
-                              data[i]["len_tru"],
+        deltas = (data[i][fit_keys[i]] - data[i][true_key]) / data[i][true_key]
+        x = data[i][true_key]
+        print(label)
+        print(len(deltas), np.mean(deltas))
+        print(len(x), np.mean(x))
+        plot_quartiles_vs_x( deltas,
+                              x,
                               bins,
-                              labels[i])
+                              labels[i],
+                              color=colors[i],
+                              plot_quartiles=plot_quartiles)
     plt.xlabel(r'Length [m]')
     plt.ylabel('$(L_{rec}-L_{true})/L_{true}$')
     plt.axhline(0, linewidth=0.5, color='gray', linestyle='--')
     plt.xlim(0, 50)
     plt.ylim(-0.5, 0.5)
-    plt.legend()
-    plt.savefig(f'{outpath}/medlenres.png', bbox_inches='tight')
+    plt.legend() if plot_quartiles else plt.legend(ncols=2)
+    plt.tight_layout()
+    plt.savefig(f'{outpath}/medlenres_{"-".join(fit_keys)}_vs_{true_key}.png', bbox_inches='tight')
     plt.clf()
 
-def plot_medasmres_len( data, labels, outpath, bins = np.linspace(0, 100,35) ):
+def plot_medasmres_len( data, fit_keys, asm_true_key, len_tru_key, labels, outpath, bins = np.linspace(0, 100,35), plot_quartiles = True ):
 
     plt.figure()
     for i, label in enumerate(labels):
-        plot_quartiles_vs_x(data[i]["asm_fit"] - data[i]["asm_tru"],
-                            data[i]["len_tru"],
+        plot_quartiles_vs_x(data[i][fit_keys[i]] - data[i][asm_true_key],
+                            data[i][len_tru_key],
                             bins,
-                            labels[i])
+                            labels[i],
+                            color=colors[i],
+                            plot_quartiles=plot_quartiles)
     plt.xlabel(r'Length [m]')
     plt.ylabel('$A_{rec}-A_{true}$')
     plt.axhline(0, linewidth=0.5, color='gray', linestyle='--')
     plt.xlim(0, 50)
     plt.ylim(-0.5, 0.5)
-    plt.legend()
-    plt.savefig(f'{outpath}/medasmres_len.png', bbox_inches='tight')
-
+    plt.legend() if plot_quartiles else plt.legend(ncols=2)
+    plt.tight_layout()
+    plt.savefig(f'{outpath}/medasmres_len_{"-".join(fit_keys)}_{asm_true_key}_vs_{len_tru_key}.png', bbox_inches='tight')
 
 
 def compare_files( nufiles, keys, labels, outpath ):

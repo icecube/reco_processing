@@ -24,9 +24,10 @@ def extract_data_combined(nufile):
 
     is_ftp = False if "spice" in nufile else True
     is_evtgen = True if "evtgen" in nufile else False
+    is_evtgen = True
 
     print(20*"-")
-    print("Opening", nufile, "is_ftp", is_ftp)
+    print("Opening", nufile, "is_ftp", is_ftp, "is_evtgen", is_evtgen)
 
     # Choose Taupede and Monopod keys based on format
     taupede_key = "TaupedeFit_iMIGRAD_PPB0" if is_ftp else "HESETaupedeFit"
@@ -44,16 +45,17 @@ def extract_data_combined(nufile):
     data["azi_Monopod"] = tf.get_node(f'/{monopod_key}').cols.azimuth[:][slc]
     data["loge_Monopod"] = np.log10(tf.get_node(f'/{monopod_key}').cols.energy[:][slc])
 
-    # SPEFit (same in both cases)
-    if "v1" not in nufile and "v2" not in nufile and "v3" not in nufile:
-        key = "SPEFit16"
-        data["cth_SPEFit16"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
-        data["azi_SPEFit16"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
-        data["loge_SPEFit16"] = np.log10(tf.get_node(f'/{key}').cols.energy[:][slc])
+    # # SPEFit (same in both cases)
+    # if "v1" not in nufile and "v2" not in nufile and "v3" not in nufile:
+    #     key = "SPEFit16"
+    #     data["cth_SPEFit16"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
+    #     data["azi_SPEFit16"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
+    #     data["loge_SPEFit16"] = np.log10(tf.get_node(f'/{key}').cols.energy[:][slc])
 
     # EventGenerator only for FTP
     if is_evtgen:
-        for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max", "EventGeneratorDC_Combined"]:
+        # for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max", "EventGeneratorDC_Combined"]:
+        for key in ["EventGeneratorDC_Thijs", "EventGeneratorDC_Max"]:
             data[f"len_{key}"] = np.abs(tf.get_node(f'/{key}').cols.cascade_cascade_00001_distance[:][slc])
             data[f"asm_{key}"] = get_easymm_evtgen(tf.get_node(f'/{key}'))[slc]
             data[f"cth_{key}"] = np.cos(tf.get_node(f'/{key}').cols.cascade_zenith[:][slc])
@@ -61,21 +63,21 @@ def extract_data_combined(nufile):
             data[f"loge_{key}"] = np.log10(tf.get_node(f'/{key}').cols.cascade_energy[:][slc] + 
                                            tf.get_node(f'/{key}').cols.cascade_cascade_00001_energy[:][slc])
 
-    # Millipede reconstructions
-    key = "HESEMillipedeFit"
-    data["cth_Millipede"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
-    data["azi_Millipede"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
-    data["loge_Millipede"] = np.log10(tf.root.HESEMillipedeFitDepositedEnergy[slc]['value'])
-    data["loge_MillipedeTrun"] = np.log10(tf.root.HESEMillipedeFitTruncatedDepositedEnergy[slc]['value'])
+    # # Millipede reconstructions
+    # key = "HESEMillipedeFit"
+    # data["cth_Millipede"] = np.cos(tf.get_node(f'/{key}').cols.zenith[:][slc])
+    # data["azi_Millipede"] = tf.get_node(f'/{key}').cols.azimuth[:][slc]
+    # data["loge_Millipede"] = np.log10(tf.root.HESEMillipedeFitDepositedEnergy[slc]['value'])
+    # data["loge_MillipedeTrun"] = np.log10(tf.root.HESEMillipedeFitTruncatedDepositedEnergy[slc]['value'])
 
-    # extra millipede stuff from v6
-    if "v6" in nufile or "v7" in nufile or "v8" in nufile:
-        data["loge_MonoMillipede"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
-        data["loge_MonoMillipedeTrun"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
-        data["loge_SPEMillipede"] = np.log10(tf.root.SPEFit16MillipedeFitDepositedEnergy[slc]['value'])
-        data["loge_SPEMillipedeTrun"] = np.log10(tf.root.SPEFit16MillipedeFitTruncatedDepositedEnergy[slc]['value'])
-        data["loge_TauMillipede"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
-        data["loge_TauMillipedeTrun"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+    # # extra millipede stuff from v6
+    # if "v6" in nufile or "v7" in nufile or "v8" in nufile:
+    #     data["loge_MonoMillipede"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
+    #     data["loge_MonoMillipedeTrun"] = np.log10(tf.root.MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+    #     data["loge_SPEMillipede"] = np.log10(tf.root.SPEFit16MillipedeFitDepositedEnergy[slc]['value'])
+    #     data["loge_SPEMillipedeTrun"] = np.log10(tf.root.SPEFit16MillipedeFitTruncatedDepositedEnergy[slc]['value'])
+    #     data["loge_TauMillipede"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy[slc]['value'])
+    #     data["loge_TauMillipedeTrun"] = np.log10(tf.root.TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy[slc]['value'])
 
 
     # Reco information neha
