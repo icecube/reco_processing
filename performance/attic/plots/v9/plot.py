@@ -89,6 +89,7 @@ def compare( nufiles, outpath ):
                   labels=["Monopod", "Millipede", "MillipedeTrun"], outpath=outpath, bins = np.linspace(4,8,nbins) )
 
 
+
 ###
 ### NuTau
 ###
@@ -101,9 +102,9 @@ def compare( nufiles, outpath ):
 ### NuE
 ###
 
-nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuE.h5"]
-outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v9/NuE"
-compare(nufiles=nufiles,outpath=outpath)
+# nufiles = ["/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/v9/NuE.h5"]
+# outpath = "/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/v9/NuE"
+# compare(nufiles=nufiles,outpath=outpath)
 
 ###
 ### NuMu
