@@ -7,10 +7,12 @@ import matplotlib.pyplot as plt
 from common import calculator # tianlu
 from copy import deepcopy
 
+plt.style.use("style.mplstyle")
+
 # hdf path
 reco_version_spice = "spice_tau_reco"
 hdf_path_spice = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version_spice}"
-plotting_main_path = f"/data/user/tvaneede/GlobalFit/reco_processing/performance/output/{reco_version_spice}"
+plotting_main_path = f"/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/{reco_version_spice}"
 
 reco_version_ftp = "taureco_iceprod_v1"
 hdf_path_ftp = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version_ftp}/merged"

@@ -13,7 +13,7 @@ colors = ["C0","C3","C5","C4"]
 # reco_version = "taureco_iceprod_v0"
 reco_version = "taureco_iceprod_v3"
 hdf_path = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version}/merged"
-plotting_main_path = f"/data/user/tvaneede/GlobalFit/reco_processing/performance/output/{reco_version}"
+plotting_main_path = f"/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/{reco_version}"
 
 os.system(f"mkdir -p {plotting_main_path}")
 
