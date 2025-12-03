@@ -14,7 +14,7 @@ import sys
 sys.path.append("/data/user/nlad/PassingFractions/")
 from spline_evaluator import Spline_Evaluator
 
-gcd = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
+gcd_pass2 = "/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
 
 '''
 Whole section taken from R.Naab 
@@ -53,10 +53,8 @@ Snippet to calculate the penetrating depth (to be used for passing fraction calc
 This is the depth at which a muon travelling colinear with the primary neutrino would have entered the detector.
 Taken from R.Naab
 '''
-def penetrating_depth(frame):
+def penetrating_depth(frame, gcd = gcd_pass2, depth_name_suffix=''):
     ##  add penetrating depth dependence to the self veto probability calculation
-    depth_name_suffix=''
-    
     from icecube import MuonGun
     p = frame['MCPrimary']
 

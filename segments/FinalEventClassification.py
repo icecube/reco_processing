@@ -8,7 +8,7 @@ from icecube.hdfwriter import I3HDFWriter
 from I3Tray import I3Tray
 import numpy as np
 from I3Tray import *
-
+import sys
 
 
 '''
@@ -87,16 +87,17 @@ def gettrackfilter(eventclassarr, larr, econfinementarr, eratioarr):
     
     return combinedmask
 
-def checkfinaltopology(frame):
+def checkfinaltopology(frame,eventclass,suffix = ""):
 
-    if 'FinalTopology' in frame: return
+    if f'FinalTopology{suffix}' in frame: return
 
-    if 'HESEEventclass' not in frame: return # for old reco versions
+    if eventclass not in frame: 
+        sys.exit(f"could not find {eventclass}") 
 
-    eventclassarr = frame['HESEEventclass'].value
-    larr = frame['RecoL'].value
-    econfinementarr = frame['RecoEConfinement'].value
-    eratioarr = frame['RecoERatio'].value
+    eventclassarr = frame[eventclass].value
+    larr = frame[f'RecoL{suffix}'].value
+    econfinementarr = frame[f'RecoEConfinement{suffix}'].value
+    eratioarr = frame[f'RecoERatio{suffix}'].value
     FinalEventClass = 0
     single = getsinglefilter(eventclassarr=eventclassarr, larr=larr, econfinementarr=econfinementarr, eratioarr=eratioarr)
     double = getdoublefilter(eventclassarr=eventclassarr, larr=larr, econfinementarr=econfinementarr, eratioarr=eratioarr)
@@ -111,5 +112,5 @@ def checkfinaltopology(frame):
     else:
         print('something is wrong, no PID assigned')
 
-    frame['FinalTopology'] = dataclasses.I3Double(FinalEventClass)
+    frame[f'FinalTopology{suffix}'] = dataclasses.I3Double(FinalEventClass)
 

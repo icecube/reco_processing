@@ -34,13 +34,16 @@ hdfkeys += [
     'TaupedeFit_iMIGRAD_PPB0_bright', 'TaupedeFit_iMIGRAD_PPB0_brightFitParams',
     'TaupedeFit_iMIGRAD_PPB0_brightParticles',
 
+    'MonopodFit_iMIGRAD_PPB0_ibr', 'MonopodFit_iMIGRAD_PPB0_ibrFitParams',
+    'MonopodFit_iMIGRAD_PPB0_ibr_idc', 'MonopodFit_iMIGRAD_PPB0_ibr_idcFitParams',
+
     # neha reco var
     'HESETaupedeFit', 'HESETaupedeFitFitParams', 'HESETaupedeFitParticles',
     'HESETaupedeFit1', 'HESETaupedeFit2',
     'HESEMonopodFit', 'HESEMonopodFitFitParams', 'HESEMonopodFitParticles',
-    'SPEFit16', 'SPEFit16FitParams',
+    'SPEFit16', 'SPEFit16FitParams','SPEFit16_PPB0','SPEFit16_PPB0FitParams',
 
-    'HESEEventclass', 'FinalTopology', 'FinalEventClass', 'MCInteractionEventclass',
+    'HESEEventclass', 'FinalTopology', 'FinalEventClass', 'MCInteractionEventclass','TaupedeFit_iMIGRAD_PPB0HESEEventclass',
     'TauDecayLength','TauEnergy','TauNeutrinoEnergy','MCInteractionDoubleBang', 'MCReconstructionEventclass', 
 
     'ConventionalAtmosphericPassingFractions', 'PromptAtmosphericPassingFractions',
@@ -51,8 +54,15 @@ hdfkeys += [
     # millipede
     'HESEMillipedeFit',
     'HESEMillipedeFitTruncatedDepositedEnergy','HESEMillipedeFitDepositedEnergy','HESEMillipedeFitFitParams',
-    'MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','MonopodFit_iMIGRAD_PPB0MillipedeFitFitParams',
-    'TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','TaupedeFit_iMIGRAD_PPB0MillipedeFitFitParams',
+
+    'HESEMillipedeFit_PPB0', 'HESEMillipedeFit_PPB0_ibr', 'HESEMillipedeFit_PPB0_ibr_idc',
+    'HESEMillipedeFit_PPB0DepositedEnergy','HESEMillipedeFit_PPB0TruncatedDepositedEnergy','HESEMillipedeFit_PPB0FitParams', 
+    'HESEMillipedeFit_PPB0_ibrDepositedEnergy','HESEMillipedeFit_PPB0_ibrTruncatedDepositedEnergy','HESEMillipedeFit_PPB0_ibrFitParams', 
+    'HESEMillipedeFit_PPB0_ibr_idcDepositedEnergy','HESEMillipedeFit_PPB0_ibr_idcTruncatedDepositedEnergy','HESEMillipedeFit_PPB0_ibr_idcFitParams', 
+
+    'MonopodFit_iMIGRAD_PPB0MillipedeFit','MonopodFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'MonopodFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','MonopodFit_iMIGRAD_PPB0MillipedeFitFitParams',
+    'TaupedeFit_iMIGRAD_PPB0MillipedeFit','TaupedeFit_iMIGRAD_PPB0MillipedeFitDepositedEnergy', 'TaupedeFit_iMIGRAD_PPB0MillipedeFitTruncatedDepositedEnergy','TaupedeFit_iMIGRAD_PPB0MillipedeFitFitParams',
+    'SPEFit16_PPB0MillipedeFit','SPEFit16_PPB0MillipedeFitDepositedEnergy','SPEFit16_PPB0MillipedeFitTruncatedDepositedEnergy','SPEFit16_PPB0MillipedeFitFitParams',
 
     'HESEMonopodFitMillipedeFitDepositedEnergy', 'HESEMonopodFitMillipedeFitTruncatedDepositedEnergy','HESEMonopodFitMillipedeFitFitParams',
     'HESETaupedeFitMillipedeFitDepositedEnergy', 'HESETaupedeFitMillipedeFitTruncatedDepositedEnergy','HESETaupedeFitMillipedeFitFitParams',
@@ -97,7 +107,18 @@ hdfkeys += [
     'TrueContainedSingle', 'TrueContained1', 'TrueContained2',
 
     # weight, polarization, more
-    'TotalWeight', 'TotalWeightPol',
+    'TotalWeight', 'TotalWeightPol', 'TotalWeight_Original',
     'y_lep', 'y_had','SnowstormParameterDict',
-    'DNNC_I3Particle'
+    'DNNC_I3Particle',
+
+    # muon stuff
+    'MuonWeightConv','MuonWeightPrompt','MuonWeightScaled',
+
+    # cascade keys from /home/pfuerst/software/processing/cascades-processing/i3_to_summary_hdf_cascades_rnaab.py
+    'cscdSBU_MonopodFit4','cscdSBU_LE_bdt_input','cscdSBU_LE_bdt_cascade','cscdSBU_LE_bdt_hybrid','cscdSBU_LE_bdt_track', 
+    'cscdSBU_L4StartingTrackHLC_cscdSBU_MonopodFit4_OfflinePulsesHLC_noDCVetoCharge',
+    'cscdSBU_MonopodFit4_Delay_ice', 'cscdSBU_Qtot_HLC_IC', 'CascadeLlhVertexFit_L2Params',
+    'cscdSBU_VetoMaxDomChargeOM', 'cscdSBU_VetoDepthFirstHit',
+    'cscdSBU_MCPrimary','PolyplopiaPrimary',
+    'penetrating_depth','penetrating_depth_old', 'penetrating_depth_v1_gcd','penetrating_depth_v1_gcd_old',
 ]

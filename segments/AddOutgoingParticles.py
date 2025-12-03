@@ -41,8 +41,6 @@ def AddOutGoingParticles(frame):
                 outgoing_hadrons.append(t)
                 positions.append(t.pos)
                 times.append(t.time)
-       
-        
         
     frame['NumVerticesInFiducialVolume'] = icetray.I3Int(len(positions))
     frame['VertexPosition'] = positions[0]

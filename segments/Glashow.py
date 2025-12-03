@@ -7,6 +7,9 @@ import pandas as pd
 # Taken from Aswathi
 def glashow_correction(frame):
     
+    # copy originial
+    frame['TotalWeight_Original'] = dataclasses.I3Double(frame['I3MCWeightDict']['TotalWeight'])
+
     nutype=int(frame["I3MCWeightDict"]["PrimaryNeutrinoType"])
     inter_type=int(frame['I3MCWeightDict']['InteractionType'])
     en = float(frame['I3MCWeightDict']['PrimaryNeutrinoEnergy'])

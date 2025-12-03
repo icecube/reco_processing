@@ -54,6 +54,10 @@ if __name__ == "__main__":
     output = args.out
     inputs = args.inputs
 
+    # print("merge.py")
+    # print(output)
+    # print(inputs)
+
     merge_hdf5_files(output, inputs)
 
 

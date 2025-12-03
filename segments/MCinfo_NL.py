@@ -164,19 +164,25 @@ def mcinfo(tray, name,
         primary = mctree.primaries[0]
         flattenedtree = []
         flattentree(mctree, primary, flattenedtree)
+
         for particletag in ['VertexOutgoingLepton', 'VertexOutgoingHadron']:
             if not particletag in frame:
-               
                continue
             originalparticle = frame[particletag]
             correctparticle = None
+
             for particle in flattenedtree:
                 if issameparticle(originalparticle, particle):
                     correctparticle = I3Particle(particle)
                     break
-            
+
+            # one crazy glashow resonant event in frame 5081 run 2261400728
+            if correctparticle == None:
+                for particle in flattenedtree: 
+                    if originalparticle.id == particle.id: correctparticle = I3Particle(particle)
+
+
             frame.Delete(particletag)
-            
             frame.Put(particletag, correctparticle)
     
     
@@ -588,7 +594,7 @@ def mcinfo(tray, name,
             cascade1 = I3Particle(hadron)
             cascade1.energy = hadron.energy*((ShowerParameters(hadron.type,hadron.energy).emScale))
             ShowerMax = ((ShowerParameters(hadron.type,hadron.energy).a-1)\
-                             /ShowerParameters(hadron.type,hadron.energy).b)
+                             /ShowerParameters(hadron.type,hadron.energy).b) if ShowerParameters(hadron.type,hadron.energy).b > 0 else 0
             cascade1.pos = cascade1.shift_along_track(ShowerMax)
             cascade1.time = hadron.time + ShowerMax/I3Constants.c
             cascade1.length = 0.

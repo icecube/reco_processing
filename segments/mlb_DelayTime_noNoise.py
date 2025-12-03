@@ -101,9 +101,9 @@ def calc_dt_nearly_ice(frame, name, reconame, pulsemapname):
 
     ############ calculate delay time for a cleaned pulses
     pmap_Cleaned = dataclasses.I3RecoPulseSeriesMap.from_frame(frame, 'OfflinePulsesHLC_CleanedFirstPulses')
-    for i,(omkey, pseries) in enumerate(pmap_Cleaned.iteritems()):
-    # for i,omkey in enumerate(pmap_Cleaned):
-        # pseries = pmap_Cleaned[omkey]
+    # for i,(omkey, pseries) in enumerate(pmap_Cleaned.iteritems()):
+    for i,omkey in enumerate(pmap_Cleaned):
+        pseries = pmap_Cleaned[omkey]
         if len(pseries) == 0:
             continue   
         #if(frame.Has('SaturationWindows') and frame['SaturationWindows'].keys()==omkey):

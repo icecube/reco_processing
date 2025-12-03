@@ -11,12 +11,15 @@ from icecube import recclasses
 
 import numpy as np
 import pandas as pd
+import sys
 
 def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
 
     if 'Taupede_Distance' in frame: return
     
-    if 'SPEFit16' not in frame: return # for old reco
+    if 'SPEFit16_PPB0' not in frame: 
+        sys.exit("SPEFit16_PPB0 not in frame!!")
+        return # for old reco
 
     # variables
     taupede1,taupede2 = frame[f"{taupede_key}Particles"]
@@ -47,8 +50,8 @@ def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
         frame["CVStatistics_q_max_doms"] = I3Double( frame['CVStatistics'].q_max_doms )
         frame["CVStatistics_z_travel"] = I3Double( frame['CVStatistics'].z_travel )
 
-    frame["CscdL3_SPEFit16_zenith"] = I3Double( frame['SPEFit16'].dir.zenith )
-    frame["CscdL3_SPEFit16FitParams_rlogl"] = I3Double( frame['SPEFit16FitParams'].rlogl )
+    frame["CscdL3_SPEFit16_zenith"] = I3Double( frame['SPEFit16_PPB0'].dir.zenith )
+    frame["CscdL3_SPEFit16FitParams_rlogl"] = I3Double( frame['SPEFit16_PPB0FitParams'].rlogl )
 
     frame["CascadeLlhVertexFitParams_rlogL"] = I3Double( frame["CascadeLlhVertexFit_L3Params"].ReducedLlh ) 
 

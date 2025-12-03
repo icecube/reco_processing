@@ -31,7 +31,7 @@ from segments.Glashow import glashow_correction
 from segments.TauPol import tau_polarization
 from segments.VHESelfVeto import SelfVetoWrapper
 from segments.FinalEventClassification import checkfinaltopology
-from segments.RecoObservables import calculaterecoobservables, eventgen_eratio
+from segments.RecoObservables import calculaterecoobservables
 
 from segments.MuonGunWeighter import Get_MuonWeight
 from segments.PropagateMuons import PropagateMuons
@@ -187,20 +187,20 @@ def fdnn(frame):
     frame['DNNC_I3Particle'] = ppar
 
 
-def reclassify_double(frame, suffix = ""):
+def reclassify_double(frame):
     """
     Neha's removal of high-energy single cascades in double cascade sample
     Doesn't seem necessary anymore
     """
-    if f'FinalTopology{suffix}' not in frame: return # for old reco
-    classification = frame[f'FinalTopology{suffix}'].value
+    if 'FinalTopology' not in frame: return # for old reco
+    classification = frame['FinalTopology'].value
     if classification != 2:
-        frame[f'FinalEventClass{suffix}']= dataclasses.I3Double(classification)
+        frame['FinalEventClass']= dataclasses.I3Double(classification)
     else:
-        if frame[f'RecoL{suffix}']<=20 and frame[f'RecoETot{suffix}']>=3000000:
-            frame[f'FinalEventClass{suffix}']=dataclasses.I3Double(1)
+        if frame['RecoL']<=20 and frame['RecoETot']>=3000000:
+            frame['FinalEventClass']=dataclasses.I3Double(1)
         else:
-            frame[f'FinalEventClass{suffix}']= dataclasses.I3Double(classification)
+            frame['FinalEventClass']= dataclasses.I3Double(classification)
 
 def fn(frame):    
     # tianlu scripts
@@ -231,9 +231,8 @@ corrupt_files = [
 #we do MuonWeightConv*2.1
 def MuonWeight_Scaling(frame):
     if frame.Has('MuonWeightConv'):
-        MuonWeightConv = frame['MuonWeightConv'].value
-        frame['MuonWeightScaled'] = dataclasses.I3Double(MuonWeightConv*2.1)
-    else: print("could nog find MuonWeightConv")
+         MuonWeightConv = frame['MuonWeightConv'].value
+         frame['MuonWeightScaled'] = dataclasses.I3Double(MuonWeightConv*2.1)
     return True    
 
 def remove_corrupt_files(input_files):
@@ -244,7 +243,6 @@ def remove_corrupt_files(input_files):
 def remove_checksum_files(input_files):
     """Remove known corrupt files from the input list."""
     clean_files = []
-    n_checksum = 0
 
     for input_file in input_files:
         try:
@@ -253,10 +251,8 @@ def remove_checksum_files(input_files):
             clean_files.append(input_file)
             i3file.close()
         except:
-            print("found corrupt file",input_file)
-            n_checksum +=1 
             continue
-    return clean_files, n_checksum
+    return clean_files
 
 def main():
     parser = argparse.ArgumentParser(
@@ -270,6 +266,10 @@ def main():
                         type=str, help='input path')
     parser.add_argument('-f', '--flavor', default='NuTau',
                         type=str, help='flavor')
+    parser.add_argument('-sf', '--selection', default=None,
+                        type=str, help='selection function')
+    parser.add_argument('-c', '--channel', default=None,
+                        type=int, help='cascade 1, double 2, track 3')
     parser.add_argument('-S', '--splits', default=['InIceSplit',"Final"], nargs='+',
                         help='which P-frame splits to process')
     parser.add_argument('--spice', default=False, action='store_true',
@@ -289,15 +289,19 @@ def main():
         pulses      = "SplitInIcePulses"
 
     inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
-    print(f"found {len(inputfiles)}")
-
     inputfiles = remove_corrupt_files(inputfiles)
-    inputfiles,n_checksum = remove_checksum_files(inputfiles)
+    inputfiles = remove_checksum_files(inputfiles)
 
-    print("using", len(inputfiles))
-    print("n_checksum", n_checksum)
-    print("args.inpath", args.inpath)
+    # cutoff_time = datetime.now() - timedelta(hours=1)
+
+    # # Keep only files older than 1 hour
+    # inputfiles = [
+    #     f for f in inputfiles
+    #     if datetime.fromtimestamp(os.path.getmtime(f)) < cutoff_time
+    # ]
+
     print("Writing output to", args.out)
+    print(f"found {len(inputfiles)}")
     print("using args.spice", args.spice)
 
     gcd = ["/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"]
@@ -313,22 +317,17 @@ def main():
     
     tray.Add(fn)
 
-    for suffix in ["", "_ibr", "_ibr_idc"]:
-        tray.AddModule(calculaterecoobservables,
-                        f'calc_reco_observables_{suffix}',
-                        innerboundary=550,
-                        outeredge_x=outeredge_x,
-                        outeredge_y=outeredge_y,
-                        monopod_key=f'{monopod_key}{suffix}',
-                        taupede_key=f'{taupede_key}{suffix}',
-                        millipede_key=f'{millipede_key}{suffix}',
-                        suffix=suffix)
-        tray.Add(checkfinaltopology,eventclass=f"{taupede_key}{suffix}HESEEventclass", suffix=suffix)
-        tray.Add(reclassify_double, suffix=suffix)
+    tray.AddModule(calculaterecoobservables,
+                    'calc_reco_observables',
+                    innerboundary=550,
+                    outeredge_x=outeredge_x,
+                    outeredge_y=outeredge_y,
+                    monopod_key=monopod_key,
+                    taupede_key=taupede_key,
+                    millipede_key=millipede_key)
 
-    # evt gen
-    for key in ["EventGeneratorDC_Max", "EventGeneratorDC_Thijs"]:
-        tray.Add( eventgen_eratio, key=key)
+    tray.Add(checkfinaltopology,eventclass=f"{taupede_key}HESEEventclass")
+    tray.Add(reclassify_double)
 
     ###
     ### add cascade bdt variables
@@ -403,7 +402,14 @@ def main():
         outeredge_x=outeredge_x, 
         outeredge_y=outeredge_y)
 
-    from hdf_keys_clean import hdfkeys
+    if args.selection:
+        print("using a selection", args.selection, args.channel)
+        import importlib
+        module = importlib.import_module("selections")
+        func = getattr(module, args.selection) 
+        tray.Add(lambda frame : func(frame, args.channel))
+
+    from hdf_keys import hdfkeys
     hdfkeys+=args.add
 
     tray.Add(I3HDFWriter, Output=args.out, Keys=hdfkeys, SubEventStreams=args.splits)

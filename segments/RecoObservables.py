@@ -81,15 +81,30 @@ def getenergyconfinement(double_particles, track_particles, key):
     return econfinement
 
 
+
+
 """
 calculate reco observables
 """
+def eventgen_eratio(frame,key):
+    energythreshold=1e3
+    if key not in frame:
+        sys.exit("could not find", key)
 
-def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopod_key,taupede_key):
+    reco = frame[key]
     
-    if "RecoContainedSingle" in frame: return
+    energy1 = reco["cascade_energy"]
+    energy2 = reco["cascade_cascade_00001_energy"]
+    eratio = (energy1 - energy2)/(energy1 + energy2) if energy1+energy2 >= energythreshold else 1.
 
-    if "HESEMillipedeFit" not in frame: return # for old reco versions
+    frame.Put(f'RecoERatio_{key}', I3Double(eratio))
+
+def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopod_key,taupede_key,millipede_key,suffix):
+    
+    if f"RecoContainedSingle{suffix}" in frame: return
+
+    if any(k not in frame for k in (monopod_key, taupede_key, millipede_key)):
+        sys.exit(f"Reco keys missing! Not doing Neha reco observables")
     
     energythreshold=1e3
     # the single vertex containment
@@ -107,25 +122,25 @@ def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopo
     e2 = n.log10(cascade2.energy)
     
     # the direction is taken from the HESEMillipedeFit (i.e. best fit out of three hypotheses)
-    zenith = frame['HESEMillipedeFit'].dir.zenith
-    azimuth = frame['HESEMillipedeFit'].dir.azimuth
+    zenith = frame[millipede_key].dir.zenith
+    azimuth = frame[millipede_key].dir.azimuth
     
     # if truncated deposited energy is below threshold switch over to non-truncated energy deposition
-    etot = n.log10(frame['HESEMillipedeFitTruncatedDepositedEnergy'].value)
-    reco_e = frame['HESEMillipedeFitTruncatedDepositedEnergy'].value
+    etot = n.log10(frame[f'{millipede_key}TruncatedDepositedEnergy'].value)
+    reco_e = frame[f'{millipede_key}TruncatedDepositedEnergy'].value
     if frame.Has('energy_reco'):
 	      frame.Delete('energy_reco')
     usetruncated = True
     if etot < n.log10(energythreshold):
-        etot = n.log10(frame['HESEMillipedeFitDepositedEnergy'].value)
-        reco_e = (frame['HESEMillipedeFitDepositedEnergy'].value)
+        etot = n.log10(frame[f'{millipede_key}DepositedEnergy'].value)
+        reco_e = (frame[f'{millipede_key}DepositedEnergy'].value)
         usetruncated = False
         
     # the calculation of the energy confinement
     if usetruncated:
-        econfinement = getenergyconfinement([cascade1, cascade2], frame['HESEMillipedeFitTruncatedParticles'], 'reco')
+        econfinement = getenergyconfinement([cascade1, cascade2], frame[f'{millipede_key}TruncatedParticles'], 'reco')
     else:
-        econfinement = getenergyconfinement([cascade1, cascade2], frame['HESEMillipedeFitParticles'], 'reco')
+        econfinement = getenergyconfinement([cascade1, cascade2], frame[f'{millipede_key}Particles'], 'reco')
     # sanitize values
     if not n.isfinite(length):
         length = 0 # limit to 1 m
@@ -148,35 +163,29 @@ def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopo
          reco_l = 10**length
          
     # save it to the frame
-    frame.Put('RecoContainedSingle', icetray.I3Bool(contained))
-    frame.Put('RecoContained1', icetray.I3Bool(contained1))
-    frame.Put('RecoContained2', icetray.I3Bool(contained2))
-    frame.Put('RecoLogL', I3Double(length))
-    frame.Put('RecoERatio', I3Double(eratio))
-    frame.Put('RecoEConfinement', I3Double(econfinement))
-    frame.Put('RecoLogE1', I3Double(e1))
-    frame.Put('RecoLogE2', I3Double(e2))
-    frame.Put('RecoLogETot', I3Double(etot))
-    frame.Put('RecoZenith', I3Double(zenith))
-    frame.Put('RecoAzimuth', I3Double(azimuth))
-    frame.Put('HESETaupedeFit1', I3Particle(cascade1))
-    frame.Put('HESETaupedeFit2', I3Particle(cascade2))
-    frame.Put('RecoETot', I3Double(reco_e))
-    frame.Put('RecoL', I3Double(reco_l))
-    frame.Put('HESEMonopodFit_x', I3Double(cascade.pos.x))
-    frame.Put('HESEMonopodFit_y', I3Double(cascade.pos.y))
-    frame.Put('HESEMonopodFit_z', I3Double(cascade.pos.z))
+    frame.Put(f'RecoContainedSingle{suffix}', icetray.I3Bool(contained))
+    frame.Put(f'RecoContained1{suffix}', icetray.I3Bool(contained1))
+    frame.Put(f'RecoContained2{suffix}', icetray.I3Bool(contained2))
 
-    frame.Put('HESETaupedeFit1_x', I3Double(cascade1.pos.x))
-    frame.Put('HESETaupedeFit1_y', I3Double(cascade1.pos.y))
-    frame.Put('HESETaupedeFit1_z', I3Double(cascade1.pos.z))
+    frame.Put(f'RecoL{suffix}', I3Double(reco_l))
+    frame.Put(f'RecoERatio{suffix}', I3Double(eratio))
+    frame.Put(f'RecoEConfinement{suffix}', I3Double(econfinement))
+    frame.Put(f'RecoETot{suffix}', I3Double(reco_e))
+    frame.Put(f'RecoLogE1{suffix}', I3Double(e1))
+    frame.Put(f'RecoLogE2{suffix}', I3Double(e2))
+    frame.Put(f'RecoZenith{suffix}', I3Double(zenith))
+    frame.Put(f'RecoAzimuth{suffix}', I3Double(azimuth))
 
-    frame.Put('HESETaupedeFit2_x', I3Double(cascade2.pos.x))
-    frame.Put('HESETaupedeFit2_y', I3Double(cascade2.pos.y))
-    frame.Put('HESETaupedeFit2_z', I3Double(cascade2.pos.z))
+    frame.Put(f'{taupede_key}_1', I3Particle(cascade1))
+    frame.Put(f'{taupede_key}_2', I3Particle(cascade2))
+
+    for coord in ['x', 'y', 'z']:
+        frame.Put(f'{monopod_key}_{coord}', I3Double(getattr(cascade.pos, coord)))
+        frame.Put(f'{taupede_key}_1_{coord}', I3Double(getattr(cascade1.pos, coord)))
+        frame.Put(f'{taupede_key}_2_{coord}', I3Double(getattr(cascade2.pos, coord)))
 
     # add fit params information
-    for key in [monopod_key, taupede_key, 'HESEMillipedeFit']:
+    for key in [monopod_key, taupede_key, millipede_key]:
         if key in frame:
             frame.Put(key + 'Logl', I3Double(frame[key + 'FitParams'].logl))
             frame.Put(key + 'LoglNdof', I3Double(frame[key + 'FitParams'].ndof))
