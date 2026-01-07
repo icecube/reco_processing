@@ -11,10 +11,11 @@ import argparse
 sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 
 # Import the datasets module
-from datasets import datasets_analysis as datasets
+# from datasets import datasets_hese as datasets
+from datasets import datasets_cascade as datasets
 
 # set the inputs
-reco_version = "taureco_iceprod_v5"
+reco_version = "cascade_iceprod_v0"
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)

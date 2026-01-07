@@ -313,45 +313,47 @@ def main():
     
     tray.Add(fn)
 
-    for suffix in ["", "_ibr", "_ibr_idc"]:
-        tray.AddModule(calculaterecoobservables,
-                        f'calc_reco_observables_{suffix}',
-                        innerboundary=550,
-                        outeredge_x=outeredge_x,
-                        outeredge_y=outeredge_y,
-                        monopod_key=f'{monopod_key}{suffix}',
-                        taupede_key=f'{taupede_key}{suffix}',
-                        millipede_key=f'{millipede_key}{suffix}',
-                        suffix=suffix)
-        tray.Add(checkfinaltopology,eventclass=f"{taupede_key}{suffix}HESEEventclass", suffix=suffix)
-        tray.Add(reclassify_double, suffix=suffix)
+    if flavor != "Data":
+        for suffix in ["", "_ibr", "_ibr_idc"]:
+            tray.AddModule(calculaterecoobservables,
+                            f'calc_reco_observables_{suffix}',
+                            innerboundary=550,
+                            outeredge_x=outeredge_x,
+                            outeredge_y=outeredge_y,
+                            monopod_key=f'{monopod_key}{suffix}',
+                            taupede_key=f'{taupede_key}{suffix}',
+                            millipede_key=f'{millipede_key}{suffix}',
+                            suffix=suffix)
+            tray.Add(checkfinaltopology,eventclass=f"{taupede_key}{suffix}HESEEventclass", suffix=suffix)
+            tray.Add(reclassify_double, suffix=suffix)
 
-    # evt gen
-    for key in ["EventGeneratorDC_Max", "EventGeneratorDC_Thijs"]:
-        tray.Add( eventgen_eratio, key=key)
+        # evt gen
+        for key in ["EventGeneratorDC_Max", "EventGeneratorDC_Thijs"]:
+            tray.Add( eventgen_eratio, key=key)
 
-    ###
-    ### add cascade bdt variables
-    ###
-    tray.AddSegment(misc, 'misc', pulses=pulses) # was with OfflinePulses, but should be same as SplitInIcePulses
+        ###
+        ### add cascade bdt variables
+        ###
+        tray.AddSegment(misc, 'misc', pulses=pulses, If=lambda frame: frame.Has(pulses)) # was with OfflinePulses, but should be same as SplitInIcePulses
 
-    # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
-    # and mlb_DelayTime_noNoise.py
-    tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name="MonopodFit_iMIGRAD_PPB0",
-                    reconame=monopod_key,pulsemapname=f'{pulses}HLC_noSaturDOMs')
+        # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
+        # and mlb_DelayTime_noNoise.py
+        tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name="MonopodFit_iMIGRAD_PPB0",
+                        reconame=monopod_key,pulsemapname=f'{pulses}HLC_noSaturDOMs',
+                        If=lambda frame: frame.Has(f'{pulses}HLC'))
 
-    # add cv statistics if we dont have it yet
-    tray.AddSegment(add_hit_verification_info_muon_and_wimp, 'CommonVariablesMuonAndWimp',
-                    Pulses= pulses,
-                    If = which_split(split_name='InIceSplit') & (lambda f: (muon_wg(f) or wimp_wg(f)) and 'CVStatistics' not in f),
-                    OutputI3HitMultiplicityValuesName= "CVMultiplicity",
-                    OutputI3HitStatisticsValuesName= "CVStatistics",
-                    suffix = '')
+        # add cv statistics if we dont have it yet
+        tray.AddSegment(add_hit_verification_info_muon_and_wimp, 'CommonVariablesMuonAndWimp',
+                        Pulses= pulses,
+                        If = which_split(split_name='InIceSplit') & (lambda f: (muon_wg(f) or wimp_wg(f)) and 'CVStatistics' not in f),
+                        OutputI3HitMultiplicityValuesName= "CVMultiplicity",
+                        OutputI3HitStatisticsValuesName= "CVStatistics",
+                        suffix = '')
 
-    tray.AddModule(taupede_monopod_bdt_var,"taupede_monopod_bdt_var",
-                   monopod_key=monopod_key, taupede_key=taupede_key)
+        tray.AddModule(taupede_monopod_bdt_var,"taupede_monopod_bdt_var",
+                    monopod_key=monopod_key, taupede_key=taupede_key)
 
-    if flavor != "MuonGun": # nugen
+    if "Nu" in flavor: # nugen
         tray.Add(add_primary)
         tray.Add(penetrating_depth)
 
@@ -366,8 +368,7 @@ def main():
 
         tray.AddModule(AddOutGoingParticles,'AddOutGoingParticles')
         tray.Add(AddMCInfo,'AddMCInfo')
-
-    else: # muongun
+    elif flavor == "MuonGun":
         ## actually propagate the muons (is that necessary?)
         tray.Add("Rename", "rename", 
                  Keys = ['MMCTrackList', 'MMCTrackList_orig'],
@@ -390,18 +391,19 @@ def main():
                 flux_model='GaisserH4a_atmod12_DPMJET-C',prefix='Prompt')
         tray.AddModule(MuonWeight_Scaling)
 
-    tray.Add(mcinfo, 'mcpreproc_',
-                    outeredge_x=outeredge_x, outeredge_y=outeredge_y,
-                    innerboundary=550.0, outerboundary=650.0,
-                    dataset=flavor,
-                    ethreshold=1e3,
-                    PhotonsPerBin=5,
-                    ShowerSpacing=5)
-    tray.Add(calculatetrueobservables,
-        'calc_true_observables',
-        innerboundary=550.0,
-        outeredge_x=outeredge_x, 
-        outeredge_y=outeredge_y)
+    if flavor != "Data":
+        tray.Add(mcinfo, 'mcpreproc_',
+                        outeredge_x=outeredge_x, outeredge_y=outeredge_y,
+                        innerboundary=550.0, outerboundary=650.0,
+                        dataset=flavor,
+                        ethreshold=1e3,
+                        PhotonsPerBin=5,
+                        ShowerSpacing=5)
+        tray.Add(calculatetrueobservables,
+            'calc_true_observables',
+            innerboundary=550.0,
+            outeredge_x=outeredge_x, 
+            outeredge_y=outeredge_y)
 
     from hdf_keys_clean import hdfkeys
     hdfkeys+=args.add

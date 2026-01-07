@@ -1,5 +1,5 @@
 
-reco_version=taureco_iceprod_v5_newicetray
+reco_version=hese_iceprod_v6
 out_path=/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/hdf/output/${reco_version}/merged
 
 outfiles=""

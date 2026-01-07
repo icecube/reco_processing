@@ -10,9 +10,9 @@ def merge_datasets(target, source):
             if name not in target:
                 source.copy(name, target)
             else:
-                dset_src = item[...]
+                dset_src = item[...] # load source data into memory
                 dset_dst = target[name]
-                if dset_dst.shape[1:] != dset_src.shape[1:]:
+                if dset_dst.shape[1:] != dset_src.shape[1:]: # enforce dataset to only differ along axis 0, index
                     raise ValueError(f"Shape mismatch in dataset '{name}'")
                 new_size = dset_dst.shape[0] + dset_src.shape[0]
                 dset_dst.resize((new_size,) + dset_dst.shape[1:])
@@ -42,7 +42,6 @@ if __name__ == "__main__":
         print("Usage: python merge_hdf5.py output.h5 input1.h5 input2.h5 ...")
         sys.exit(1)
 
-
     parser = argparse.ArgumentParser(
         description='Extract CausalQTot and MJD data from i3 to h5')
 
@@ -53,10 +52,6 @@ if __name__ == "__main__":
 
     output = args.out
     inputs = args.inputs
-
-    # print("merge.py")
-    # print(output)
-    # print(inputs)
 
     merge_hdf5_files(output, inputs)
 

@@ -59,6 +59,8 @@ hdfkeys += [
     'cscdSBU_Qtot_HLC_log', 'Taupede_ftpFitParams_rlogl',
     'cscdSBU_MonopodFit4_noDCFitParams_rlogl',
 
+    'TauMonoMilliDiff_rlogl', 'TauSPEMilliDiff_rlogl',
+
     # HESE
     'HESE_VHESelfVeto', 'HESE_CausalQTot', 'HESE_HomogenizedQTot',
     'VHESelfVeto', 'CausalQTot', 'HomogenizedQTot',
