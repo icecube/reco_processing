@@ -16,11 +16,11 @@ import sys
 def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
 
     if 'Taupede_Distance' in frame: return
-    
-    if 'SPEFit16_PPB0' not in frame: 
-        sys.exit("SPEFit16_PPB0 not in frame!!")
-        return # for old reco
 
+    if taupede_key not in frame: 
+        print("could not find", taupede_key)
+        return
+    
     # variables
     taupede1,taupede2 = frame[f"{taupede_key}Particles"]
     frame["Taupede_Distance"] = I3Double(taupede1.length)
@@ -68,7 +68,13 @@ def taupede_monopod_bdt_var( frame, monopod_key, taupede_key ):
     distance = np.sqrt( (x1-x2)**2 + (y1-y2)**2 + (z1-z2)**2 )
     frame["cscdSBU_VertexRecoDist_CscdLLh"]= I3Double( distance )
 
-    x = frame["MonopodFit_iMIGRAD_PPB0_Delay_ice"]
+
+    if 'SPEFit16_PPB0' not in frame: 
+        return 
+    
+    ### millipede rlogl differences
+    frame['TauMonoMilliDiff_rlogl'] = I3Double( frame[f'{taupede_key}MillipedeFitFitParams'].rlogl - frame[f'{monopod_key}MillipedeFitFitParams'].rlogl )
+    frame['TauSPEMilliDiff_rlogl'] = I3Double( frame[f'{taupede_key}MillipedeFitFitParams'].rlogl - frame[f'SPEFit16_PPB0MillipedeFitFitParams'].rlogl )
 
     return True
 

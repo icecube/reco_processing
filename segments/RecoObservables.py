@@ -89,7 +89,8 @@ calculate reco observables
 def eventgen_eratio(frame,key):
     energythreshold=1e3
     if key not in frame:
-        sys.exit("could not find", key)
+        print("could not find", key)
+        return
 
     reco = frame[key]
     
@@ -104,7 +105,8 @@ def calculaterecoobservables(frame,innerboundary,outeredge_x, outeredge_y,monopo
     if f"RecoContainedSingle{suffix}" in frame: return
 
     if any(k not in frame for k in (monopod_key, taupede_key, millipede_key)):
-        sys.exit(f"Reco keys missing! Not doing Neha reco observables")
+        print(f"Reco keys missing! Not doing Neha reco observables")
+        return
     
     energythreshold=1e3
     # the single vertex containment

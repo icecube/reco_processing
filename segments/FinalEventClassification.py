@@ -92,7 +92,8 @@ def checkfinaltopology(frame,eventclass,suffix = ""):
     if f'FinalTopology{suffix}' in frame: return
 
     if eventclass not in frame: 
-        sys.exit(f"could not find {eventclass}") 
+        print(f"could not find {eventclass}") 
+        return
 
     eventclassarr = frame[eventclass].value
     larr = frame[f'RecoL{suffix}'].value

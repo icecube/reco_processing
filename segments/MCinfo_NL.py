@@ -696,7 +696,7 @@ def mcinfo(tray, name,
                 cascade1 = I3Particle(hadron)
                 cascade1.energy = hadron.energy*((ShowerParameters(hadron.type,hadron.energy).emScale))
                 ShowerMax = ((ShowerParameters(hadron.type,hadron.energy).a-1)\
-                                 /ShowerParameters(hadron.type,hadron.energy).b)
+                                 /ShowerParameters(hadron.type,hadron.energy).b) if ShowerParameters(hadron.type,hadron.energy).b > 0 else 0
                 cascade1.pos = cascade1.shift_along_track(ShowerMax)
                 cascade1.time = hadron.time + ShowerMax/I3Constants.c
                 cascade1.length = 0.
