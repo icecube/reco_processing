@@ -1,0 +1,15 @@
+input_params:
+  astro_norm: 1.44
+  gamma_astro: 2.37
+  prompt_norm: 0.0
+  astro_nue_ratio: 1.0
+  astro_nutau_ratio: 1.0
+  conv_norm: 1.0
+
+snowstorm_simulated_ranges:
+    DOMEfficiency: [0.9, 1.1]
+    IceAbsorption: [0.9, 1.1]
+    IceScattering: [0.9, 1.1]
+    IceAnisotropyScale: [0.0, 2.0]
+    HoleIceForward_p0: [-0.84, 0.3]
+    HoleIceForward_p1 : [-0.134, +0.05]

@@ -1,0 +1,14 @@
+snowstorm_simulated_ranges:
+  DOMEfficiency: [0.9, 1.1]
+  IceAbsorption: [0.9, 1.1]
+  IceScattering: [0.9, 1.1]
+  HoleIceForward_p0: [-0.1, 0.6]
+  HoleIceForward_p1 : [-0.12, 0.0]
+  CrystalDensityParameterScaling: [0.8, 1.2]
+snowstorm_ranges_for_calculation:
+  DOMEfficiency: [0.9, 1.1]
+  IceAbsorption: [0.9, 1.1]
+  IceScattering: [0.9, 1.1]
+  HoleIceForward_p0: [-0.1, 0.5980366362473171]
+  HoleIceForward_p1 : [-0.1135759700999585, 0.0]
+  CrystalDensityParameterScaling: [0.8, 1.2]

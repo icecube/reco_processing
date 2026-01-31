@@ -1,0 +1,126 @@
+#
+# atmospheric
+#
+
+astro:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio, inel_scale]
+  param_specifications:
+    inel_scale:
+      
+      inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
+
+astro_without_flavor:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_norm, gamma_astro, inel_scale]
+  param_specifications:
+    inel_scale:
+      
+      inelasticity_table: *inelasticity_table
+
+astro_muon_dampened:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_norm, gamma_astro, muon_ecrit,astro_nue_ratio, astro_nutau_ratio, inel_scale]
+  param_specifications:
+    inel_scale:
+      
+      inelasticity_table: *inelasticity_table
+
+prompt:
+   baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
+
+   additional:
+      fixed_passing_fraction_per_event: PassRate_prompt
+   class: AtmoFixedVeto
+   parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
+   param_specifications:
+     delta_gamma:
+       baseline_weights: *prompt_base_weights
+     CR_grad:
+       baseline_weights: *prompt_base_weights
+       alternative_weights: mceq_pr_GST4_SIBYLL23c
+     inel_scale:
+       inelasticity_table: *inelasticity_table
+
+
+
+
+conventional:
+  baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
+  additional:
+     fixed_passing_fraction_per_event: PassRate_conv
+  class: AtmoFixedVeto
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y,inel_scale]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *conv_base_weights
+    CR_grad:
+      baseline_weights: *conv_base_weights
+      alternative_weights: mceq_conv_GST4_SIBYLL23c
+    barr_h:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_h_mceq_H4a_SIBYLL23c
+    barr_y:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_y_mceq_H4a_SIBYLL23c
+    barr_w:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_w_mceq_H4a_SIBYLL23c
+    barr_z:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_z_mceq_H4a_SIBYLL23c
+    inel_scale:
+      
+      inelasticity_table: *inelasticity_table
+
+muon:
+  baseline_weights: muongun_conv_H4a_SIBYLL
+  class: ConventionalAtmo
+  parameters: [muongun_norm]
+  skip_syst: True
+
+muontemplate:
+  class: TemplateFlux
+  parameters: [muongun_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit_Flavor/NNMFit_Configs/override/MuonGun/Tracks_KDE.pickle
+
+#
+# astro
+#
+
+
+astro_wcutoff:
+  baseline_weights: powerlaw
+  class: Powerlaw 
+  parameters: [astro_norm, gamma_astro, cutoff_astro]
+
+logparabola_astro:
+  baseline_weights: powerlaw
+  class: LogParabola
+  parameters: [astro_parabola_norm, astro_parabola_a, astro_parabola_b]
+
+brokenastro_fixed:
+  baseline_weights: powerlaw
+  class: BrokenPowerlaw_fixedBreak 
+  parameters: [astro_norm, gamma_astro_second, gamma_astro_first]
+
+piecewise_astro_5bin:
+  baseline_weights: powerlaw
+  class: PiecewisePowerlaw
+  parameters: [piece1, piece2, piece3, piece4, piece5]
+
+piecewise_astro_13bin:
+  baseline_weights: powerlaw
+  class: PiecewisePowerlaw
+  parameters: [cscd_piece1, cscd_piece2, cscd_piece3, cscd_piece4, cscd_piece5, cscd_piece6, cscd_piece7, cscd_piece8, cscd_piece9, cscd_piece10, cscd_piece11, cscd_piece12,cscd_piece13]
+  
+astro_nu_ratio:
+   baseline_weights: powerlaw
+   class: Powerlaw
+   parameters: [astro_nue_ratio, astro_nutau_ratio]
+
