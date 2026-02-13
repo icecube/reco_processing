@@ -1,14 +1,12 @@
-#
-# atmospheric
-#
-
+###
+### astro
+###
 astro:
   baseline_weights: powerlaw
   class: Powerlaw
   parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio, inel_scale]
   param_specifications:
     inel_scale:
-      
       inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
 astro_without_flavor:
@@ -17,7 +15,6 @@ astro_without_flavor:
   parameters: [astro_norm, gamma_astro, inel_scale]
   param_specifications:
     inel_scale:
-      
       inelasticity_table: *inelasticity_table
 
 astro_muon_dampened:
@@ -26,73 +23,7 @@ astro_muon_dampened:
   parameters: [astro_norm, gamma_astro, muon_ecrit,astro_nue_ratio, astro_nutau_ratio, inel_scale]
   param_specifications:
     inel_scale:
-      
       inelasticity_table: *inelasticity_table
-
-prompt:
-   baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
-
-   additional:
-      fixed_passing_fraction_per_event: PassRate_prompt
-   class: AtmoFixedVeto
-   parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
-   param_specifications:
-     delta_gamma:
-       baseline_weights: *prompt_base_weights
-     CR_grad:
-       baseline_weights: *prompt_base_weights
-       alternative_weights: mceq_pr_GST4_SIBYLL23c
-     inel_scale:
-       inelasticity_table: *inelasticity_table
-
-
-
-
-conventional:
-  baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
-  additional:
-     fixed_passing_fraction_per_event: PassRate_conv
-  class: AtmoFixedVeto
-  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y,inel_scale]
-  param_specifications:
-    delta_gamma:
-      baseline_weights: *conv_base_weights
-    CR_grad:
-      baseline_weights: *conv_base_weights
-      alternative_weights: mceq_conv_GST4_SIBYLL23c
-    barr_h:
-      baseline_weights: *conv_base_weights
-      slope_per_event: barr_h_mceq_H4a_SIBYLL23c
-    barr_y:
-      baseline_weights: *conv_base_weights
-      slope_per_event: barr_y_mceq_H4a_SIBYLL23c
-    barr_w:
-      baseline_weights: *conv_base_weights
-      slope_per_event: barr_w_mceq_H4a_SIBYLL23c
-    barr_z:
-      baseline_weights: *conv_base_weights
-      slope_per_event: barr_z_mceq_H4a_SIBYLL23c
-    inel_scale:
-      
-      inelasticity_table: *inelasticity_table
-
-muon:
-  baseline_weights: muongun_conv_H4a_SIBYLL
-  class: ConventionalAtmo
-  parameters: [muongun_norm]
-  skip_syst: True
-
-muontemplate:
-  class: TemplateFlux
-  parameters: [muongun_norm]
-  skip_syst: True
-  additional:
-    template_file: /data/ana/Diffuse/GlobalFit_Flavor/NNMFit_Configs/override/MuonGun/Tracks_KDE.pickle
-
-#
-# astro
-#
-
 
 astro_wcutoff:
   baseline_weights: powerlaw
@@ -124,3 +55,185 @@ astro_nu_ratio:
    class: Powerlaw
    parameters: [astro_nue_ratio, astro_nutau_ratio]
 
+###
+### atmospheric
+###
+
+#
+# HESE
+#
+prompt:
+   baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
+   additional:
+      fixed_passing_fraction_per_event: PassRate_prompt
+   class: AtmoFixedVeto
+   parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
+   param_specifications:
+     delta_gamma:
+       baseline_weights: *prompt_base_weights
+     CR_grad:
+       baseline_weights: *prompt_base_weights
+       alternative_weights: mceq_pr_GST4_SIBYLL23c
+     inel_scale:
+       inelasticity_table: *inelasticity_table
+
+conventional:
+  baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
+  additional:
+     fixed_passing_fraction_per_event: PassRate_conv
+  class: AtmoFixedVeto
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y,inel_scale]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *conv_base_weights
+    CR_grad:
+      baseline_weights: *conv_base_weights
+      alternative_weights: mceq_conv_GST4_SIBYLL23c
+    barr_h:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_h_mceq_H4a_SIBYLL23c
+    barr_y:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_y_mceq_H4a_SIBYLL23c
+    barr_w:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_w_mceq_H4a_SIBYLL23c
+    barr_z:
+      baseline_weights: *conv_base_weights
+      slope_per_event: barr_z_mceq_H4a_SIBYLL23c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
+
+#
+# Globalfit
+# 
+conventional_globalfit:
+  # baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
+  # TODO: Is this correct to point to the same baseline weights?
+  baseline_weights: *conv_base_weights
+  class: ConventionalAtmo
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *conv_base_weights
+    CR_grad:
+      baseline_weights: *conv_base_weights
+      alternative_weights: &conv_cr_grad_alt mceq_conv_GST4_SIBYLL23c
+    barr_h:
+      baseline_weights: *conv_base_weights
+      slope_per_event: &conv_barr_h barr_h_mceq_H4a_SIBYLL23c
+    barr_y:
+      baseline_weights: *conv_base_weights
+      slope_per_event: &conv_barr_y barr_y_mceq_H4a_SIBYLL23c
+    barr_w:
+      baseline_weights: *conv_base_weights
+      slope_per_event: &conv_barr_w barr_w_mceq_H4a_SIBYLL23c
+    barr_z:
+      baseline_weights: *conv_base_weights
+      slope_per_event: &conv_barr_z barr_z_mceq_H4a_SIBYLL23c
+  additional:
+    hooks:
+      OscillationsHook:
+        spline_file: /data/ana/Diffuse/NNMFit/resources/oscillation_splines/NuCraft_OscillationProb.pickle
+
+prompt_globalfit:
+  # baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
+  # TODO: Is this correct to point to the same baseline weights?
+  baseline_weights: *prompt_base_weights
+  class: PromptAtmo
+  parameters: [prompt_norm, delta_gamma, CR_grad]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *prompt_base_weights
+    CR_grad:
+      baseline_weights: *prompt_base_weights
+      alternative_weights: &pr_cr_grad_alt mceq_pr_GST4_SIBYLL23c
+  additional:
+    hooks:
+      OscillationsHook:
+        spline_file: /data/ana/Diffuse/NNMFit/resources/oscillation_splines/NuCraft_OscillationProb.pickle
+
+conventional_veto_globalfit:
+  baseline_weights: *conv_base_weights
+  class: ConventionalAtmo
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, effective_veto]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *conv_base_weights
+    CR_grad:
+      baseline_weights: *conv_base_weights
+      alternative_weights: *conv_cr_grad_alt
+    barr_h:
+      baseline_weights: *conv_base_weights
+      slope_per_event: *conv_barr_h
+    barr_y:
+      baseline_weights: *conv_base_weights
+      slope_per_event: *conv_barr_y
+    barr_w:
+      baseline_weights: *conv_base_weights
+      slope_per_event: *conv_barr_w
+    barr_z:
+      baseline_weights: *conv_base_weights
+      slope_per_event: *conv_barr_z
+    effective_veto:
+      threshold_a: log_PF_at100GeV_conv_a
+      threshold_b: log_PF_at100GeV_conv_b
+      threshold_c: log_PF_at100GeV_conv_c
+
+prompt_veto_globalfit:
+  baseline_weights: *prompt_base_weights
+  class: PromptAtmo
+  parameters: [prompt_norm, delta_gamma, CR_grad, effective_veto]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *prompt_base_weights
+    CR_grad:
+      baseline_weights: *prompt_base_weights
+      alternative_weights: *pr_cr_grad_alt
+    effective_veto:
+      threshold_a: log_PF_at100GeV_pr_a
+      threshold_b: log_PF_at100GeV_pr_b
+      threshold_c: log_PF_at100GeV_pr_c
+
+###
+### atmospheric muons
+###
+
+#
+# HESE
+#
+muon:
+  baseline_weights: muongun_conv_H4a_SIBYLL
+  class: ConventionalAtmo
+  parameters: [muongun_norm]
+  skip_syst: True
+
+muontemplate:
+  class: TemplateFlux
+  parameters: [muongun_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit_Flavor/NNMFit_Configs/override/MuonGun/Tracks_KDE.pickle
+
+#
+# globalfit
+#
+muontemplate_globalfit:
+  class: TemplateFlux
+  parameters: [muon_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon.pickle
+
+muontemplate_drop5bins_globalfit:
+  class: TemplateFlux
+  parameters: [muon_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon_Fullrange_drop_5lowEbins.pickle
+    
+muon:
+  baseline_weights: muongun_conv_H4a_SIBYLL
+  class: ConventionalAtmo
+  parameters: [muongun_norm]
+  skip_syst: True

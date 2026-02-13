@@ -50,6 +50,19 @@ HI_inter:
   prior: 0.5
   prior_width: 1.
 
+# Taken from cascade folder zheyang
+# TODO: what is this? 
+effective_veto:
+  # for transformed (logspace) threshold parameter
+  # range: [-1.301, 1.477]
+  range: [-1.301, 1.301] # limited by validity of available splines
+  default: 1.
+  # for "linear" threshold parameter
+  # range: [0.005,30.0] # limited by available splines
+  class: VetoThreshold
+  additional:
+    rescale_energy: 100
+    anchor_energy: 100
 
 kPi_mceq:
   range: [-0.5,0.5]
