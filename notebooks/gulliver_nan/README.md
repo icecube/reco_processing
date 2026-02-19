@@ -18,4 +18,6 @@ WARN (I3SimpleFitter): (SPEFitSingle) Saw no events with at least one good fit. 
 WARN (I3IterativeFitter): (SPEFit2) Saw no events with at least one good fit. (I3IterativeFitter.cxx:591 in virtual void I3IterativeFitter::Finish())
 ERROR (I3Gulliver): (TaupedeFit_iMIGRAD_PPB0) nr. of improper llh fcn calls (NAN parameters)by minimizer iminuit: 71. You should investigate this, it is very likely that something is screwed up. (I3Gulliver.cxx:36 in virtual I3Gulliver::~I3Gulliver())
 
-here i am doing my due dillingence
+here i am doing my due dillingence.
+
+Conclusion: no problem according to Tianlu. Many many directions are scanned. As long as 1 optimization doesn't give nan, we are fine.

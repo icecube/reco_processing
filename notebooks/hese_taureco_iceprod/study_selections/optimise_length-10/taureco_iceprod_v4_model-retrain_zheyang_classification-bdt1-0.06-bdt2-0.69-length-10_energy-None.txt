@@ -1,0 +1,85 @@
+
+=== Rates ===
+
+            Astro NuE    Astro NuMu   Astro NuTau  Conventional       Prompt          Muon
+Cascade  54.47 ± 0.37   6.08 ± 0.09  27.62 ± 0.26  12.80 ± 0.48  5.78 ± 0.06   0.70 ± 0.70
+Double    0.62 ± 0.03   0.42 ± 0.02   4.80 ± 0.07   0.20 ± 0.04  0.13 ± 0.00   0.00 ± 0.00
+Track     1.66 ± 0.07  14.08 ± 0.12   2.62 ± 0.07  12.82 ± 0.43  1.11 ± 0.02  18.56 ± 6.50
+
+=== Purity ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.51  0.06  0.26
+Double   0.10  0.07  0.78
+Track    0.03  0.28  0.05
+
+=== Efficiency ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.96  0.30  0.79
+Double   0.01  0.02  0.14
+Track    0.03  0.68  0.07
+
+=== Sig / sqrt(bg) ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  7.48  0.60  3.09
+Double   0.26  0.17  4.09
+Track    0.24  2.32  0.38
+
+=== Rates (LaTeX) ===
+
+\begin{tabular}{lcccccc}
+\toprule
+ & Astro NuE & Astro NuMu & Astro NuTau & Conventional & Prompt & Muon \\
+\midrule
+Cascade & 54.47 ± 0.37 & 6.08 ± 0.09 & 27.62 ± 0.26 & 12.80 ± 0.48 & 5.78 ± 0.06 & 0.70 ± 0.70 \\
+Double & 0.62 ± 0.03 & 0.42 ± 0.02 & 4.80 ± 0.07 & 0.20 ± 0.04 & 0.13 ± 0.00 & 0.00 ± 0.00 \\
+Track & 1.66 ± 0.07 & 14.08 ± 0.12 & 2.62 ± 0.07 & 12.82 ± 0.43 & 1.11 ± 0.02 & 18.56 ± 6.50 \\
+\bottomrule
+\end{tabular}
+
+
+=== Purity (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.51 & 0.06 & 0.26 \\
+Double & 0.10 & 0.07 & 0.78 \\
+Track & 0.03 & 0.28 & 0.05 \\
+\bottomrule
+\end{tabular}
+
+
+=== Efficiency (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.96 & 0.30 & 0.79 \\
+Double & 0.01 & 0.02 & 0.14 \\
+Track & 0.03 & 0.68 & 0.07 \\
+\bottomrule
+\end{tabular}
+
+
+=== Sig / sqrt(bg) (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 7.48 & 0.60 & 3.09 \\
+Double & 0.26 & 0.17 & 4.09 \\
+Track & 0.24 & 2.32 & 0.38 \\
+\bottomrule
+\end{tabular}

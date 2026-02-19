@@ -130,6 +130,15 @@ def create_AstroFluxModel(per_flavor_norm, gamma_astro):
     
     return AstroFluxModel
 
+# weight functions
+gamma_astro = 2.87
+per_flavor_norm = 2.12
+AstroFluxModel_HESE = create_AstroFluxModel(per_flavor_norm=per_flavor_norm, gamma_astro=gamma_astro)
+
+gamma_astro = 2.53
+per_flavor_norm = 1.66
+AstroFluxModel_cascade = create_AstroFluxModel(per_flavor_norm=per_flavor_norm, gamma_astro=gamma_astro)
+
 def Append_Weights(file, gamma_astro = 2.87, per_flavor_norm = 2.12, livetime_s = 11.687 * 365.25 * 24 * 3600):
     
     file["weighters"] = {}

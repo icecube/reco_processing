@@ -1,0 +1,85 @@
+
+=== Rates ===
+
+            Astro NuE    Astro NuMu   Astro NuTau Conventional       Prompt         Muon
+Cascade  30.07 ± 0.24   2.45 ± 0.04  14.02 ± 0.16  2.59 ± 0.09  2.93 ± 0.04  0.00 ± 0.00
+Double    1.35 ± 0.04   0.30 ± 0.01   4.76 ± 0.07  0.11 ± 0.02  0.16 ± 0.00  0.00 ± 0.00
+Track     8.82 ± 0.12  12.05 ± 0.10   5.40 ± 0.08  7.19 ± 0.21  1.26 ± 0.02  0.37 ± 0.14
+
+=== Purity ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.58  0.05  0.27
+Double   0.20  0.04  0.71
+Track    0.25  0.34  0.15
+
+=== Efficiency ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.75  0.17  0.58
+Double   0.03  0.02  0.20
+Track    0.22  0.81  0.22
+
+=== Sig / sqrt(bg) ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  6.41  0.35  2.27
+Double   0.58  0.12  3.44
+Track    1.72  2.51  0.99
+
+=== Rates (LaTeX) ===
+
+\begin{tabular}{lcccccc}
+\toprule
+ & Astro NuE & Astro NuMu & Astro NuTau & Conventional & Prompt & Muon \\
+\midrule
+Cascade & 30.07 ± 0.24 & 2.45 ± 0.04 & 14.02 ± 0.16 & 2.59 ± 0.09 & 2.93 ± 0.04 & 0.00 ± 0.00 \\
+Double & 1.35 ± 0.04 & 0.30 ± 0.01 & 4.76 ± 0.07 & 0.11 ± 0.02 & 0.16 ± 0.00 & 0.00 ± 0.00 \\
+Track & 8.82 ± 0.12 & 12.05 ± 0.10 & 5.40 ± 0.08 & 7.19 ± 0.21 & 1.26 ± 0.02 & 0.37 ± 0.14 \\
+\bottomrule
+\end{tabular}
+
+
+=== Purity (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.58 & 0.05 & 0.27 \\
+Double & 0.20 & 0.04 & 0.71 \\
+Track & 0.25 & 0.34 & 0.15 \\
+\bottomrule
+\end{tabular}
+
+
+=== Efficiency (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.75 & 0.17 & 0.58 \\
+Double & 0.03 & 0.02 & 0.20 \\
+Track & 0.22 & 0.81 & 0.22 \\
+\bottomrule
+\end{tabular}
+
+
+=== Sig / sqrt(bg) (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 6.41 & 0.35 & 2.27 \\
+Double & 0.58 & 0.12 & 3.44 \\
+Track & 1.72 & 2.51 & 0.99 \\
+\bottomrule
+\end{tabular}

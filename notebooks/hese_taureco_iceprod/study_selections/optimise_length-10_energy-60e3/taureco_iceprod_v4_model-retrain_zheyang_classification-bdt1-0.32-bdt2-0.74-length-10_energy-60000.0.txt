@@ -1,0 +1,85 @@
+
+=== Rates ===
+
+            Astro NuE   Astro NuMu   Astro NuTau Conventional       Prompt         Muon
+Cascade  39.94 ± 0.27  4.68 ± 0.06  18.83 ± 0.18  4.61 ± 0.15  3.65 ± 0.04  0.00 ± 0.00
+Double    0.15 ± 0.01  0.29 ± 0.01   4.24 ± 0.06  0.12 ± 0.02  0.10 ± 0.00  0.00 ± 0.00
+Track     0.15 ± 0.01  9.83 ± 0.09   1.11 ± 0.03  5.16 ± 0.18  0.59 ± 0.01  0.37 ± 0.14
+
+=== Purity ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.56  0.07  0.26
+Double   0.03  0.06  0.87
+Track    0.01  0.57  0.06
+
+=== Efficiency ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  0.99  0.32  0.78
+Double   0.00  0.02  0.18
+Track    0.00  0.66  0.05
+
+=== Sig / sqrt(bg) ===
+
+          NuE  NuMu NuTau
+Class                    
+Cascade  7.09  0.57  2.59
+Double   0.07  0.14  5.24
+Track    0.04  3.62  0.28
+
+=== Rates (LaTeX) ===
+
+\begin{tabular}{lcccccc}
+\toprule
+ & Astro NuE & Astro NuMu & Astro NuTau & Conventional & Prompt & Muon \\
+\midrule
+Cascade & 39.94 ± 0.27 & 4.68 ± 0.06 & 18.83 ± 0.18 & 4.61 ± 0.15 & 3.65 ± 0.04 & 0.00 ± 0.00 \\
+Double & 0.15 ± 0.01 & 0.29 ± 0.01 & 4.24 ± 0.06 & 0.12 ± 0.02 & 0.10 ± 0.00 & 0.00 ± 0.00 \\
+Track & 0.15 ± 0.01 & 9.83 ± 0.09 & 1.11 ± 0.03 & 5.16 ± 0.18 & 0.59 ± 0.01 & 0.37 ± 0.14 \\
+\bottomrule
+\end{tabular}
+
+
+=== Purity (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.56 & 0.07 & 0.26 \\
+Double & 0.03 & 0.06 & 0.87 \\
+Track & 0.01 & 0.57 & 0.06 \\
+\bottomrule
+\end{tabular}
+
+
+=== Efficiency (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 0.99 & 0.32 & 0.78 \\
+Double & 0.00 & 0.02 & 0.18 \\
+Track & 0.00 & 0.66 & 0.05 \\
+\bottomrule
+\end{tabular}
+
+
+=== Sig / sqrt(bg) (LaTeX) ===
+
+\begin{tabular}{lccc}
+\toprule
+ & NuE & NuMu & NuTau \\
+Class &  &  &  \\
+\midrule
+Cascade & 7.09 & 0.57 & 2.59 \\
+Double & 0.07 & 0.14 & 5.24 \\
+Track & 0.04 & 3.62 & 0.28 \\
+\bottomrule
+\end{tabular}
