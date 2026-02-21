@@ -135,7 +135,7 @@ def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, sav
 
             bin_centers = 0.5 * (binning[:-1] + binning[1:])
 
-            axes[i].stairs(hist, binning, label=f"{input_name}: {sum(hist):.2f}")
+            axes[i].stairs(hist, binning, label=f"{input_name}: {sum(hist):.2f}+-{sum(yerror):.2f}")
             axes[i].fill_between(binning, np.r_[hist - yerror, (hist - yerror)[-1]], np.r_[hist + yerror, (hist + yerror)[-1]], step="post", alpha=0.4)
             # axes[i].errorbar(bin_centers, hist, yerr=yerror, fmt="none", capsize=2)
 
@@ -187,7 +187,7 @@ def plot_histogram_astro_flavor(hist_graph_hdl, det_config, gamma_astro = 2.87, 
             hist = hists[input_flavor].sum(axis=1-i)
             yerror = np.sqrt(errors[input_flavor].sum(axis=1-i))
 
-            axes[i].stairs(hist, binning, label=f"{input_flavor}: {sum(hist):.2f}")
+            axes[i].stairs(hist, binning, label=f"{input_flavor}: {sum(hist):.2f}+-{sum(yerror):.2f}")
             axes[i].fill_between(binning, np.r_[hist - yerror, (hist - yerror)[-1]], np.r_[hist + yerror, (hist + yerror)[-1]], step="post", alpha=0.4)
 
             axes[i].set_xlabel(x_labels[variable_name])
