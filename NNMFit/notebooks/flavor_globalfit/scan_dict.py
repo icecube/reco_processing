@@ -10,8 +10,11 @@ scan_dir_dict = {
     "spice_nosyst":           f"{hese_path}/asimov_SAY_HESEBestfit_NoSystematics_spice",
     "hese_oldpid_nosyst":     f"{hese_path}/asimov_SAY_HESEBestfit_NoSystematics_ftp_FinalTopology",
 
-    # # --- Old PID with systematics ---
-    # "hese_oldpid":            f"{hese_path}/asimov_SAY_HESEBestfit_ftp_FinalTopology",
+    # --- Old PID with systematics ---
+    "hese_oldpid":            f"{hese_path}/asimov_SAY_HESEBestfit_ftp_FinalTopology",
+
+    "hese_oldpid_combinedBase":  
+                              f"{hese_path}/asimov_SAY_HESEBestfit_ftp_FinalTopology_combinedBaseline",
 
     # # --- 11 feature variants, optimized for different bdt trainings or figures of merit ---
     # "hese_11feat_purity":     f"{hese_path}/mcd-flavor_flux-hese_feat-11features/"
@@ -51,6 +54,12 @@ scan_dir_dict = {
                               f"rloglmilli_econf_evtgen/"
                               f"bdt1_0.333333_bdt2_0.366667_length_10_"
                               f"10bdtprod_threshold_0.122_combinedBaseline",
+
+    "hese_allfeat_bdtprod_combinedBase_withSyst":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_combinedBaseline_withSyst",
 
     # --- Global fits ---
     "gf_zheyang":             f"{globalfit_path}/asimov_SAY_globalfit_zheyang",
