@@ -91,8 +91,8 @@ def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, title 
 
     m = ax.pcolormesh(x_bins, y_bins, relerr.T, shading="auto", norm=plt.LogNorm() if zlog else None)
 
-    ax.set_xlabel(x_labels[x_var])
-    ax.set_ylabel(x_labels[y_var])
+    ax.set_xlabel(x_labels[x_var], fontsize=14)
+    ax.set_ylabel(x_labels[y_var], fontsize=14)
     ax.set_xlim(min(x_bins), max(x_bins))
     ax.set_ylim(min(y_bins), max(y_bins))
     if "energy" in x_var or "length" in x_var: ax.set_xscale("log")
@@ -108,7 +108,10 @@ def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, title 
     nbins_empty = np.sum( res["mu"] == 0 )
     nbins_10perc = np.sum((relerr > 0.1) & (res["mu"] > 0))
 
-    plt.colorbar(m, ax=ax, label=r"$\sqrt{\mathrm{ssq}}/\mu$")
+    # cbar = plt.colorbar(m, ax=ax, label=r"$\sqrt{\mathrm{ssq}}/\mu$")
+    cbar = plt.colorbar(m, ax=ax)
+    cbar.set_label(r"$\sqrt{\mathrm{ssq}}/\mu$", fontsize=14)
+
     plt.suptitle(f"{det_config}, {nbins_empty} empty bins, {nbins_10perc} / {res['mu'].size} bins > 10%") if not title else plt.suptitle(f"{title}, {nbins_empty} empty bins, {nbins_10perc} / {res['mu'].size} bins > 10%")
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
