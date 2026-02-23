@@ -9,7 +9,7 @@ x_labels = {
     "bdt_product" : "BDT score 1 x BDT score 2"
 }
 
-def plot_histogram_2D(hist_graph_hdl, det_config, input_variable, zlog=None, savepath=None):
+def plot_histogram_2D(hist_graph_hdl, det_config, input_variable, zlog=None, title=None,savepath=None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -35,12 +35,12 @@ def plot_histogram_2D(hist_graph_hdl, det_config, input_variable, zlog=None, sav
     cbar = plt.colorbar(mesh, ax=ax)
     cbar.set_label(f"Rate / {livetime:.2f} yr")
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
 
-def plot_2d_ssq_and_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, savepath=None):
+def plot_2d_ssq_and_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, title = None, savepath=None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -70,12 +70,12 @@ def plot_2d_ssq_and_relerr(hist_graph_hdl, det_config, input_variable, zlog=None
     plt.colorbar(m0, ax=axes[0], label="ssq")
     plt.colorbar(m1, ax=axes[1], label=r"$\sqrt{\mathrm{ssq}}/\mu$")
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
 
-def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, savepath=None):
+def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, title = None, savepath=None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -109,7 +109,7 @@ def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, savepa
     nbins_10perc = np.sum((relerr > 0.1) & (res["mu"] > 0))
 
     plt.colorbar(m, ax=ax, label=r"$\sqrt{\mathrm{ssq}}/\mu$")
-    plt.suptitle(f"{det_config}, {nbins_empty} empty bins, {nbins_10perc} / {res['mu'].size} bins > 10%")
+    plt.suptitle(f"{det_config}, {nbins_empty} empty bins, {nbins_10perc} / {res['mu'].size} bins > 10%") if not title else plt.suptitle(f"{title}, {nbins_empty} empty bins, {nbins_10perc} / {res['mu'].size} bins > 10%")
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
@@ -117,7 +117,7 @@ def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, savepa
 
 
 
-def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, savepath = None):
+def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, title = None, savepath = None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -148,12 +148,12 @@ def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, sav
             if "energy" in variable_name or "length" in variable_name: axes[i].set_xscale("log")
             if not i: axes[i].legend()
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
 
-def plot_histogram_astro_flavor(hist_graph_hdl, det_config, gamma_astro = 2.87, astro_norm = 2.1233, ylog = None, savepath = None):
+def plot_histogram_astro_flavor(hist_graph_hdl, det_config, gamma_astro = 2.87, astro_norm = 2.1233, ylog = None, title = None,savepath = None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -199,12 +199,12 @@ def plot_histogram_astro_flavor(hist_graph_hdl, det_config, gamma_astro = 2.87, 
             if "energy" in variable_name or "length" in variable_name: axes[i].set_xscale("log")
             if not i: axes[i].legend()
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
 
-def plot_histogram_flavor_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, savepath=None):
+def plot_histogram_flavor_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, title = None, savepath=None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -250,14 +250,14 @@ def plot_histogram_flavor_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro
         axes[i].set_title(flavor)
         plt.colorbar(mesh, ax=axes[i], label=f"Rate / {hist_graph_hdl.get_livetime(det_config)/(3600*24*365.25):.2f} yr")
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
 
 
 
-def plot_histogram_components_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, savepath=None):
+def plot_histogram_components_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, title = None, savepath=None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
@@ -322,7 +322,7 @@ def plot_histogram_components_2D(hist_graph_hdl, det_config, gamma_astro=2.87, a
         axes[i].set_title(flavor)
         plt.colorbar(mesh, ax=axes[i], label=f"Rate / {hist_graph_hdl.get_livetime(det_config)/(3600*24*365.25):.2f} yr")
 
-    plt.suptitle(det_config)
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
