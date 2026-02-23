@@ -254,3 +254,75 @@ def plot_histogram_flavor_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
+
+
+
+def plot_histogram_components_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, savepath=None):
+
+    print(det_config)
+    binnings = hist_graph_hdl.get_binning(det_config=det_config)
+    var_names = list(binnings.keys())
+    x_var, y_var = var_names
+    x_bins, y_bins = binnings[x_var], binnings[y_var]
+
+    # calculate astro contributions per flavor
+    res_flavor = {
+        "All": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": astro_norm, "gamma_astro": gamma_astro, "prompt_norm": 1, "conv_norm": 1,
+                             "astro_nue_ratio": 1, "astro_nutau_ratio": 1},
+            det_config=det_config, reshape=True
+        ),
+        "Conventional": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": 0.0, "gamma_astro": gamma_astro, "prompt_norm": 0, "conv_norm": 1,
+                             "astro_nue_ratio": 1, "astro_nutau_ratio": 1},
+            det_config=det_config, reshape=True
+        ),
+        "Prompt": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": 0, "gamma_astro": gamma_astro, "prompt_norm": 1, "conv_norm": 0,
+                             "astro_nue_ratio": 1, "astro_nutau_ratio": 1},
+            det_config=det_config, reshape=True
+        ),
+        "NuMu": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": astro_norm, "gamma_astro": gamma_astro, "prompt_norm": 0, "conv_norm": 0,
+                             "astro_nue_ratio": 0, "astro_nutau_ratio": 0},
+            det_config=det_config, reshape=True
+        ),
+        "NuMu+NuE": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": astro_norm, "gamma_astro": gamma_astro, "prompt_norm": 0, "conv_norm": 0,
+                             "astro_nue_ratio": 1, "astro_nutau_ratio": 0},
+            det_config=det_config, reshape=True
+        ),
+        "NuMu+NuTau": hist_graph_hdl.get_evaled_histogram(
+            input_variables={"astro_norm": astro_norm, "gamma_astro": gamma_astro, "prompt_norm": 0, "conv_norm": 0,
+                             "astro_nue_ratio": 0, "astro_nutau_ratio": 1},
+            det_config=det_config, reshape=True
+        ),
+    }
+
+    hists = {
+        "All": res_flavor["All"]["mu"],
+        "Conventional": res_flavor["Conventional"]["mu"],
+        "Prompt": res_flavor["Prompt"]["mu"],
+        "Astro NuE": res_flavor["NuMu+NuE"]["mu"] - res_flavor["NuMu"]["mu"],
+        "Astro NuMu": res_flavor["NuMu"]["mu"],
+        "Astro NuTau": res_flavor["NuMu+NuTau"]["mu"] - res_flavor["NuMu"]["mu"],
+    }
+
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    axes = axes.flatten()
+
+    for i, (flavor, hist) in enumerate(hists.items()):
+        mesh = axes[i].pcolormesh(x_bins, y_bins, hist.T, shading="auto", norm=plt.LogNorm() if zlog else None)
+        axes[i].set_xlabel(x_labels[x_var])
+        axes[i].set_ylabel(x_labels[y_var])
+        axes[i].set_xlim(min(x_bins), max(x_bins))
+        axes[i].set_ylim(min(y_bins), max(y_bins))
+        if "energy" in x_var or "length" in x_var: axes[i].set_xscale("log")
+        if "energy" in y_var or "length" in y_var: axes[i].set_yscale("log")
+        axes[i].set_title(flavor)
+        plt.colorbar(mesh, ax=axes[i], label=f"Rate / {hist_graph_hdl.get_livetime(det_config)/(3600*24*365.25):.2f} yr")
+
+    plt.suptitle(det_config)
+    plt.tight_layout()
+    if savepath: plt.savefig(savepath)
+    plt.show()
