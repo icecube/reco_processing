@@ -207,6 +207,47 @@ def plot_histogram_astro_flavor(hist_graph_hdl, det_config, gamma_astro = 2.87, 
     if savepath: plt.savefig(savepath)
     plt.show()
 
+def plot_histogram_astro_newflavor(hist_graph_hdl, det_config, gamma_astro = 2.87, total_astro_norm = 2.1233, ylog = None, title = None,savepath = None):
+
+    print(det_config)
+    binnings = hist_graph_hdl.get_binning(det_config=det_config)
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+
+    # calculate astro contributions per flavor
+    res_flavor = {
+        "NuE" : hist_graph_hdl.get_evaled_histogram(input_variables={"total_astro_norm" : total_astro_norm/3, "gamma_astro" : gamma_astro, "prompt_norm" : 0, "conv_norm" : 0, "a" : flavor_ratios_to_angles(1,0,0)[0], "b" : flavor_ratios_to_angles(1,0,0)[1]}, det_config=det_config, reshape=True),
+        "NuMu" : hist_graph_hdl.get_evaled_histogram(input_variables={"total_astro_norm" : total_astro_norm/3, "gamma_astro" : gamma_astro,"prompt_norm" : 0, "conv_norm" : 0, "a" : flavor_ratios_to_angles(0,1,0)[0], "b" : flavor_ratios_to_angles(0,1,0)[1]}, det_config=det_config, reshape=True),
+        "NuTau" : hist_graph_hdl.get_evaled_histogram(input_variables={"total_astro_norm" : total_astro_norm/3, "gamma_astro" : gamma_astro, "prompt_norm" : 0, "conv_norm" : 0, "a" : flavor_ratios_to_angles(0,0,1)[0], "b" : flavor_ratios_to_angles(0,0,1)[1]}, det_config=det_config, reshape=True),
+    }
+
+    for input_flavor, res in res_flavor.items():
+
+        print(input_flavor)
+
+        for i, (variable_name, binning) in enumerate(binnings.items()):
+
+            hist = res_flavor[input_flavor]["mu"].sum(axis=1-i)
+            yerror = np.sqrt(res_flavor[input_flavor]["ssq"].sum(axis=1-i))
+
+            axes[i].stairs(hist, binning, label=f"{input_flavor}: {sum(hist):.2f}+-{sum(yerror):.2f}")
+            axes[i].fill_between(binning, np.r_[hist - yerror, (hist - yerror)[-1]], np.r_[hist + yerror, (hist + yerror)[-1]], step="post", alpha=0.4)
+
+            axes[i].set_xlabel(x_labels[variable_name])
+            axes[i].set_ylabel(f"Rate / {hist_graph_hdl.get_livetime(det_config)/(3600*24*365.25):.2f} yr")
+
+            axes[i].set_xlim(min(binning), max(binning))
+
+            axes[i].set_yscale("log") if ylog else 0
+            if "energy" in variable_name or "length" in variable_name: axes[i].set_xscale("log")
+            if not i: axes[i].legend()
+
+    plt.suptitle(det_config) if not title else plt.suptitle(title)
+    plt.tight_layout()
+    if savepath: plt.savefig(savepath)
+    plt.show()
+
+
 def plot_histogram_flavor_2D(hist_graph_hdl, det_config, gamma_astro=2.87, astro_norm=2.1233, zlog=None, title = None, savepath=None):
 
     print(det_config)
@@ -329,3 +370,49 @@ def plot_histogram_components_2D(hist_graph_hdl, det_config, gamma_astro=2.87, a
     plt.tight_layout()
     if savepath: plt.savefig(savepath)
     plt.show()
+
+
+
+def flavor_ratios_to_angles(fr0, fr1, fr2):
+    """
+    Convert flavor ratios to spherical coordinates a and b.
+    
+    Parameters:
+    fr0, fr1, fr2: float
+        The flavor ratios for neutrino flavors (e.g., nu_e, nu_mu, nu_tau).
+    
+    Returns:
+    tuple
+        (a = sphi4, b = c2psi) angles in.
+    """
+    # Normalize the flavor ratios
+    norm = fr0 + fr1 + fr2
+    fr0_n = fr0 / norm
+    fr1_n = fr1 / norm
+    fr2_n = fr2 / norm
+    
+    # Compute phi
+    sphi4 = (1.0 - fr2_n) ** 2 # from 0 to 1
+    
+    # Compute psi
+    sphi2 = (1.0 - fr2_n)
+    if sphi2 == 0.0:
+        c2psi = 0.0
+        x = np.nan
+    else:
+        cpsi2 = fr0_n / sphi2
+        x = np.sqrt(cpsi2)
+        if x > 1: x = 1
+        psi = np.arccos(x)
+        c2psi = np.cos(2.0 * np.arccos(x)) # from -1 to 1
+
+    return sphi4, c2psi 
+
+
+def angles_to_flavor_ratios(a, b):
+    # Calculate and return the three flavor ratios: E, Mu, and Tau
+    return (
+        (b + 1.0) * np.sqrt(a) / 2.0,  # Electron flavor ratio (E)
+        (-b + 1.0) * np.sqrt(a) / 2.0, # Muon flavor ratio (Mu)
+        -np.sqrt(a) + 1.0              # Tau flavor ratio (Tau)
+    )

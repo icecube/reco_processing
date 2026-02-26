@@ -61,6 +61,33 @@ scan_dir_dict = {
                               f"bdt1_0.333333_bdt2_0.366667_length_10_"
                               f"10bdtprod_threshold_0.122_combinedBaseline_withSyst",
 
+    # --- Adding the muon template ---
+    "hese_allfeat_bdtprod_combinedBase_NehaMuon":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_combinedBaseline_NehaMuon",
+
+    "hese_allfeat_bdtprod_combinedBase_reproduceNehaMuon":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_combinedBaseline_reproduceNehaMuon",
+    
+    "hese_allfeat_bdtprod_combinedBase_Muon":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_combinedBaseline_Muon",
+
+    # --- New flavor parametrization ---
+    "hese_allfeat_bdtprod_combinedBase_newflavorparam":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_combinedBaseline_newflavorparam",
+
+
     # --- Global fits ---
     "gf_zheyang":             f"{globalfit_path}/asimov_SAY_globalfit_zheyang",
     "gf_v0":                  f"{globalfit_path}/asimov_SAY_globalfit_datasets_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67",
