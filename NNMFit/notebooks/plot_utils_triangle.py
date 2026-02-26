@@ -72,6 +72,45 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
 
     return C
 
+def likelihood_contour( data, name, labels, levels = ['68%','90%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", savepath = None ):
+
+    fig = plt.figure()
+    tax = flavor_triangle()
+
+    lh, ll = [], []
+
+    ts_values = [ts_dict[i] for i in levels]
+
+
+    C2 = tax.ca.contour(data[name]["ft_grid_asimov_poisson"],
+                        data[name]["fe_grid_asimov_poisson"],
+                        data[name]["ts_grid_asimov_poisson"],  
+                        ts_values,
+                        linestyles=["-",'--'],
+                        linewidths=3,
+                        colors='black')
+
+
+    levs_vals = np.linspace(0,10,num=45)
+
+    # heatmap
+    X = tax.ca.contourf(data[name]["ft_grid_asimov_poisson"],
+                        data[name]["fe_grid_asimov_poisson"],
+                        data[name]["ts_grid_asimov_poisson"], 
+                        levs_vals,
+                        cmap= plt.colormaps['Blues_r'])
+
+    # create colourbar
+    cax = plt.axes([1., 0.2, 0.045, 0.65])
+    cbar = plt.colorbar(X,
+                        cax=cax, # axes where to make the colourbar
+                        spacing='proportional',
+                        ticks=[2.37,5.99,9.21])
+    cbar.set_label(label=r'$-2\Delta\mathrm{log}\mathcal{L}$',size=16,fontfamily='serif')
+    cbar.ax.set_yticklabels(['2.37','5.99','9.21'])  # vertically oriented colorbar
+
+    if savepath: plt.savefig(savepath,bbox_inches='tight')
+
 def polygon_area(x, y):
     # Close path if not already closed
     if x[0] != x[-1] or y[0] != y[-1]:

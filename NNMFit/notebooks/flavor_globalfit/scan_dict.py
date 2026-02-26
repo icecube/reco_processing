@@ -87,6 +87,13 @@ scan_dir_dict = {
                               f"bdt1_0.333333_bdt2_0.366667_length_10_"
                               f"10bdtprod_threshold_0.122_combinedBaseline_newflavorparam",
 
+    # --- BPL ---
+    "hese_allfeat_bdtprod_combinedBase_newflavorparam_BPL":
+                              f"{hese_path}/mcd-simpletopology_flux-hese_feat-11features_plus_"
+                              f"rloglmilli_econf_evtgen/"
+                              f"bdt1_0.333333_bdt2_0.366667_length_10_"
+                              f"10bdtprod_threshold_0.122_BPL",
+
 
     # --- Global fits ---
     "gf_zheyang":             f"{globalfit_path}/asimov_SAY_globalfit_zheyang",
