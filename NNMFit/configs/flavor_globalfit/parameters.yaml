@@ -111,7 +111,7 @@ barr_z:
 
 inel_scale:
   range: [0.5, 1.5]
-  default:  1.
+  default:  1.0
   class: MeanInelasticityScaling
   prior: 1.
   prior_width: 0.1
@@ -213,6 +213,128 @@ muon_ecrit:
   default: 4.0
   range: [2., 8.]  # within simulated neutrino energy range
   class: MuonDampening
+
+#
+# astro 3 flavor
+#
+astro_SPL_3flavor:
+  class: AstroSPL_3flavor
+  parameters:
+    - total_astro_norm
+    - a
+    - b
+    - gamma
+  default:
+    - 6.3699   # norm
+    - 0.4444444444   # a
+    - 0.0   # b
+    - 2.87   # index
+  range:
+    - [0., null]  # norm
+    - [0.000001, 1.0]  # a
+    - [-1.0, 1.0]  # b
+    - [1., null]  # index
+  prior:
+    - null
+    - null
+    - null
+    - null
+  prior_width:
+    - null
+    - null
+    - null
+    - null
+  additional:
+    per_type_norm: False
+    reference_index: 2.0
+    variable_mapping:
+      total_norm: total_astro_norm
+      a: a
+      b: b
+      index: gamma
+
+# taken from break paper: https://arxiv.org/pdf/2507.22233
+# BPL
+astro_BPL:
+  class: AstroBPL
+  parameters:
+    - astro_norm
+    - gamma_1
+    - gamma_2
+    - e_break
+  default:
+    - 1.77  # norm
+    - 1.31  # index 1
+    - 2.74  # index 2
+    - 4.59  # e_break
+  range:
+    - [0., null]  # norm
+    - [1., 5]  # index 1
+    - [1., 5]  # index 2
+    - [2., 8.]    # e_break
+  prior:
+    - null
+    - null
+    - null
+    - null
+  prior_width:
+    - null
+    - null
+    - null
+    - null
+  additional:
+    per_type_norm: False
+    variable_mapping:
+      norm: astro_norm
+      index_1: gamma_1
+      index_2: gamma_2
+      e_break: e_break
+
+astro_BPL_3flavor:
+  class: AstroBPL_3flavor
+  parameters:
+    - total_astro_norm
+    - a
+    - b
+    - gamma_1
+    - gamma_2
+    - e_break
+  default:
+    - 5.31   # 1.77*3
+    - 0.4444444444   # a
+    - 0.0   # b
+    - 1.31   # gamma_1
+    - 2.74   # gamma_2
+    - 4.39   # e_break
+  range:
+    - [0., null]  # norm
+    - [0.000001, 1.0]  # a
+    - [-1.0, 1.0]  # b
+    - [1., 5.0]  # gamma_1
+    - [1., 5.0]  # gamma_2
+    - [2., 8.0]  # e_break
+  prior:
+    - null
+    - null
+    - null
+    - null
+    - null
+    - null
+  prior_width:
+    - null
+    - null
+    - null
+    - null
+    - null
+  additional:
+    per_type_norm: False
+    variable_mapping:
+      total_norm: total_astro_norm
+      a: a
+      b: b
+      index_1: gamma_1
+      index_2: gamma_2
+      e_break: e_break
 
 #
 # galactic

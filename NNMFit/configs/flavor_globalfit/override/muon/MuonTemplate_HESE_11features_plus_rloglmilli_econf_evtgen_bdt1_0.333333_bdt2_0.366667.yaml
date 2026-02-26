@@ -1,0 +1,7 @@
+
+muontemplate:
+  class: TemplateFlux
+  parameters: [muongun_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/notebooks/muons/KDE/HESE_Tracks_KDE_11features_plus_rloglmilli_econf_evtgen_bdt1_0.333333_bdt2_0.366667.pickle

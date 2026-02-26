@@ -1,0 +1,7 @@
+
+muontemplate:
+  class: TemplateFlux
+  parameters: [muongun_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/notebooks/muons/KDE/HESE_neha_Tracks_KDE.pickle

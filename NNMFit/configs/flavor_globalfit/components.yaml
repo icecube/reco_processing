@@ -9,6 +9,28 @@ astro:
     inel_scale:
       inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
+astro_SPL_3flavor:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_SPL_3flavor, inel_scale]
+  param_specifications:
+    inel_scale:
+      inelasticity_table: *inelasticity_table
+
+astro_brokenPL:
+  class: FluxlessBase
+  parameters: [astro_BPL,inel_scale]
+  param_specifications:
+    inel_scale:
+      inelasticity_table: *inelasticity_table
+
+astro_brokenPL_3flavor:
+  class: FluxlessBase
+  parameters: [astro_BPL_3flavor,inel_scale]
+  param_specifications:
+    inel_scale:
+      inelasticity_table: *inelasticity_table
+
 astro_without_flavor:
   baseline_weights: powerlaw
   class: Powerlaw
