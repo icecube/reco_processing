@@ -1,6 +1,7 @@
 analysis_type: asimov
 llh: SAYLLH
 detector_configs: [IC86_pass2_SnowStorm_v2_tracks,IC86_pass2_SnowStorm_v2_cscd_muon,IC86_pass2_SnowStorm_v2_cscd_hybrid, IC86_pass2_SnowStorm_v2_cscd_cascade]
+# detector_configs: [IC86_pass2_SnowStorm_v2_tracks]
 
 input_params:
   astro_nue_ratio: 1.0

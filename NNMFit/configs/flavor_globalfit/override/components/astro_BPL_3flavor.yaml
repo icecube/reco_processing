@@ -1,5 +1,6 @@
 astro:
   class: FluxlessBase
+  baseline_weights: fluxless_weight
   parameters: [astro_BPL_3flavor,inel_scale]
   param_specifications:
     inel_scale:

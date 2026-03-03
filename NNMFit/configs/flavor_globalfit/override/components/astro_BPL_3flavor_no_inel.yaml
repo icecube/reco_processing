@@ -1,3 +1,4 @@
 astro:
   class: FluxlessBase
+  baseline_weights: fluxless_weight
   parameters: [astro_BPL_3flavor]
