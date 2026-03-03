@@ -1,0 +1,6 @@
+muontemplate_track_globalfit:
+  class: TemplateFlux
+  parameters: [muon_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon_Fullrange_drop_5lowEbins.pickle

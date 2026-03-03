@@ -174,14 +174,7 @@ muontemplate_hese:
 #
 # globalfit
 #
-muontemplate_tracks_globalfit:
-  class: TemplateFlux
-  parameters: [muon_norm]
-  skip_syst: True
-  additional:
-    template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon.pickle
-
-muontemplate_tracks_drop5bins_globalfit:
+muontemplate_track_globalfit:
   class: TemplateFlux
   parameters: [muon_norm]
   skip_syst: True
