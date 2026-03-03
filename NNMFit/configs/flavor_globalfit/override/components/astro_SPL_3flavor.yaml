@@ -1,0 +1,7 @@
+astro:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_SPL_3flavor, inel_scale]
+  param_specifications:
+    inel_scale:
+      inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json

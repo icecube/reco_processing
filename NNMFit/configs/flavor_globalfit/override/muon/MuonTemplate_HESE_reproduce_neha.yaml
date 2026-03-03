@@ -1,5 +1,5 @@
 
-muontemplate:
+muontemplate_hese:
   class: TemplateFlux
   parameters: [muongun_norm]
   skip_syst: True

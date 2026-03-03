@@ -1,0 +1,4 @@
+astro:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_SPL_3flavor]

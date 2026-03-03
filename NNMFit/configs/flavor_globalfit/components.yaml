@@ -9,88 +9,6 @@ astro:
     inel_scale:
       inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
-astro_no_inel:
-  baseline_weights: powerlaw
-  class: Powerlaw
-  parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio]
-
-astro_SPL_3flavor:
-  baseline_weights: powerlaw
-  class: Powerlaw
-  parameters: [astro_SPL_3flavor, inel_scale]
-  param_specifications:
-    inel_scale:
-      inelasticity_table: *inelasticity_table
-
-astro_SPL_3flavor_no_inel:
-  baseline_weights: powerlaw
-  class: Powerlaw
-  parameters: [astro_SPL_3flavor]
-
-astro_brokenPL:
-  class: FluxlessBase
-  parameters: [astro_BPL,inel_scale]
-  param_specifications:
-    inel_scale:
-      inelasticity_table: *inelasticity_table
-
-astro_brokenPL_3flavor:
-  class: FluxlessBase
-  parameters: [astro_BPL_3flavor,inel_scale]
-  param_specifications:
-    inel_scale:
-      inelasticity_table: *inelasticity_table
-
-astro_brokenPL_3flavor_no_inel:
-  class: FluxlessBase
-  parameters: [astro_BPL_3flavor]
-
-astro_without_flavor:
-  baseline_weights: powerlaw
-  class: Powerlaw
-  parameters: [astro_norm, gamma_astro, inel_scale]
-  param_specifications:
-    inel_scale:
-      inelasticity_table: *inelasticity_table
-
-astro_muon_dampened:
-  baseline_weights: powerlaw
-  class: Powerlaw
-  parameters: [astro_norm, gamma_astro, muon_ecrit,astro_nue_ratio, astro_nutau_ratio, inel_scale]
-  param_specifications:
-    inel_scale:
-      inelasticity_table: *inelasticity_table
-
-astro_wcutoff:
-  baseline_weights: powerlaw
-  class: Powerlaw 
-  parameters: [astro_norm, gamma_astro, cutoff_astro]
-
-logparabola_astro:
-  baseline_weights: powerlaw
-  class: LogParabola
-  parameters: [astro_parabola_norm, astro_parabola_a, astro_parabola_b]
-
-brokenastro_fixed:
-  baseline_weights: powerlaw
-  class: BrokenPowerlaw_fixedBreak 
-  parameters: [astro_norm, gamma_astro_second, gamma_astro_first]
-
-piecewise_astro_5bin:
-  baseline_weights: powerlaw
-  class: PiecewisePowerlaw
-  parameters: [piece1, piece2, piece3, piece4, piece5]
-
-piecewise_astro_13bin:
-  baseline_weights: powerlaw
-  class: PiecewisePowerlaw
-  parameters: [cscd_piece1, cscd_piece2, cscd_piece3, cscd_piece4, cscd_piece5, cscd_piece6, cscd_piece7, cscd_piece8, cscd_piece9, cscd_piece10, cscd_piece11, cscd_piece12,cscd_piece13]
-  
-astro_nu_ratio:
-   baseline_weights: powerlaw
-   class: Powerlaw
-   parameters: [astro_nue_ratio, astro_nutau_ratio]
-
 ###
 ### atmospheric
 ###
@@ -98,7 +16,7 @@ astro_nu_ratio:
 #
 # HESE
 #
-prompt:
+prompt_hese:
    baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
    additional:
       fixed_passing_fraction_per_event: PassRate_prompt
@@ -113,7 +31,7 @@ prompt:
      inel_scale:
        inelasticity_table: *inelasticity_table
 
-conventional:
+conventional_hese:
   baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
   additional:
      fixed_passing_fraction_per_event: PassRate_conv
@@ -235,16 +153,18 @@ prompt_veto_globalfit:
 ### atmospheric muons
 ###
 
-#
-# HESE
-#
+
 muon:
   baseline_weights: muongun_conv_H4a_SIBYLL
   class: ConventionalAtmo
   parameters: [muongun_norm]
   skip_syst: True
 
-muontemplate:
+
+#
+# HESE
+#
+muontemplate_hese:
   class: TemplateFlux
   parameters: [muongun_norm]
   skip_syst: True
@@ -254,27 +174,21 @@ muontemplate:
 #
 # globalfit
 #
-muontemplate_globalfit:
+muontemplate_tracks_globalfit:
   class: TemplateFlux
   parameters: [muon_norm]
   skip_syst: True
   additional:
     template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon.pickle
 
-muontemplate_drop5bins_globalfit:
+muontemplate_tracks_drop5bins_globalfit:
   class: TemplateFlux
   parameters: [muon_norm]
   skip_syst: True
   additional:
     template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/Tracks_CorsikaMuon_Fullrange_drop_5lowEbins.pickle
-    
-muon:
-  baseline_weights: muongun_conv_H4a_SIBYLL
-  class: ConventionalAtmo
-  parameters: [muongun_norm]
-  skip_syst: True
 
-muon_cascade:
+muontemplate_cascade_globalfit:
   class: TemplateFlux
   parameters: [muongun_norm]
   skip_syst: True
