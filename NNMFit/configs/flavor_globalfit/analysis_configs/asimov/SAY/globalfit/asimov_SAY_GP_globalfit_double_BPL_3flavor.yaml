@@ -1,0 +1,13 @@
+analysis_type: asimov
+llh: SAYLLH
+detector_configs: [IC86_pass2_SnowStorm_v2_tracks,IC86_pass2_SnowStorm_v2_cscd_muon,IC86_pass2_SnowStorm_v2_cscd_hybrid, IC86_pass2_SnowStorm_v2_cscd_cascade, IC86_pass2_SnowStorm_v2_cscd_cascade_double]
+
+input_params:
+  total_astro_norm: 5.31
+  a: 0.4444444444
+  b: 0.0
+  gamma_1: 1.31
+  gamma_2: 2.74
+  e_break: 4.39
+  prompt_norm: 0.0
+  conv_norm: 1.0

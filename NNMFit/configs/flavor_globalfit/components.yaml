@@ -9,6 +9,11 @@ astro:
     inel_scale:
       inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
+astro_no_inel:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio]
+
 astro_SPL_3flavor:
   baseline_weights: powerlaw
   class: Powerlaw
@@ -16,6 +21,11 @@ astro_SPL_3flavor:
   param_specifications:
     inel_scale:
       inelasticity_table: *inelasticity_table
+
+astro_SPL_3flavor_no_inel:
+  baseline_weights: powerlaw
+  class: Powerlaw
+  parameters: [astro_SPL_3flavor]
 
 astro_brokenPL:
   class: FluxlessBase
@@ -30,6 +40,10 @@ astro_brokenPL_3flavor:
   param_specifications:
     inel_scale:
       inelasticity_table: *inelasticity_table
+
+astro_brokenPL_3flavor_no_inel:
+  class: FluxlessBase
+  parameters: [astro_BPL_3flavor]
 
 astro_without_flavor:
   baseline_weights: powerlaw
@@ -259,3 +273,10 @@ muon:
   class: ConventionalAtmo
   parameters: [muongun_norm]
   skip_syst: True
+
+muon_cascade:
+  class: TemplateFlux
+  parameters: [muongun_norm]
+  skip_syst: True
+  additional:
+    template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/cscd_muongun_ALL_KDE_manual_ssq.pickle
