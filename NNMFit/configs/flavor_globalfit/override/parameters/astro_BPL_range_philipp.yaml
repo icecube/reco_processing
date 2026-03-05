@@ -1,0 +1,6 @@
+astro_BPL:
+  range:
+    - [0., 5.]  # norm
+    - [-2.0, 3.0]  # index 1
+    - [2., 4.]  # index 2
+    - [3.5, 5.]    # e_break

@@ -1,0 +1,4 @@
+astro:
+  class: FluxlessBase
+  baseline_weights: fluxless_weight
+  parameters: [astro_BPL, astro_nue_ratio, astro_nutau_ratio]

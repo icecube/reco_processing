@@ -1,6 +1,6 @@
 analysis_type: asimov
-llh: SAYLLH
-detector_configs: [IC86_pass2_SnowStorm_FTP_HESE_Cascades,IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades,IC86_pass2_SnowStorm_FTP_HESE_Tracks]
+llh: PoissonLLH
+detector_configs: [IC86_pass2_SnowStorm_v2_tracks,IC86_pass2_SnowStorm_v2_cscd_muon,IC86_pass2_SnowStorm_v2_cscd_hybrid, IC86_pass2_SnowStorm_v2_cscd_cascade, IC86_pass2_SnowStorm_v2_cscd_cascade_double]
 input_params:
   astro_norm: 1.77
   gamma_1: 1.31
