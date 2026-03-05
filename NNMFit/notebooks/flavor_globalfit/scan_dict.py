@@ -107,16 +107,30 @@ scan_dir_dict = {
                               f"bdt1_0.333333_bdt2_0.366667_length_10_"
                               f"10bdtprod_threshold_0.122_combinedBaseline_withSyst_minuit",
 
-    # # --- Global fits ---
+    # --- Global fits ---
     # "gf_zheyang":             f"{globalfit_path}/asimov_SAY_globalfit_zheyang",
-    # "gf_v0":                  f"{globalfit_path}/asimov_SAY_globalfit_datasets_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67",
-    # "gf_v0_noHESE":           f"{globalfit_path}/asimov_SAY_globalfit_datasets_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
+    # "gf_zheyang_v0":          f"{globalfit_path}/asimov_SAY_globalfit_datasets_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67",
+    # "gf_zheyang_v0_noHESE":   f"{globalfit_path}/asimov_SAY_globalfit_datasets_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
 
-    # # --- Combined globalfit HESE
-    # "gfh_fluxh_woverlap" :    f"{combined_path}/asimov_SAY_globalfit_hese_flux-hese",
-    # "gfh_fluxg_woverlap" :    f"{combined_path}/asimov_SAY_globalfit_hese_flux-globalfit",
+    # away from zheyangs configs
+    "gf_SPL_3flavor_cscd_cascade_double_v0_noSyst":  
+                               f"{globalfit_path}/asimov_SAY_GP_globalfit_double_SPL_3flavor_cscd_cascade_double_v0_noSyst",
+    "gf_BPL_3flavor_cscd_cascade_double_v0_noSyst":  
+                               f"{globalfit_path}/asimov_SAY_GP_globalfit_double_BPL_3flavor_cscd_cascade_double_v0_noSyst",
+    "gf_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst":  
+                               f"{globalfit_path}/asimov_SAY_GP_globalfit_double_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst",
+    "gf_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst_minuit":  
+                               f"{globalfit_path}/asimov_SAY_GP_globalfit_double_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst_minuit",
 
-    # "gfh_fluxh" :             f"{combined_path}/asimov_SAY_globalfit_hese_flux-hese_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
-    # "gfh_fluxg" :             f"{combined_path}/asimov_SAY_globalfit_hese_flux-globalfit_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
+    # --- Combined globalfit HESE
+    # "gfh_zheyang_fluxh_woverlap" :    f"{combined_path}/asimov_SAY_globalfit_hese_flux-hese",
+    # "gfh_zheyang_fluxg_woverlap" :    f"{combined_path}/asimov_SAY_globalfit_hese_flux-globalfit",
+
+    # "gfh_zheyang_fluxh" :             f"{combined_path}/asimov_SAY_globalfit_hese_flux-hese_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
+    # "gfh_zheyang_fluxg" :             f"{combined_path}/asimov_SAY_globalfit_hese_flux-globalfit_22612_22644_train_zheyang_bdt1_0.45_bdt2_0.67_noHESE",
+
+    # away from zheyangs configs
+    "gfh_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst_minuit":  
+                               f"{combined_path}/asimov_SAY_GP_globalfit_double_hese_BPL_3flavor_cscd_cascade_double_nohese_v0_noSyst_minuit",
 
 }

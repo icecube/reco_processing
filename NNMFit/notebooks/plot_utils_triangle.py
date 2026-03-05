@@ -72,7 +72,7 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
 
     return C
 
-def likelihood_contour( data, name, labels, levels = ['68%','90%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", savepath = None ):
+def likelihood_contour( data, name, levels = ['68%','90%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", savepath = None ):
 
     fig = plt.figure()
     tax = flavor_triangle()
