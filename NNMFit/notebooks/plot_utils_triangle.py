@@ -44,9 +44,9 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
     ts_values = [ts_dict[i] for i in levels]
 
     for i,name in enumerate(names):
-        C[name] = tax.ca.contour(data[name]["ft_grid_asimov_poisson"],
-                                data[name]["fe_grid_asimov_poisson"],
-                                data[name]["ts_grid_asimov_poisson"], 
+        C[name] = tax.ca.contour(data[name]["ftau_grid"],
+                                data[name]["fe_grid"],
+                                data[name]["ts_grid"], 
                                 ts_values,
                                 linestyles=linestyles[:len(levels)],
                                 linewidths=1.5,
@@ -81,10 +81,9 @@ def likelihood_contour( data, name, levels = ['68%','90%'], title = r"HESE: $\ph
 
     ts_values = [ts_dict[i] for i in levels]
 
-
-    C2 = tax.ca.contour(data[name]["ft_grid_asimov_poisson"],
-                        data[name]["fe_grid_asimov_poisson"],
-                        data[name]["ts_grid_asimov_poisson"],  
+    C2 = tax.ca.contour(data[name]["ftau_grid"],
+                        data[name]["fe_grid"],
+                        data[name]["ts_grid"],  
                         ts_values,
                         linestyles=["-",'--'],
                         linewidths=3,
@@ -94,11 +93,16 @@ def likelihood_contour( data, name, levels = ['68%','90%'], title = r"HESE: $\ph
     levs_vals = np.linspace(0,10,num=45)
 
     # heatmap
-    X = tax.ca.contourf(data[name]["ft_grid_asimov_poisson"],
-                        data[name]["fe_grid_asimov_poisson"],
-                        data[name]["ts_grid_asimov_poisson"], 
+    X = tax.ca.contourf(data[name]["ftau_grid"],
+                        data[name]["fe_grid"],
+                        data[name]["ts_grid"], 
                         levs_vals,
                         cmap= plt.colormaps['Blues_r'])
+
+    tax.ca.scatter(data[name]["ftau"],
+                   data[name]["fe"], 
+                   c=data[name]["ts"], 
+                   s=15)
 
     # create colourbar
     cax = plt.axes([1., 0.2, 0.045, 0.65])
