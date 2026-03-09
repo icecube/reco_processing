@@ -24,7 +24,7 @@ ts_dict = {
 colours = ["black","C0","C3","C2", "C1", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"]
 linestyles = ["-","--",":"]
 
-def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", savepath = None ):
+def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", scenarios = False,savepath = None ):
 
     # helper functions
     C = {} # needed for area comparison!
@@ -61,8 +61,28 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
         # if i == len(names) - 1:
             for l, s in zip(C[name].levels, levels):
                 fmt[l] = s
-            plt.clabel(C[name],ts_values,inline=True,fontsize=12.,
-                    fmt=fmt,colors='black')
+            # plt.clabel(C[name],ts_values,inline=True,fontsize=12.,
+            #         fmt=fmt,colors='black')
+
+    if scenarios:
+        # standard 1:2:0 scenario
+        traditional = tax.ca.scatter([0.34], [0.30], marker='o', facecolor='forestgreen',
+                        edgecolor='k', lw=0.5, s=80)
+        # lh.append(traditional)
+        # ll.append('1:2:0 --> 0.30 : 0.36 : 0.34')
+
+        # muon damped
+        muondamped = tax.ca.scatter([0.38], [0.19], marker='s', facecolor='darkorange',
+                    edgecolor='k', lw=0.5, s=80)
+        # lh.append(muondamped)
+        # ll.append('0:1:0 --> 0.19 : 0.43 : 0.38')
+
+
+        # only electron
+        electron = tax.ca.scatter([0.28], [0.55], marker='^', facecolor='darkblue',
+                    edgecolor='k', lw=0.5, s=80)
+        # lh.append(electron)
+        # ll.append('1:0:0 --> 0.55 : 0.17 : 0.28')
 
     l = fig.legend(lh,ll,
                     bbox_to_anchor=(0.7, 0.05),prop=font_legend,
