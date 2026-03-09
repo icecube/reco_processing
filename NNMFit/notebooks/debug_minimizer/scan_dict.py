@@ -38,10 +38,19 @@ scan_dir_dict = {
     "globalfit_double_no_hybrid_muon_BPL_range_philipp_LBFGSB":           f"{globalfit_path}/globalfit_double_no_hybrid_muon_BPL_range_philipp_LBFGSB",
     "globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB":           f"{globalfit_path}/globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB",
 
+    "globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB_fine":           f"{globalfit_path}/globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB_fine",
+    "globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB_fine_center":           f"{globalfit_path}/globalfit_double_no_hybrid_muon_BPL_range_philipp_strict_LBFGSB_fine_center",
+
+    "globalfit_double_BPL_range_philipp_strict_LBFGSB_fine_center":           f"{globalfit_path}/globalfit_double_BPL_range_philipp_strict_LBFGSB_fine_center",
+    "globalfit_double_nohese_BPL_range_philipp_strict_LBFGSB_fine_center":           f"{globalfit_path}/globalfit_double_nohese_BPL_range_philipp_strict_LBFGSB_fine_center",
+
 
     # --- gbf ---
     "globalfit_double_hese_SPL":           f"{globalfit_hese_path}/globalfit_double_hese_SPL",
     "globalfit_double_hese_BPL":           f"{globalfit_hese_path}/globalfit_double_hese_BPL",
+
+    "globalfit_double_hese_BPL_range_philipp_strict":           f"{globalfit_hese_path}/globalfit_double_hese_BPL_range_philipp_strict",
+    "globalfit_double_hese_BPL_range_philipp_strict_fine_center":           f"{globalfit_hese_path}/globalfit_double_hese_BPL_range_philipp_strict_fine_center",
 
     # --- gbf ---
     "hese_allfeat_bdtprod_combinedBase_Muon":

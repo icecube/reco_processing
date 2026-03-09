@@ -57,7 +57,8 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
         ll.append(labels[i])
 
         # add ts levels in plot
-        if i == len(names) - 1:
+        if i == 0:
+        # if i == len(names) - 1:
             for l, s in zip(C[name].levels, levels):
                 fmt[l] = s
             plt.clabel(C[name],ts_values,inline=True,fontsize=12.,
@@ -65,7 +66,8 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
 
     l = fig.legend(lh,ll,
                     bbox_to_anchor=(0.7, 0.05),prop=font_legend,
-                    ncols=1 if len(names) < 5 else 2,frameon=True,fancybox=True,shadow=True)
+                    ncols=1)
+                    # ncols=1 if len(names) < 5 else 2,frameon=True,fancybox=True,shadow=True)
     if title: plt.title(title,y=1.1,fontdict=font_title)    
 
     if savepath: plt.savefig(savepath,bbox_inches='tight')
