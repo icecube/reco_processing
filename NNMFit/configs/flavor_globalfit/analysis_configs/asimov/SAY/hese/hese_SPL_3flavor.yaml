@@ -1,0 +1,11 @@
+analysis_type: asimov
+llh: SAYLLH
+detector_configs: [IC86_pass2_SnowStorm_FTP_HESE_Cascades,IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades,IC86_pass2_SnowStorm_FTP_HESE_Tracks]
+
+input_params:
+  a: 0.4444444444
+  b: 0.0
+  gamma: 2.52
+  total_astro_norm: 5.4
+  prompt_norm: 0.0
+  conv_norm: 1.0
