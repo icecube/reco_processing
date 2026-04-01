@@ -7,7 +7,7 @@ astro:
   parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio, inel_scale]
   param_specifications:
     inel_scale:
-      inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
+      inelasticity_table: &inelasticity_table /mnt/ceph1-npx/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
 ###
 ### atmospheric
