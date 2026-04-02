@@ -2,3 +2,21 @@ astro:
   class: FluxlessBase
   baseline_weights: fluxless_weight
   parameters: [astro_BPL, astro_nue_ratio, astro_nutau_ratio]
+
+prompt_hese:
+  parameters: [prompt_norm, delta_gamma, CR_grad]
+
+conventional_hese:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y]
+
+conventional_globalfit:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y]
+
+prompt_globalfit:
+  parameters: [prompt_norm, delta_gamma, CR_grad]
+
+conventional_veto_globalfit:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, effective_veto]
+
+prompt_veto_globalfit:
+  parameters: [prompt_norm, delta_gamma, CR_grad, effective_veto]

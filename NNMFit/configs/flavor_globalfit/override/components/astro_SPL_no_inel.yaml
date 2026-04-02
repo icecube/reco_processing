@@ -2,3 +2,21 @@ astro:
   baseline_weights: powerlaw
   class: Powerlaw
   parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio]
+
+prompt_hese:
+  parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
+
+conventional_hese:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y,inel_scale]
+
+conventional_globalfit:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y,inel_scale]
+
+prompt_globalfit:
+  parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
+
+conventional_veto_globalfit:
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, effective_veto,inel_scale]
+
+prompt_veto_globalfit:
+  parameters: [prompt_norm, delta_gamma, CR_grad, effective_veto,inel_scale]

@@ -7,7 +7,7 @@ astro:
   parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio, inel_scale]
   param_specifications:
     inel_scale:
-      inelasticity_table: &inelasticity_table /mnt/ceph1-npx/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
+      inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
 ###
 ### atmospheric
@@ -17,19 +17,19 @@ astro:
 # HESE
 #
 prompt_hese:
-   baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
-   additional:
-      fixed_passing_fraction_per_event: PassRate_prompt
-   class: AtmoFixedVeto
-   parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
-   param_specifications:
-     delta_gamma:
-       baseline_weights: *prompt_base_weights
-     CR_grad:
-       baseline_weights: *prompt_base_weights
-       alternative_weights: mceq_pr_GST4_SIBYLL23c
-     inel_scale:
-       inelasticity_table: *inelasticity_table
+  baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
+  additional:
+    fixed_passing_fraction_per_event: PassRate_prompt
+  class: AtmoFixedVeto
+  parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
+  param_specifications:
+    delta_gamma:
+      baseline_weights: *prompt_base_weights
+    CR_grad:
+      baseline_weights: *prompt_base_weights
+      alternative_weights: mceq_pr_GST4_SIBYLL23c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
 
 conventional_hese:
   baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
@@ -62,11 +62,9 @@ conventional_hese:
 # Globalfit
 # 
 conventional_globalfit:
-  # baseline_weights: &conv_base_weights mceq_conv_H4a_SIBYLL23c
-  # TODO: Is this correct to point to the same baseline weights?
   baseline_weights: *conv_base_weights
   class: ConventionalAtmo
-  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y]
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, inel_scale]
   param_specifications:
     delta_gamma:
       baseline_weights: *conv_base_weights
@@ -85,23 +83,25 @@ conventional_globalfit:
     barr_z:
       baseline_weights: *conv_base_weights
       slope_per_event: &conv_barr_z barr_z_mceq_H4a_SIBYLL23c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
   additional:
     hooks:
       OscillationsHook:
         spline_file: /data/ana/Diffuse/NNMFit/resources/oscillation_splines/NuCraft_OscillationProb.pickle
 
 prompt_globalfit:
-  # baseline_weights: &prompt_base_weights mceq_pr_H4a_SIBYLL23c
-  # TODO: Is this correct to point to the same baseline weights?
   baseline_weights: *prompt_base_weights
   class: PromptAtmo
-  parameters: [prompt_norm, delta_gamma, CR_grad]
+  parameters: [prompt_norm, delta_gamma, CR_grad, inel_scale]
   param_specifications:
     delta_gamma:
       baseline_weights: *prompt_base_weights
     CR_grad:
       baseline_weights: *prompt_base_weights
       alternative_weights: &pr_cr_grad_alt mceq_pr_GST4_SIBYLL23c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
   additional:
     hooks:
       OscillationsHook:
@@ -110,7 +110,7 @@ prompt_globalfit:
 conventional_veto_globalfit:
   baseline_weights: *conv_base_weights
   class: ConventionalAtmo
-  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, effective_veto]
+  parameters: [conv_norm, delta_gamma, CR_grad, barr_h, barr_w, barr_z, barr_y, effective_veto, inel_scale]
   param_specifications:
     delta_gamma:
       baseline_weights: *conv_base_weights
@@ -133,11 +133,13 @@ conventional_veto_globalfit:
       threshold_a: log_PF_at100GeV_conv_a
       threshold_b: log_PF_at100GeV_conv_b
       threshold_c: log_PF_at100GeV_conv_c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
 
 prompt_veto_globalfit:
   baseline_weights: *prompt_base_weights
   class: PromptAtmo
-  parameters: [prompt_norm, delta_gamma, CR_grad, effective_veto]
+  parameters: [prompt_norm, delta_gamma, CR_grad, effective_veto, inel_scale]
   param_specifications:
     delta_gamma:
       baseline_weights: *prompt_base_weights
@@ -148,6 +150,8 @@ prompt_veto_globalfit:
       threshold_a: log_PF_at100GeV_pr_a
       threshold_b: log_PF_at100GeV_pr_b
       threshold_c: log_PF_at100GeV_pr_c
+    inel_scale:
+      inelasticity_table: *inelasticity_table
 
 ###
 ### atmospheric muons

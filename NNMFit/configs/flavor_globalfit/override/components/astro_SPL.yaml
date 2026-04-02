@@ -1,10 +1,10 @@
 astro:
   baseline_weights: powerlaw
   class: Powerlaw
-  parameters: [astro_SPL_3flavor, inel_scale]
+  parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio, inel_scale]
   param_specifications:
     inel_scale:
-      inelasticity_table: &inelasticity_table /data/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
+      inelasticity_table: &inelasticity_table /mnt/ceph1-npx/ana/Diffuse/NNMFit/resources/inelasticity_tables/NuGen_xsection_fits.json
 
 prompt_hese:
   parameters: [prompt_norm, delta_gamma, CR_grad,inel_scale]
