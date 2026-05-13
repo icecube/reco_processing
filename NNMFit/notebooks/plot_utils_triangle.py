@@ -24,7 +24,76 @@ ts_dict = {
 colours = ["black","C0","C3","C2", "C1", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11"]
 linestyles = ["-","--",":"]
 
-def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", scenarios = False,savepath = None ):
+def plot_contour(
+    data, name, label,
+    levels=['68%'],
+    title=None,
+    scenarios=False,
+    show_ts_labels=False,
+    savepath=None
+):
+    fig = plt.figure(figsize=(7,6))
+    tax = flavor_triangle()
+
+    ts_values = [ts_dict[i] for i in levels]
+
+    C = tax.ca.contour(
+        data[name]["ftau_grid"],
+        data[name]["fe_grid"],
+        data[name]["ts_grid"],
+        ts_values,
+        linestyles=linestyles[:len(levels)],
+        linewidths=1.5,
+        colors=colours[0]
+    )
+
+    # inline TS labels
+    if show_ts_labels:
+        fmt = {l: s for l, s in zip(C.levels, levels)}
+        plt.clabel(C, ts_values, inline=True, fontsize=10, fmt=fmt)
+
+    # main legend
+    h, _ = C.legend_elements()
+    lh, ll = [],[]
+    asimov = tax.ca.scatter([1.0/3], [1.0/3], marker='*', facecolor='black',
+                    edgecolor='k', lw=0.5, s=80)
+    ll.append('Asimov: 1:1:1'); lh.append(asimov)
+    if show_ts_labels:
+        ll.append(label); lh.append(h[0])
+    else:
+        ll.append(f"{label} ({', '.join(levels)})"); lh.append(h[0])
+    fig.legend(lh, ll, bbox_to_anchor=(0.7, 0.05), prop=font_legend)
+
+    # scenarios legend
+    if scenarios:
+        lh, ll = [], []
+
+        lh.append(tax.ca.scatter([0.34], [0.30], marker='o', facecolor='forestgreen',
+                                 edgecolor='k', lw=0.5, s=80))
+        # ll.append('1:2:0 →\n0.30:0.36:0.34')
+        ll.append('1:2:0')
+
+        lh.append(tax.ca.scatter([0.36], [0.17], marker='s', facecolor='darkorange',
+                                 edgecolor='k', lw=0.5, s=80))
+        # ll.append('0:1:0 →\n0.17:0.47:0.36')
+        ll.append('0:1:0')
+
+        lh.append(tax.ca.scatter([0.28], [0.55], marker='^', facecolor='darkblue',
+                                 edgecolor='k', lw=0.5, s=80))
+        # ll.append('1:0:0 →\n0.55:0.17:0.28')
+        ll.append('1:0:0')
+
+        fig.legend(lh, ll, loc=(0.05,0.8), prop=font_legend, title="Ratio at source", title_fontsize=14)
+
+    if title:
+        plt.title(title, y=1.08, fontdict=font_title)
+
+    if savepath:
+        plt.savefig(savepath, bbox_inches='tight')
+
+    return C
+
+def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\phi_0 = 2.12,\gamma=2.87$", scenarios = False, show_ts_labels=False, savepath = None ):
 
     C = {} # needed for area comparison!
 
@@ -58,33 +127,30 @@ def compare_contours( data, names, labels, levels = ['68%'], title = r"HESE: $\p
         lh.append(h[0]) # legend elements
         ll.append(labels[i])
 
-        # add ts levels in plot
-        if i == 0:
-        # if i == len(names) - 1:
-            for l, s in zip(C[name].levels, levels):
-                fmt[l] = s
-            plt.clabel(C[name],ts_values,inline=True,fontsize=12.,
-                    fmt=fmt,colors='black')
+    # inline TS labels
+    if show_ts_labels:
+        fmt = {l: s for l, s in zip(C[names[0]].levels, levels)}
+        plt.clabel(C[names[0]], ts_values, inline=True, fontsize=12, fmt=fmt)
 
     if scenarios:
         # standard 1:2:0 scenario
         traditional = tax.ca.scatter([0.34], [0.30], marker='o', facecolor='forestgreen',
                         edgecolor='k', lw=0.5, s=80)
-        # lh.append(traditional)
-        # ll.append('1:2:0 --> 0.30 : 0.36 : 0.34')
+        lh.append(traditional)
+        ll.append('1:2:0 --> 0.30 : 0.36 : 0.34')
 
         # muon damped
         muondamped = tax.ca.scatter([0.36], [0.17], marker='s', facecolor='darkorange',
                     edgecolor='k', lw=0.5, s=80)
-        # lh.append(muondamped)
-        # ll.append('0:1:0 --> 0.17 : 0.47 : 0.36')
+        lh.append(muondamped)
+        ll.append('0:1:0 --> 0.17 : 0.47 : 0.36')
 
 
         # only electron
         electron = tax.ca.scatter([0.28], [0.55], marker='^', facecolor='darkblue',
                     edgecolor='k', lw=0.5, s=80)
-        # lh.append(electron)
-        # ll.append('1:0:0 --> 0.55 : 0.17 : 0.28')
+        lh.append(electron)
+        ll.append('1:0:0 --> 0.55 : 0.17 : 0.28')
 
     l = fig.legend(lh,ll,
                     bbox_to_anchor=(0.7, 0.05),prop=font_legend,
