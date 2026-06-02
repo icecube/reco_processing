@@ -1,0 +1,204 @@
+Target event  RunID=122649  EventID=63903532
+
+  File A: /mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v1/IC86_2013/EvtGen/EvtGen.i3.zst
+  File B: /mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/data/hese/output/test/IC86_2013/EvtGen/EvtGen.i3.zst
+
+Scanning File A ...
+Scanning File B ...
+  File A: found RunID=122649 EventID=63903532
+  File B: found RunID=122649 EventID=63903532
+
+======================================================================
+  Frame stop: G
+======================================================================
+  Key sets are identical (2 keys).
+
+  Comparing 2 common keys (serialised bytes):
+    Identical (2): DeepCoreDOMs, I3Geometry
+    All keys are byte-for-byte identical.
+
+======================================================================
+  Frame stop: C
+======================================================================
+  Key sets are identical (3 keys).
+
+  Comparing 3 common keys (serialised bytes):
+    Identical (3): DeepCoreDOMs, I3Calibration, I3Geometry
+    All keys are byte-for-byte identical.
+
+======================================================================
+  Frame stop: D
+======================================================================
+  Key sets are identical (12 keys).
+
+  Comparing 12 common keys (serialised bytes):
+    Identical (12): BadDomsList, BadDomsListSLC, DeepCoreDOMs, GRLSnapshotId, GoodRunEndTime, GoodRunStartTime, I3Calibration, I3DetectorStatus, I3Geometry, IceTopBadDOMs, IceTopBadTanks, OfflineProductionVersion
+    All keys are byte-for-byte identical.
+
+======================================================================
+  Pulse series: SplitInIcePulses
+======================================================================
+
+  Total pulses : File A (v1)=4313   File B (test)=4313   SAME
+  Total DOMs   : File A (v1)=327   File B (test)=327   SAME
+
+  Pulse series are identical in both files.
+
+======================================================================
+  Pulse series: SplitInIcePulsesIC
+======================================================================
+
+  Total pulses : File A (v1)=4297   File B (test)=4297   SAME
+  Total DOMs   : File A (v1)=315   File B (test)=315   SAME
+
+  Pulse series are identical in both files.
+
+======================================================================
+  Pulse series: SplitInIcePulsesICPulseCleaned
+======================================================================
+
+  Total pulses : File A (v1)=3446   File B (test)=3446   SAME
+  Total DOMs   : File A (v1)=281   File B (test)=281   SAME
+
+  Pulse series are identical in both files.
+
+======================================================================
+  Pulse series: SRTSplitInIcePulses
+======================================================================
+
+  Total pulses : File A (v1)=4226   File B (test)=4226   SAME
+  Total DOMs   : File A (v1)=264   File B (test)=264   SAME
+
+  Pulse series are identical in both files.
+
+======================================================================
+  Pulse series: SRTSplitInIcePulses_IC_Singles_PPB0
+======================================================================
+
+  Total pulses : File A (v1)=4217   File B (test)=4217   SAME
+  Total DOMs   : File A (v1)=257   File B (test)=257   SAME
+
+  Pulse series are identical in both files.
+
+======================================================================
+  Key: LineFit
+======================================================================
+  Byte-for-byte identical.
+  pos=(-205.3593, -436.2563, -392.9147) m
+  zen=2.010259 rad  azi=1.807260 rad
+  energy=nan GeV  time=10342.1635 ns
+  length=nan m  fit_status=OK
+
+======================================================================
+  Key: SPEFit2
+======================================================================
+    !! pos.x           File A (v1): -174.2678 m   File B (test): -174.2677 m
+       pos.y           File A (v1): -380.7491 m   File B (test): -380.7491 m
+       pos.z           File A (v1): -343.5675 m   File B (test): -343.5675 m
+    !! dir.zenith      File A (v1): 2.628985 rad   File B (test): 2.628984 rad
+    !! dir.azimuth     File A (v1): 3.944450 rad   File B (test): 3.944449 rad
+       energy          File A (v1): nan GeV   File B (test): nan GeV
+    !! time            File A (v1): 9845.8917 ns   File B (test): 9845.8916 ns
+       length          File A (v1): nan m   File B (test): nan m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): InfiniteTrack   File B (test): InfiniteTrack
+       type            File A (v1): unknown   File B (test): unknown
+
+======================================================================
+  Key: SPEFitSingle
+======================================================================
+  Key absent in both files.
+
+======================================================================
+  Key: CascadeLlhVertexFit_L2
+======================================================================
+    !! pos.x           File A (v1): -209.9952 m   File B (test): -208.1701 m
+    !! pos.y           File A (v1): -414.9681 m   File B (test): -414.5433 m
+    !! pos.z           File A (v1): -401.1938 m   File B (test): -400.8534 m
+    !! dir.zenith      File A (v1): 2.397495 rad   File B (test): 1.914377 rad
+    !! dir.azimuth     File A (v1): 4.327436 rad   File B (test): 2.585301 rad
+    !! energy          File A (v1): 645916 GeV   File B (test): 591572 GeV
+    !! time            File A (v1): 9488.3983 ns   File B (test): 9482.6076 ns
+       length          File A (v1): nan m   File B (test): nan m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): Cascade   File B (test): Cascade
+       type            File A (v1): EMinus   File B (test): EMinus
+
+======================================================================
+  Key: CascadeLlhVertexFit_L3
+======================================================================
+       pos.x           File A (v1): -208.1898 m   File B (test): -208.1898 m
+       pos.y           File A (v1): -413.8399 m   File B (test): -413.8399 m
+       pos.z           File A (v1): -401.1611 m   File B (test): -401.1611 m
+       dir.zenith      File A (v1): 1.835116 rad   File B (test): 1.835116 rad
+       dir.azimuth     File A (v1): 2.553479 rad   File B (test): 2.553479 rad
+       energy          File A (v1): 640448 GeV   File B (test): 640448 GeV
+       time            File A (v1): 9481.4980 ns   File B (test): 9481.4980 ns
+       length          File A (v1): nan m   File B (test): nan m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): Cascade   File B (test): Cascade
+       type            File A (v1): EMinus   File B (test): EMinus
+    (all fields identical)
+
+======================================================================
+  Key: CascadeLast_L2
+======================================================================
+    !! pos.x           File A (v1): -208.4505 m   File B (test): -209.1604 m
+    !! pos.y           File A (v1): -405.2051 m   File B (test): -407.1265 m
+    !! pos.z           File A (v1): -402.4425 m   File B (test): -404.1706 m
+    !! dir.zenith      File A (v1): 2.397495 rad   File B (test): 1.914377 rad
+    !! dir.azimuth     File A (v1): 4.327436 rad   File B (test): 2.585301 rad
+    !! energy          File A (v1): 645916 GeV   File B (test): 591572 GeV
+    !! time            File A (v1): 6743.9547 ns   File B (test): 9775.3543 ns
+       length          File A (v1): nan m   File B (test): nan m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): Cascade   File B (test): Cascade
+       type            File A (v1): unknown   File B (test): unknown
+
+======================================================================
+  Key: CombinedCascadeSeed_L3
+======================================================================
+       pos.x           File A (v1): -208.1898 m   File B (test): -208.1898 m
+       pos.y           File A (v1): -413.8399 m   File B (test): -413.8399 m
+       pos.z           File A (v1): -401.1611 m   File B (test): -401.1611 m
+    !! dir.zenith      File A (v1): 2.628985 rad   File B (test): 2.628984 rad
+    !! dir.azimuth     File A (v1): 3.944450 rad   File B (test): 3.944449 rad
+       energy          File A (v1): 0 GeV   File B (test): 0 GeV
+       time            File A (v1): 9481.4980 ns   File B (test): 9481.4980 ns
+       length          File A (v1): 0.0000 m   File B (test): 0.0000 m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): Cascade   File B (test): Cascade
+       type            File A (v1): unknown   File B (test): unknown
+
+======================================================================
+  Key: MonopodFit_iMIGRAD_PPB0
+======================================================================
+    !! pos.x           File A (v1): -221.3389 m   File B (test): -221.3311 m
+    !! pos.y           File A (v1): -414.5140 m   File B (test): -414.5264 m
+    !! pos.z           File A (v1): -415.9309 m   File B (test): -415.9337 m
+    !! dir.zenith      File A (v1): 1.117858 rad   File B (test): 1.117734 rad
+    !! dir.azimuth     File A (v1): 2.691735 rad   File B (test): 2.692091 rad
+    !! energy          File A (v1): 98722.2 GeV   File B (test): 98732 GeV
+    !! time            File A (v1): 9825.2500 ns   File B (test): 9825.2429 ns
+       length          File A (v1): 0.0000 m   File B (test): 0.0000 m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): Cascade   File B (test): Cascade
+       type            File A (v1): unknown   File B (test): unknown
+
+======================================================================
+  Key: TaupedeFit_iMIGRAD_PPB0
+======================================================================
+    !! pos.x           File A (v1): -222.7190 m   File B (test): -222.7167 m
+    !! pos.y           File A (v1): -414.7238 m   File B (test): -414.7090 m
+    !! pos.z           File A (v1): -415.8220 m   File B (test): -415.8297 m
+    !! dir.zenith      File A (v1): 1.153042 rad   File B (test): 1.154046 rad
+    !! dir.azimuth     File A (v1): 2.745418 rad   File B (test): 2.747151 rad
+    !! energy          File A (v1): 98286.7 GeV   File B (test): 98261.3 GeV
+    !! time            File A (v1): 9822.2248 ns   File B (test): 9822.2210 ns
+    !! length          File A (v1): 3.7831 m   File B (test): 3.7943 m
+       fit_status      File A (v1): OK   File B (test): OK
+       shape           File A (v1): InfiniteTrack   File B (test): InfiniteTrack
+       type            File A (v1): unknown   File B (test): unknown
+
+======================================================================
+Done.

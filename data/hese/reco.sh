@@ -4,8 +4,8 @@ set -e
 INPATH=${1}
 OUTPATH=${2}
 
-OUTPATH_TAUPEDE=/data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v1/IC86_2022/Taupede
-OUTPATH_EVTGEN=/data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v1/IC86_2022/EvtGen
+OUTPATH_TAUPEDE=${OUTPATH}/Taupede
+OUTPATH_EVTGEN=${OUTPATH}/EvtGen
 
 mkdir -p ${OUTPATH}
 mkdir -p ${OUTPATH_TAUPEDE}
@@ -39,7 +39,7 @@ echo "OUTFILE" ${OUTFILE}
 ## EvtGen
 ##
 
-OUTFILE_EVTGEN=${OUTPATH_EVTGEN}/${OUTPATH}/EvtGen.i3.zst
+OUTFILE_EVTGEN=${OUTPATH_EVTGEN}/EvtGen.i3.zst
 
 echo "-----------------------------"
 echo "EvtGen"
