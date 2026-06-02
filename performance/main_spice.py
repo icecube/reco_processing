@@ -14,7 +14,7 @@ reco_version_spice = "spice_tau_reco"
 hdf_path_spice = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version_spice}"
 plotting_main_path = f"/data/user/tvaneede/GlobalFit/reco_processing/performance/plots/{reco_version_spice}"
 
-reco_version_ftp = "taureco_iceprod_v3"
+reco_version_ftp = "hese_iceprod_v7"
 hdf_path_ftp = f"/data/user/tvaneede/GlobalFit/reco_processing/hdf/output/{reco_version_ftp}/merged"
 
 os.system(f"mkdir -p {plotting_main_path}")
@@ -67,73 +67,73 @@ for flavor_key, plots_spice, plots_ftp in zip(["NuTau","NuE"],
                                    [plot_spice,plot_ftp],
                                     plotting_main_path=f"{plotting_main_path}/compare" )
 
-###
-### EventGenerator
-###
-from plot_dicts_ftp import plots_evtgen
+# ###
+# ### EventGenerator
+# ###
+# from plot_dicts_ftp import plots_evtgen
 
-flavor_key = "NuTau"
+# flavor_key = "NuTau"
 
-plot_combinations = [
+# plot_combinations = [
 
-    [
-    [
-        datasets_spice[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"]
-    ],
-    [
-        plots_taupede_spice["HESETaupedeFit_deltaLength_trueLength"], 
-        plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaLength_trueLength"],
-        plots_evtgen["EventGeneratorDC_Thijs_deltaLength_trueLength"],
+#     [
+#     [
+#         datasets_spice[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"]
+#     ],
+#     [
+#         plots_taupede_spice["HESETaupedeFit_deltaLength_trueLength"], 
+#         plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaLength_trueLength"],
+#         plots_evtgen["EventGeneratorDC_Thijs_deltaLength_trueLength"],
 
-    ]
-    ],
+#     ]
+#     ],
 
-    [
-    [
-        datasets_spice[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"]
-    ],
-    [
-        plots_taupede_spice["HESETaupedeFit_deltaLength_trueLength_normalised"], 
-        plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaLength_trueLength_normalised"],
-        plots_evtgen["EventGeneratorDC_Thijs_deltaLength_trueLength_normalised"],
+#     [
+#     [
+#         datasets_spice[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"]
+#     ],
+#     [
+#         plots_taupede_spice["HESETaupedeFit_deltaLength_trueLength_normalised"], 
+#         plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaLength_trueLength_normalised"],
+#         plots_evtgen["EventGeneratorDC_Thijs_deltaLength_trueLength_normalised"],
 
-    ]
-    ],
+#     ]
+#     ],
 
-    [
-    [
-        datasets_spice[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"],
-        datasets_ftp[flavor_key]["hdf_file_path"]
-    ],
-    [
-        plots_taupede_spice["HESETaupedeFit_deltaEasym_trueLength"], 
-        plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaEasym_trueLength"],
-        plots_evtgen["EventGeneratorDC_Max_deltaEasym_trueLength"],
+#     [
+#     [
+#         datasets_spice[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"],
+#         datasets_ftp[flavor_key]["hdf_file_path"]
+#     ],
+#     [
+#         plots_taupede_spice["HESETaupedeFit_deltaEasym_trueLength"], 
+#         plots_taupede_ftp["TaupedeFit_iMIGRAD_PPB0_deltaEasym_trueLength"],
+#         plots_evtgen["EventGeneratorDC_Max_deltaEasym_trueLength"],
 
-    ]
-    ],
+#     ]
+#     ],
 
-]
+# ]
 
-for plot_quartiles in [True,False]:
-    for plot_combination in plot_combinations:
-        hdf_files = plot_combination[0]
-        plots = plot_combination[1]
-        plots[2]["label"] = "EventGenerator"
-        x = plot_median_quartiles( hdf_files,
-                                    plots,
-                                    plotting_main_path=f"{plotting_main_path}/evtgen_quartiles-{plot_quartiles}",
-                                    plot_quartiles = plot_quartiles )
+# for plot_quartiles in [True,False]:
+#     for plot_combination in plot_combinations:
+#         hdf_files = plot_combination[0]
+#         plots = plot_combination[1]
+#         plots[2]["label"] = "EventGenerator"
+#         x = plot_median_quartiles( hdf_files,
+#                                     plots,
+#                                     plotting_main_path=f"{plotting_main_path}/evtgen_quartiles-{plot_quartiles}",
+#                                     plot_quartiles = plot_quartiles )
         
-        # lets also make plots without spice
-        plots[1]["bins"] = np.linspace(0,20,20)
-        plots[2]["bins"] = np.linspace(0,20,20)
-        x = plot_median_quartiles( hdf_files[1:],
-                                    plots[1:],
-                                    plotting_main_path=f"{plotting_main_path}/evtgen_quartiles-{plot_quartiles}-nospice",
-                                    plot_quartiles = plot_quartiles )
+#         # lets also make plots without spice
+#         plots[1]["bins"] = np.linspace(0,20,20)
+#         plots[2]["bins"] = np.linspace(0,20,20)
+#         x = plot_median_quartiles( hdf_files[1:],
+#                                     plots[1:],
+#                                     plotting_main_path=f"{plotting_main_path}/evtgen_quartiles-{plot_quartiles}-nospice",
+#                                     plot_quartiles = plot_quartiles )

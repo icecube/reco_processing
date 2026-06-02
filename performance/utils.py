@@ -44,6 +44,32 @@ def plot_median_quartiles( hdf_file_paths, plot_dicts, plotting_main_path = "", 
 
         x = table_x.read(field=plot_dict["variable_key_x"])
 
+        # ---------------- CUTS ----------------
+
+        mask = np.isfinite(deltas) & np.isfinite(x)
+
+        # Load extra cut variables if requested
+        cut_kwargs = {}
+
+        if "cut_variables" in plot_dict:
+
+            for var_name, (table_name, field_name) in plot_dict["cut_variables"].items():
+
+                table = hdf_file.get_node(f'/{table_name}')
+                cut_kwargs[var_name] = table.read(field=field_name)
+
+                mask &= np.isfinite(cut_kwargs[var_name])
+
+        if "cut" in plot_dict:
+            mask &= plot_dict["cut"](**cut_kwargs)
+
+        deltas = deltas[mask]
+        x = x[mask]
+
+        ##### end of cuts
+
+        print("mean y_true", np.mean(y_true), "mean y_reco", np.mean(y_reco), "mean delta", np.mean(deltas), "mean_x", np.mean(x), "n_events", len(deltas))
+
         bins = plot_dict["bins"]
         label = plot_dict["label"] if "label" in plot_dict else ""
         color = colors[i]
@@ -58,7 +84,7 @@ def plot_median_quartiles( hdf_file_paths, plot_dicts, plotting_main_path = "", 
     plt.ylabel( plot_dicts[0]["ylabel"] )
     plt.axhline(y=0.0, color='gray', linestyle='--', linewidth=1)
     plt.savefig(f'{plotting_main_path}/{plot_dicts[0]["name"]}.png', bbox_inches='tight')
-
+    print("created", f'{plotting_main_path}/{plot_dicts[0]["name"]}.png', plot_quartiles)
 
 def get_easym(node):
     _es = node.cols.energy[:]
@@ -77,13 +103,15 @@ def plot_quartiles_vs_x(deltas, lge_tru, lge_bins, label, color, plot_quartiles 
         print(
             f'WARN: {len(deltas[np.isnan(deltas)])} nan events. Ignored in quartiles.')
     lge_i = np.digitize(lge_tru, lge_bins)
-    digitized_deltas = [deltas[lge_i == ei] for ei in range(1, lge_bins.size)]
+    # digitized_deltas = [deltas[lge_i == ei] for ei in range(1, lge_bins.size)]
+    digitized_deltas = [ca[np.isfinite(ca)] for ca in [deltas[lge_i == ei] for ei in range(1, lge_bins.size)]]
 
     per50 = [np.nanmedian(ca) for ca in digitized_deltas]
     per25 = [np.nanpercentile(ca, 25) if len(
         ca) > 0 else np.nan for ca in digitized_deltas]
     per75 = [np.nanpercentile(ca, 75) if len(
         ca) > 0 else np.nan for ca in digitized_deltas]
+    
     if plot_quartiles:
         plt.plot(calculator.centers(lge_bins), per50, label=label+' quartiles', color=color)
         plt.fill_between(calculator.centers(lge_bins), per25, per75, alpha=0.5, color=color)
