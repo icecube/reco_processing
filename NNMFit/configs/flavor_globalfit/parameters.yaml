@@ -27,9 +27,16 @@ muon_norm:
   default: 1.
   class: Norm
   prior: 1.
-  prior_width: 0.05
+  prior_width: 0.5
 
 muongun_norm:
+  range: [0, null]
+  default: 1.
+  class: Norm
+  prior: 1.
+  prior_width: 0.5
+
+muongun_norm_cascade:
   range: [0, null]
   default: 1.
   class: Norm

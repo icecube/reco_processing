@@ -187,7 +187,7 @@ muontemplate_track_globalfit:
 
 muontemplate_cascade_globalfit:
   class: TemplateFlux
-  parameters: [muongun_norm]
+  parameters: [muongun_norm_cascade]
   skip_syst: True
   additional:
     template_file: /data/ana/Diffuse/GlobalFit/NNMFit/templates/cscd_muongun_ALL_KDE_manual_ssq.pickle
