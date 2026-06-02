@@ -9,6 +9,8 @@ mkdir -p ${local_path}
 cp -r /data/user/tvaneede/GlobalFit/reco_processing/segments ${local_path}
 cp /data/user/tvaneede/GlobalFit/reco_processing/rec_tau.py ${local_path}
 cp /data/user/tvaneede/GlobalFit/reco_processing/rec_tau.sh ${local_path}
+cp /data/user/tvaneede/GlobalFit/reco_processing/rec_tau_muon.py ${local_path}
+cp /data/user/tvaneede/GlobalFit/reco_processing/rec_tau_muon.sh ${local_path}
 cp /data/user/tvaneede/GlobalFit/reco_processing/filter/filter_HESE.py ${local_path}
 cp /data/user/tvaneede/GlobalFit/reco_processing/filter/filter_HESE.sh ${local_path}
 cp /data/user/tvaneede/GlobalFit/reco_processing/evtgen/run_event_generator.py ${local_path}

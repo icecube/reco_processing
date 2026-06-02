@@ -36,13 +36,21 @@ tray.Add(lambda frame : 'HESE_CausalQTot' in frame and frame['HESE_CausalQTot'].
 tray.AddModule('I3Writer',
                 'writer',
                 filename=opts.outputfile,
-                DropOrphanStreams=[icetray.I3Frame.DAQ, icetray.I3Frame.Stream('M'), icetray.I3Frame.TrayInfo],
-                streams=[icetray.I3Frame.TrayInfo,
-                        icetray.I3Frame.Physics,
-                        icetray.I3Frame.Simulation,
-                        icetray.I3Frame.Stream('M'),
-                        icetray.I3Frame.Stream('X'),
-                        icetray.I3Frame.DAQ])
+                   DropOrphanStreams=[icetray.I3Frame.DAQ, 
+                                      icetray.I3Frame.Stream('M'), 
+                                      icetray.I3Frame.TrayInfo, 
+                                      icetray.I3Frame.Calibration, 
+                                      icetray.I3Frame.DetectorStatus,
+                                      icetray.I3Frame.Geometry],
+                   streams=[icetray.I3Frame.TrayInfo,
+                            icetray.I3Frame.Physics,
+                            icetray.I3Frame.Geometry,
+                            icetray.I3Frame.Calibration,
+                            icetray.I3Frame.Simulation,
+                            icetray.I3Frame.Stream('M'),
+                            icetray.I3Frame.Stream('X'),
+                            icetray.I3Frame.DetectorStatus,
+                            icetray.I3Frame.DAQ])
 
 tray.Execute()
 tray.Finish()
