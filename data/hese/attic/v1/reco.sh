@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-INFILE=${1}
+INPATH=${1}
 OUTPATH=${2}
 
 OUTPATH_TAUPEDE=${OUTPATH}/Taupede
@@ -13,7 +13,7 @@ mkdir -p ${OUTPATH_EVTGEN}
 
 echo "-----------------------------"
 echo "Running"
-echo "INFILE" ${INFILE}
+echo "INPATH" ${INPATH}
 echo "OUTPATH" ${OUTPATH}
 echo "-----------------------------"
 
@@ -21,12 +21,11 @@ echo "-----------------------------"
 ### Regular
 ###
 
-FILE_STEM=$(basename ${INFILE} .i3.zst)
-OUTFILE=${OUTPATH_TAUPEDE}/${FILE_STEM}.i3.zst
+OUTFILE=${OUTPATH_TAUPEDE}/Taupede.i3.zst
 
 echo "-----------------------------"
 echo "Regular"
-echo "INFILE" ${INFILE}
+echo "INPATH" ${INPATH}
 echo "OUTFILE" ${OUTFILE}
 
 /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/icetray-env icetray/v1.14.0 \
@@ -34,13 +33,13 @@ echo "OUTFILE" ${OUTFILE}
     /data/user/tvaneede/GlobalFit/reco_processing/iceprod/scripts/v1/rec_tau_data_hese.py \
     -o ${OUTFILE} \
     --imigrad --icemodel ftp-v1 --tilt --effd --effp --qs --isdata \
-    ${INFILE}
+    ${INPATH}/*.i3.zst
 
 ##
 ## EvtGen
 ##
 
-OUTFILE_EVTGEN=${OUTPATH_EVTGEN}/${FILE_STEM}.i3.zst
+OUTFILE_EVTGEN=${OUTPATH_EVTGEN}/EvtGen.i3.zst
 
 echo "-----------------------------"
 echo "EvtGen"
