@@ -12,7 +12,7 @@ muongun["MuonGun_lowlowlowE"] = { # 700 GeV - 1 TeV
     "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
     "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
     "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
-    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v4/",
     "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
 }
 
@@ -23,7 +23,7 @@ muongun["MuonGun_lowlowE"] = { # 1 TeV - 5 TeV
     "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
     "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
     "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
-    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v4/",
     "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
 }
 
@@ -34,7 +34,7 @@ muongun["MuonGun_lowE"] = { # 5 TeV - 10 TeV
     "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
     "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
     "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
-    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v4/",
     "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
 }
 
@@ -45,7 +45,7 @@ muongun["MuonGun_midE"] = { # 10 TeV - 100 TeV
     "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
     "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
     "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
-    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v4/",
     "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
 }
 
@@ -56,7 +56,7 @@ muongun["MuonGun_highE"] = { # 100 TeV - 1 EeV
     "level2_path" : "/data/sim/IceCube/2016/filtered/level2/MuonGun",
     "cascade_finallevel_path" : "/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/",
     "cascade_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/cascade/output",
-    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v1/",
+    "hese_filter_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/filter/output/v4/",
     "hese_reco_path" : "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese/output/"
 }
 
