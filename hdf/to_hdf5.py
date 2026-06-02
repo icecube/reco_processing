@@ -39,7 +39,7 @@ from segments.PropagateMuons import PropagateMuons
 # bdt
 from segments.cscdSBU_misc import misc
 from segments.mlb_DelayTime_noNoise import calc_dt_nearly_ice 
-from segments.bdt_var import taupede_monopod_bdt_var
+from segments.bdt_var import taupede_monopod_bdt_var, bdt_var_clean
 
 # cv statistics
 from icecube.filterscripts.offlineL2.Globals import muon_wg, wimp_wg
@@ -272,23 +272,30 @@ def main():
                         type=str, help='flavor')
     parser.add_argument('-S', '--splits', default=['InIceSplit',"Final"], nargs='+',
                         help='which P-frame splits to process')
-    parser.add_argument('--spice', default=False, action='store_true',
-                        help='creating hdf from spice files')
+    parser.add_argument('--type', choices=('spice', 'ftp', 'zheyang'),
+                        default='ftp', help='Which types ')
     parser.add_argument('--nframes', type=int, default=None, help='number of frames to process')
     args = parser.parse_args()
 
-    if args.spice:
-        monopod_key = "HESEMonopodFit"
-        taupede_key = "HESETaupedeFit"
+    if args.type == "spice":
+        monopod_key   = "HESEMonopodFit"
+        taupede_key   = "HESETaupedeFit"
         millipede_key = "HESEMillipedeFit"
-        pulses      = "SplitInIcePulses"
-    else:
-        monopod_key = "MonopodFit_iMIGRAD_PPB0"
-        taupede_key = "TaupedeFit_iMIGRAD_PPB0"
+        pulses        = "SplitInIcePulses"
+    elif args.type == "ftp":
+        monopod_key   = "MonopodFit_iMIGRAD_PPB0"
+        taupede_key   = "TaupedeFit_iMIGRAD_PPB0"
+        spefit_key    = "SPEFit16_PPB0"
         millipede_key = "HESEMillipedeFit_PPB0"
-        pulses      = "SplitInIcePulses"
+        pulses        = "SplitInIcePulses"
+    elif args.type == "zheyang":
+        monopod_key   = "MonopodFit_iMIGRAD_PPB0"
+        taupede_key   = "Taupede_ftp"
+        spefit_key    = "SPEFit12EHE"
+        millipede_key = "HESEMillipedeFit_PPB0"
+        pulses        = "SplitInIcePulses"
 
-    inputfiles = glob.glob( f"{args.inpath}/*.i3.*" )
+    inputfiles = glob.glob( f"{args.inpath}/*.i3.*" ) if os.path.isdir(args.inpath) else [args.inpath]
     print(f"found {len(inputfiles)}")
 
     inputfiles = remove_corrupt_files(inputfiles)
@@ -298,7 +305,7 @@ def main():
     print("n_checksum", n_checksum)
     print("args.inpath", args.inpath)
     print("Writing output to", args.out)
-    print("using args.spice", args.spice)
+    print("using args.type", args.type)
 
     gcd = ["/data/user/tvaneede/GlobalFit/reco_processing/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"]
 
@@ -314,18 +321,63 @@ def main():
     tray.Add(fn)
 
     if flavor != "Data":
-        for suffix in ["", "_ibr", "_ibr_idc"]:
-            tray.AddModule(calculaterecoobservables,
-                            f'calc_reco_observables_{suffix}',
-                            innerboundary=550,
-                            outeredge_x=outeredge_x,
-                            outeredge_y=outeredge_y,
-                            monopod_key=f'{monopod_key}{suffix}',
-                            taupede_key=f'{taupede_key}{suffix}',
-                            millipede_key=f'{millipede_key}{suffix}',
-                            suffix=suffix)
-            tray.Add(checkfinaltopology,eventclass=f"{taupede_key}{suffix}HESEEventclass", suffix=suffix)
-            tray.Add(reclassify_double, suffix=suffix)
+        if args.type == "ftp":
+            for suffix in ["", "_ibr", "_ibr_idc"]:
+                tray.AddModule(calculaterecoobservables,
+                                f'calc_reco_observables_{suffix}',
+                                innerboundary=550,
+                                outeredge_x=outeredge_x,
+                                outeredge_y=outeredge_y,
+                                monopod_key=f'{monopod_key}{suffix}',
+                                taupede_key=f'{taupede_key}{suffix}',
+                                millipede_key=f'{millipede_key}{suffix}',
+                                suffix=suffix)
+                tray.Add(checkfinaltopology,eventclass=f"{taupede_key}{suffix}HESEEventclass", suffix=suffix)
+                tray.Add(reclassify_double, suffix=suffix)
+
+            # evt gen
+            for key in ["EventGeneratorDC_Max", "EventGeneratorDC_Thijs"]:
+                tray.Add( eventgen_eratio, key=key)
+
+        ###
+        ### add cascade bdt variables
+        ###
+        tray.AddSegment(misc, 'misc', pulses=pulses, If=lambda frame: frame.Has(pulses)) # was with OfflinePulses, but should be same as SplitInIcePulses
+
+        # taken from /data/user/tvaneede/GlobalFit/selection/bdt/tau/cascade-final-filter/cscdSBU_vars.py
+        # and mlb_DelayTime_noNoise.py
+        tray.AddModule(calc_dt_nearly_ice,'delaytime_monopod_noDC',name="MonopodFit_iMIGRAD_PPB0",
+                        reconame=monopod_key,pulsemapname=f'{pulses}HLC_noSaturDOMs',
+                        If=lambda frame: frame.Has(f'{pulses}HLC'))
+
+        # add cv statistics if we dont have it yet
+        tray.AddSegment(add_hit_verification_info_muon_and_wimp, 'CommonVariablesMuonAndWimp',
+                        Pulses= pulses,
+                        If = which_split(split_name='InIceSplit') & (lambda f: (muon_wg(f) or wimp_wg(f)) and 'CVStatistics' not in f),
+                        OutputI3HitMultiplicityValuesName= "CVMultiplicity",
+                        OutputI3HitStatisticsValuesName= "CVStatistics",
+                        suffix = '')
+
+        tray.AddModule(taupede_monopod_bdt_var,f"taupede_monopod_bdt_var",
+                        monopod_key=monopod_key, taupede_key=taupede_key)
+
+        if args.type == "ftp":
+            for suffix in ["", "_ibr", "_ibr_idc"]:
+                tray.AddModule(bdt_var_clean,f"taupede_monopod_bdt_var_{suffix}",
+                                monopod_key=f"{monopod_key}{suffix}", taupede_key=f"{taupede_key}{suffix}", spefit_key=f"{spefit_key}{suffix}")
+    # data
+    else:
+        tray.AddModule(calculaterecoobservables,
+                        f'calc_reco_observables_data',
+                        innerboundary=550,
+                        outeredge_x=outeredge_x,
+                        outeredge_y=outeredge_y,
+                        monopod_key=f'{monopod_key}',
+                        taupede_key=f'{taupede_key}',
+                        millipede_key=f'{millipede_key}',
+                        suffix="")
+        tray.Add(checkfinaltopology,eventclass=f"{taupede_key}HESEEventclass", suffix="")
+        tray.Add(reclassify_double, suffix="")
 
         # evt gen
         for key in ["EventGeneratorDC_Max", "EventGeneratorDC_Thijs"]:
@@ -350,8 +402,9 @@ def main():
                         OutputI3HitStatisticsValuesName= "CVStatistics",
                         suffix = '')
 
-        tray.AddModule(taupede_monopod_bdt_var,"taupede_monopod_bdt_var",
-                    monopod_key=monopod_key, taupede_key=taupede_key)
+        tray.AddModule(taupede_monopod_bdt_var,f"taupede_monopod_bdt_var",
+                        monopod_key=monopod_key, taupede_key=taupede_key)
+
 
     if "Nu" in flavor: # nugen
         tray.Add(add_primary)

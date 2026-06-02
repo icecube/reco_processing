@@ -6,7 +6,10 @@ hdfkeys += ['cc', 'cc_easymm', 'cc_tauvis'] # true information tianlu
 hdfkeys += ['I3MCWeightDict','I3EventHeader'] # general info
 hdfkeys += ['LineFit','SPEFit2','l2_online_SplineMPE','OnlineL2_SplineMPE'] # l2 track reco
 hdfkeys += ["L3_MonopodFit4_AmptFit"] # l3 cascade
-hdfkeys += ["BestTrack"] # l3 track
+
+# l3 track
+hdfkeys += ["BestTrack", "SplineMPEMuEXDifferential", "SplineMPE", "SplineMPETruncatedEnergy_SPICEMie_ORIG_Muon", "SplineMPE"] 
+hdfkeys += ["BestTrack", "SplineMPEMuEXDifferential", "SplineMPE", "SplineMPETruncatedEnergy_SPICEMie_ORIG_Muon", "SplineMPE"] 
 
 # tau reco
 for key in ["TaupedeFit_iMIGRAD_PPB0", "TaupedeFit_iMIGRAD_PPB0_ibr", "TaupedeFit_iMIGRAD_PPB0_ibr_idc"]: 
@@ -37,6 +40,18 @@ for sfx in ["", "_ibr", "_ibr_idc"]:
     hdfkeys += [f'FinalTopology{sfx}', f"FinalEventClass{sfx}"]
     hdfkeys += [f"TaupedeFit_iMIGRAD_PPB0{sfx}HESEEventclass"]
 
+    # bdt variables clean
+    taupede_key = f"TaupedeFit_iMIGRAD_PPB0{sfx}"
+    monopod_key = f"MonopodFit_iMIGRAD_PPB0{sfx}"
+    spefit_key = f"SPEFit16_PPB0{sfx}"
+    hdfkeys += [f"{taupede_key}_Distance", f"{taupede_key}_1_energy", f"{taupede_key}_2_energy", f'{taupede_key}_Asymmetry']
+    hdfkeys += [f"{taupede_key}FitParams_rlogl", f"{monopod_key}FitParams_rlogl",f'{taupede_key}_{monopod_key}_Diff_rlogl']
+    hdfkeys += [f"{spefit_key}_zenith",f"{spefit_key}FitParams_rlogl",f"{monopod_key}_zenith",f"{monopod_key}_energy"]
+    hdfkeys += [f"{taupede_key}_VertexRecoDist_CscdLLh",f'{taupede_key}_{monopod_key}_MilliDiff_rlogl',f'{taupede_key}_{spefit_key}_MilliDiff_rlogl']
+
+# zheyang variables
+hdfkeys += ["Taupede_ftp", "Taupede_ftpFitParams", "Taupede_ftpMonoDiff_rlogl", "Taupede_ftp_1Particles", "Taupede_ftp_2Particles", "Taupede_ftp_Asymmetry"]
+hdfkeys += ["cscdSBU_I3XYScale", "cscdSBU_I3XYScale_noDC"]
 
 hdfkeys += [
     'MCInteractionEventclass',

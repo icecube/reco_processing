@@ -7,11 +7,14 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 
 # Import the datasets module
 # from datasets import datasets_hese as datasets
+# from datasets import datasets_hese_extra as datasets
 # from datasets import datasets_cascade as datasets
-from datasets import datasets_snowstorm as datasets
+# from datasets import datasets_snowstorm as datasets
+# from datasets import datasets_snowstorm_furst as datasets
+from datasets import datasets_cascade_zheyang as datasets
 
 # set the inputs
-reco_version = "ftp_ensemble_ani_v0" # hese_iceprod_v6 cascade_iceprod_v0
+reco_version = "cascade_zheyang_v0" # hese_iceprod_v6 cascade_iceprod_v0 hese_extra_iceprod_v0 ftp_ensemble_ani_v1 ftp_ensemble_v1
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)
@@ -26,7 +29,7 @@ os.system(f"mkdir -p {hdf_outpath}")
 submit_jobs = True # actually submit the dag jobs
 
 # fixed dag paths
-dag_path      = f"{dag_base_path}/{reco_version}"
+dag_path      = f"{dag_base_path}/{reco_version}_all"
 log_dir       = f"{dag_path}/logs"
 
 # creating folders and copying scripts
@@ -49,8 +52,10 @@ def get_reco_file_path(level, year, dataset, subfolder):
     if level == "level6_cascade": return f"/data/sim/IceCube/{year}/filtered/level6/cascade/neutrino-generator/cascade/{dataset}/{subfolder}/"
     if level == "level6_muon": return f"/data/sim/IceCube/{year}/filtered/level6/cascade/neutrino-generator/muon/{dataset}/{subfolder}/"
     if level == "level6_hybrid": return f"/data/sim/IceCube/{year}/filtered/level6/cascade/neutrino-generator/hybrid/{dataset}/{subfolder}/"
+    if level == "level7_zheyang": return f"/data/ana/analyses/diffuse/cascades-nutau/sim/nugen/taupede/snowstorm/ftp_reco/{dataset}/{subfolder}/final_cascade/"
     if level == "level7_cascade": return f"/data/sim/IceCube/{year}/filtered/level7/cascade/neutrino-generator/cascade/{dataset}/{subfolder}/"
     if level == "level8_cascade": return f"/data/sim/IceCube/{year}/filtered/level8/cascade/neutrino-generator/cascade/{dataset}/{subfolder}/"
+    if level == "level7_cascade_evtgen": return f"/data/sim/IceCube/{year}/filtered/level7/cascade/neutrino-generator/cascade/evtgen/{dataset}/{subfolder}/"
     # MuonGun
     if level == "level6_cascade_MuonGun": return f"/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/{dataset}/{subfolder}/final_cascade/"
     if level == "level6_muon_MuonGun": return f"/data/ana/analyses/diffuse/cascades/pass2/sim/mgun/finallevel/{dataset}/{subfolder}/final_muon/"

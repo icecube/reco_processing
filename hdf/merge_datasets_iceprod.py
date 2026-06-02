@@ -12,10 +12,13 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 
 # Import the datasets module
 # from datasets import datasets_hese as datasets
-from datasets import datasets_cascade as datasets
+# from datasets import datasets_cascade as datasets
+# from datasets import datasets_hese_extra as datasets
+# from datasets import datasets_snowstorm as datasets
+from datasets import datasets_snowstorm_furst as datasets
 
 # set the inputs
-reco_version = "cascade_iceprod_v0"
+reco_version = "ftp_ensemble_v0" # ftp_ensemble_ani_v2 hese_extra_iceprod_v1
 
 # Dynamically select the desired dataset
 simulation_datasets = getattr(datasets, reco_version)

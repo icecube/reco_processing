@@ -6,13 +6,13 @@ import re
 sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 
 # Import the datasets module
-from datasets import datasets
+from datasets.datasets_spice import spice_tau_reco_ensemble as simulation_datasets
 
 # set the inputs
-reco_version = "v10"
+reco_version = "spice_tau_reco_ensemble"
 
 # Dynamically select the desired dataset
-simulation_datasets = getattr(datasets, reco_version)
+# simulation_datasets = getattr(datasets, reco_version)
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/hdf_taupede_tianlu"
@@ -58,6 +58,11 @@ for simulation_name in simulation_datasets:
         outfile.write(f'VARS {JOBID} JOBID="{JOBID}"\n')
         outfile.write(f'VARS {JOBID} INPATH="{reco_input_path}"\n')
         outfile.write(f'VARS {JOBID} OUTFILE="{outfile_path}"\n')
+        outfile.write(f'VARS {JOBID} FLAVOR="{simulation_flavor}"\n')
+        outfile.write(f'VARS {JOBID} TYPE="spice"\n')
+
+    #     break
+    # break
 
 if submit_jobs:
 
