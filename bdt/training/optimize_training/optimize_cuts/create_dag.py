@@ -3,7 +3,7 @@ import subprocess
 import re
 
 # version
-version_name = "900steps_100fits_ibr_idc"
+version_name = "900steps_100fits_complete"
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/optimize_cuts"

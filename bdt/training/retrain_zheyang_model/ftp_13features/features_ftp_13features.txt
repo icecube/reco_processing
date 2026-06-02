@@ -1,0 +1,13 @@
+['Taupede_ftpMonoDiff_rlogl_value',
+ 'Taupede_ftp_Asymmetry_value',
+ 'Taupede_ftp_Distance_value',
+ 'Taupede_ftp_1Particles_energy',
+ 'Taupede_ftp_2Particles_energy',
+ 'cscdSBU_LE_bdt_input_cscdSBU_MonopodFit4_noDC_zenith',
+ 'cscdSBU_LE_bdt_input_cscdSBU_MonopodFit4_noDC_Delay_ice_value',
+ 'CVStatistics_q_max_doms',
+ 'cscdSBU_LE_bdt_input_cscdSBU_VertexRecoDist_CscdLLh',
+ 'cscdSBU_MonopodFit4_noDC_energy',
+ 'cscdSBU_LE_bdt_input_cscdSBU_Qtot_HLC_log_value',
+ 'Taupede_ftpFitParams_rlogl',
+ 'cscdSBU_MonopodFit4_noDCFitParams_rlogl']

@@ -33,3 +33,85 @@ def Append_BDT(weighter, model1, model2):
     bdt_score2 = model2.predict_proba(features)[:, 1]  # assuming second model
 
     return bdt_score1, bdt_score2
+
+def Append_BDT_muon(hdf_file, model1, model2):
+
+    var_names = [
+        ['TauMonoDiff_rlogl','value'],
+        ['Taupede_Asymmetry','value'],
+        ['Taupede_Distance','value'],
+        ['Taupede1_Particles_energy','value'],
+        ['Taupede2_Particles_energy','value'],
+        ['cscdSBU_MonopodFit4_noDC_zenith','value'],
+        ['MonopodFit_iMIGRAD_PPB0_Delay_ice','value'],
+        ['CVStatistics_q_max_doms','value'],
+        ['cscdSBU_VertexRecoDist_CscdLLh','value'],
+        # ['MonopodFit_iMIGRAD_PPB0_energy','value'],
+        ['MonopodFit_iMIGRAD_PPB0','energy'],
+        ['cscdSBU_Qtot_HLC_log','value'],
+        ['Taupede_ftpFitParams_rlogl','value'],
+        ['cscdSBU_MonopodFit4_noDCFitParams_rlogl','value'],
+    ]
+
+    # Build feature array: shape (num_events, 13)
+    variables = [hdf_file[var[0]][var[1]] for var in var_names]    
+    features = np.column_stack(variables)
+
+    # Predict BDT scores
+    bdt_score1 = model1.predict_proba(features)[:, 1]  # assuming binary classifier
+    bdt_score2 = model2.predict_proba(features)[:, 1]  # assuming second model
+
+    return bdt_score1, bdt_score2
+
+def Append_BDT_NNMFit(df, model1, model2):
+
+    var_names = [
+        'TauMonoDiff_rlogl',
+        'Taupede_Asymmetry',
+        'Taupede_Distance',
+        'Taupede1_Particles_energy',
+        'Taupede2_Particles_energy',
+        'cscdSBU_MonopodFit4_noDC_zenith',
+        'MonopodFit_iMIGRAD_PPB0_Delay_ice',
+        'CVStatistics_q_max_doms',
+        'cscdSBU_VertexRecoDist_CscdLLh',
+        'MonopodFit_iMIGRAD_PPB0_energy',
+        'cscdSBU_Qtot_HLC_log',
+        'Taupede_ftpFitParams_rlogl',
+        'cscdSBU_MonopodFit4_noDCFitParams_rlogl',
+    ]
+
+    # Extract features: each is a plain Series of floats
+    variables = [df[var].to_numpy() for var in var_names]
+
+    # Stack into shape (N_events, N_features)
+    features = np.column_stack(variables)
+
+    # Predict BDT scores
+    bdt_score1 = model1.predict_proba(features)[:, 1]
+    bdt_score2 = model2.predict_proba(features)[:, 1]
+
+    # Append results
+    df["bdt_scores1"] = bdt_score1
+    df["bdt_scores2"] = bdt_score2
+
+    return df
+
+
+def Append_BDT_pyFF(df, model1, model2, var_names):
+
+    # Extract features: each is a plain Series of floats
+    variables = [df[var].to_numpy() for var in var_names]
+
+    # Stack into shape (N_events, N_features)
+    features = np.column_stack(variables)
+
+    # Predict BDT scores
+    bdt_score1 = model1.predict_proba(features)[:, 1]
+    bdt_score2 = model2.predict_proba(features)[:, 1]
+
+    # Append results
+    df["bdt_scores1"] = bdt_score1
+    df["bdt_scores2"] = bdt_score2
+
+    return df

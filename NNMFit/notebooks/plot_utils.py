@@ -6,8 +6,11 @@ x_labels = {
     "reco_energy" : r"Reco $E_{\rm dep}$ [GeV]",
     "reco_length" : r"Reco $L_{\tau}$ [m]",
     "reco_zenith" : r"Reco $\theta$ [rad]",
+    "reco_azimuth" : r"Reco azimuth [rad]",
     "reco_dir" : r"Reco $\theta$ [rad]",
-    "bdt_product" : "BDT score 1 x BDT score 2"
+    "bdt_product" : "BDT score 1 x BDT score 2",
+    "bdt_scores1" : "BDT score 1",
+    "bdt_scores2" : "BDT score 2",
 }
 
 def plot_histogram_2D(hist_graph_hdl, det_config, input_variable, ax=None, title=None,savepath=None):
@@ -131,14 +134,12 @@ def plot_2d_relerr(hist_graph_hdl, det_config, input_variable, zlog=None, title 
     plt.show()
 
 
-
-
 def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, title = None, savepath = None):
 
     print(det_config)
     binnings = hist_graph_hdl.get_binning(det_config=det_config)
 
-    fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+    fig, axes = plt.subplots(1, len(binnings), figsize=(len(binnings)*5, 4))
 
     for input_name, input_variable in input_variables.items():
 
@@ -146,8 +147,13 @@ def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, tit
 
         for i, (variable_name, binning) in enumerate(binnings.items()):
 
-            hist = res["mu"].sum(axis=1-i)
-            yerror = np.sqrt(res["ssq"].sum(axis=1-i))
+            sum_axes = tuple(ax for ax in range(res["mu"].ndim) if ax != i)
+
+            hist = res["mu"].sum(axis=sum_axes)
+            yerror = np.sqrt(res["ssq"].sum(axis=sum_axes))
+
+            # hist = res["mu"].sum(axis=1-i)
+            # yerror = np.sqrt(res["ssq"].sum(axis=1-i))
 
             bin_centers = 0.5 * (binning[:-1] + binning[1:])
 
@@ -159,6 +165,7 @@ def plot_histogram(hist_graph_hdl, det_config, input_variables, ylog = None, tit
             axes[i].set_ylabel(f"Rate / {hist_graph_hdl.get_livetime(det_config)/(3600*24*365.25):.2f} yr")
 
             axes[i].set_xlim(min(binning), max(binning))
+            axes[i].set_ylim(0.8*min(hist), 1.2*max(hist))
 
             axes[i].set_yscale("log") if ylog else 0
             if "energy" in variable_name or "length" in variable_name: axes[i].set_xscale("log")
