@@ -1,6 +1,9 @@
 */__pycache__/
 __pycache__
 
+*.pickle
+*/*.pickle
+
 output/
 
 filtering/output

@@ -2,12 +2,12 @@ from icecube import icetray,dataclasses
 
 @icetray.traysegment
 def misc(tray, name, pulses='SplitInIcePulses'):
-
+    
     tray.AddModule("I3LCPulseCleaning", "I3LCPulseCleaning",
                     Input=pulses,
                     OutputHLC= f"{pulses}HLC",
                     OutputSLC= f"{pulses}SLC",
-                    IF = lambda f: f"{pulses}HLC" not in f)
+                    If=lambda f: not f.Has(f"{pulses}HLC") )
 
     def removeSaturatedDOMs(frame,pulses):
 

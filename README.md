@@ -7,10 +7,20 @@ I am using version with latest commit 7f46745:
 
 - test.sh: example script for running Taupede reconstruction
 - create_dag.py: creates and submits dag jobs to condor
-- simulation_datasets.py: overview of which datasets to process 
-- filtering: Contains script to filter HESE events from simulations.
+- datasets: overview of which datasets to process 
+- filter: Contains script to filter HESE events from simulations/data.
 
-## Versions
+## iceprod
+
+- v0: copy of the scripts. remove filtering from script, ready for l6 cascade or l2 files
+- v1: update scripts to be ready to run taupede multiple times over the same file. Regular, including bright doms, and including deepcore.
+
+## Older versions of reconstruction
+
+Datafiles found in
+```shell
+/data/user/tvaneede/GlobalFit/reco_processing/output/
+```
 
 - v0: First 100 files of 22635 and 22634 based on filtering v0, which still had a lot of orphaned q frames.
 - v1: Based on filtering v1.0, removed orphaned frames. Getting more statistics to check performance, and start playing with the BDT
@@ -23,6 +33,3 @@ I am using version with latest commit 7f46745:
 - v8: after discussing with tianlu, trying the exact exact same millipede settings as for the seeds. I am doubtful. But.. It seems to fix my problem. 
 - v9: same as v8, but all flavors and energy ranges. I copied the hdf high energy tau files from v8.
 - v10: do a check with new gcd from christopher/tianlu
-
-## iceprod
-- v0: copy of the scripts. remove filtering from script, ready for l6 cascade or l2 files
