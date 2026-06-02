@@ -1,7 +1,7 @@
 astro:
   baseline_weights: powerlaw
   class: Powerlaw
-  parameters: [astro_norm, gamma_astro, astro_nue_ratio, astro_nutau_ratio]
+  parameters: [astro_norm, gamma_astro]
 
 prompt_hese:
   parameters: [prompt_norm, delta_gamma, CR_grad]
