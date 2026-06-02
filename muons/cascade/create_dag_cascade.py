@@ -50,13 +50,12 @@ for simulation_name in ["MuonGun_lowE", "MuonGun_midE", "MuonGun_highE"]:
         for subclass in ["final_cascade", "final_hybrid", "final_muon"]:
 
             # fixed paths
+            filename = f"Cascade_{simulation_dataset}_{simulation_subfolder}_{subclass}.i3.zst"
             reco_input_path = f"{cascade_finallevel_path}/{simulation_dataset}/{simulation_subfolder}/{subclass}"
+            reco_out_path = f"{cascade_reco_path}/{simulation_dataset}/{subclass}"
 
-            reco_out_path = f"{cascade_reco_path}/{simulation_dataset}/{simulation_subfolder}/{subclass}"
+            os.system(f"mkdir -p {reco_out_path}")
 
-            infiles_list = glob.glob(f"{reco_input_path}/*.i3.zst")
-
-            filename = f"Finallevel_IC86.2016_MuonGun.{simulation_dataset}.{simulation_subfolder}.i3.zst"
             JOBID = f'{simulation_dataset}.{simulation_subfolder}.{subclass}'
 
             outfile.write(f"JOB {JOBID} run_taupede.sub\n")
@@ -67,10 +66,6 @@ for simulation_name in ["MuonGun_lowE", "MuonGun_midE", "MuonGun_highE"]:
             outfile.write(f'VARS {JOBID} OUTPATH="{reco_out_path}"\n')
 
             JOBS.append(JOBID)
-
-    #         break
-    #     break
-    # break
 
 print(f"creating {len(JOBS)}")
 

@@ -16,11 +16,13 @@ opts = parser.parse_args()
 
 gcdfilepath = "/cvmfs/icecube.opensciencegrid.org/data/GCD/GeoCalibDetectorStatus_2020.Run134142.Pass2_V0.i3.gz"
 
-inputfiles = glob.glob( f"{opts.inputpath}/*" )
+# inputfiles = glob.glob( f"{opts.inputpath}/*" )
 
-print(f"found {len(inputfiles)} files in {opts.inputpath}")
+# print(f"found {len(inputfiles)} files in {opts.inputpath}")
 
-files = [gcdfilepath] + inputfiles
+# files = [gcdfilepath] + inputfiles
+
+files = [gcdfilepath,opts.inputpath]
 
 tray = I3Tray()
 tray.Add("I3Reader", FileNameList=files)
@@ -31,7 +33,9 @@ tray.Add("I3Reader", FileNameList=files)
 
 def print_veto(frame):
     if not frame["VHESelfVeto"] and frame['CausalQTot'].value >= 6000:
-        print("bingo", frame["I3EventHeader"].event_id)
+        print("bingo")
+    if frame["I3EventHeader"].event_id == 72:
+        print('frame["I3EventHeader"].event_id',frame["I3EventHeader"].event_id)
         print("VHESelfVeto", frame['VHESelfVeto'])
         print("CausalQTot", frame['CausalQTot'])
 

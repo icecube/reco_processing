@@ -18,7 +18,7 @@ gcdfilepath = "/cvmfs/icecube.opensciencegrid.org/data/GCD/GeoCalibDetectorStatu
 
 inputfiles = glob.glob( f"{opts.inputpath}/*" )
 
-print(f"found {len(inputfiles)} files in {opts.inputpath}")
+print(f"found {len(inputfiles)} files")
 
 files = [gcdfilepath] + inputfiles
 
@@ -30,15 +30,14 @@ tray.Add("I3Reader", FileNameList=files)
 ################################################################
 
 def print_veto(frame):
-    if not frame["VHESelfVeto"] and frame['CausalQTot'].value >= 6000:
-        print("bingo", frame["I3EventHeader"].event_id)
-        print("VHESelfVeto", frame['VHESelfVeto'])
-        print("CausalQTot", frame['CausalQTot'])
+    if "VHESelfVeto" not in frame: return
+    print("VHESelfVeto", frame['VHESelfVeto'])
+    print("CausalQTot", frame['CausalQTot'])
 
 tray.Add(SelfVetoWrapper)
+# tray.Add(print_veto)
 tray.Add(lambda frame : 'VHESelfVeto' in frame and not frame['VHESelfVeto'].value)
 tray.Add(lambda frame : 'CausalQTot' in frame and frame['CausalQTot'].value >= 6000)
-tray.Add(print_veto)
 
 ################################################################
 ########################### Wrap it up #########################
@@ -49,14 +48,14 @@ tray.AddModule('I3Writer',
                 filename=opts.outputfile,
                 DropOrphanStreams=[icetray.I3Frame.DAQ, 
                                    icetray.I3Frame.Stream('M'), 
-                                   icetray.I3Frame.Stream('S'), 
                                    icetray.I3Frame.TrayInfo],
                 streams=[icetray.I3Frame.TrayInfo,
+                        icetray.I3Frame.Stream('S'), 
                         icetray.I3Frame.Physics,
                         icetray.I3Frame.Simulation,
                         icetray.I3Frame.Stream('M'),
                         icetray.I3Frame.Stream('X'),
                         icetray.I3Frame.DAQ])
 
-tray.Execute()
+tray.Execute(500)
 tray.Finish()

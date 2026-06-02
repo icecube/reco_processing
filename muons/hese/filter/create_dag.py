@@ -15,7 +15,7 @@ reco_version = "muongun"
 simulation_datasets = getattr(datasets, reco_version)
 
 # set the inputs
-filter_version = "v1"
+filter_version = "v4"
 
 # fixed paths
 dag_base_path = "/scratch/tvaneede/reco/filtering"

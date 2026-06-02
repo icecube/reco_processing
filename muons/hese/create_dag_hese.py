@@ -21,7 +21,7 @@ work_path = "/data/user/tvaneede/GlobalFit/reco_processing/muons/hese"
 submit_jobs = True # actually submit the dag jobs
 
 # fixed dag paths
-dag_name = f"reco_dag_{reco_version}_hese"
+dag_name = f"reco_dag_{reco_version}_hese_oldGCD"
 
 dag_path      = f"{dag_base_path}/{reco_version}/{dag_name}"
 log_dir       = f"{dag_path}/logs"
@@ -64,7 +64,6 @@ for simulation_name in ["MuonGun_lowE", "MuonGun_midE", "MuonGun_highE"]:
         outfile.write(f'VARS {JOBID} OUTPATH="{reco_out_path}"\n')
 
         JOBS.append(JOBID)
-
 
 print(f"creating {len(JOBS)}")
 

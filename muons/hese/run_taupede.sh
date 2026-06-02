@@ -1,5 +1,6 @@
 #!/bin/bash
-GCD=/cvmfs/icecube.opensciencegrid.org/users/tvaneede/gcd/gcd_pass2_rde.i3.gz
+# GCD=/cvmfs/icecube.opensciencegrid.org/users/tvaneede/gcd/gcd_pass2_rde.i3.gz
+GCD=/cvmfs/icecube.opensciencegrid.org/data/GCD/GeoCalibDetectorStatus_AVG_55697-57531_PASS2_SPE_withScaledNoise.i3.gz
 
 INPATH=${1}
 INFILE=${2}
@@ -11,6 +12,8 @@ OUTPATH_TAUPEDE_IBR_IDC=${OUTPATH}/Taupede_ibr_idc
 OUTPATH_EVTGEN=${OUTPATH}/EvtGen
 
 mkdir -p ${OUTPATH_TAUPEDE}
+mkdir -p ${OUTPATH_TAUPEDE_IBR}
+mkdir -p ${OUTPATH_TAUPEDE_IBR_IDC}
 mkdir -p ${OUTPATH_EVTGEN}
 
 echo "-----------------------------"
@@ -36,11 +39,10 @@ echo "INFILEPATH" ${INFILEPATH}
 
 /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/icetray-env icetray/v1.14.0 \
     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
-    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau.py \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau_muon.py \
     -o ${OUTFILE} \
     --imigrad --icemodel ftp-v1 --tilt --effd --effp --qs $GCD \
     ${INFILEPATH}
-
 
 ###
 ### Bright
@@ -55,7 +57,7 @@ echo "INFILE" ${OUTFILE}
 
 /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/icetray-env icetray/v1.14.0 \
     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
-    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau.py \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau_muon.py \
     -o ${OUTFILE_IBR} \
     --imigrad --icemodel ftp-v1 --tilt --effd --effp --ibr --qs $GCD \
     ${OUTFILE}
@@ -74,7 +76,7 @@ echo "INFILE" ${OUTFILE_IBR}
 
 /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/icetray-env icetray/v1.14.0 \
     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
-    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau.py \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/reco_processing/v1/rec_tau_muon.py \
     -o ${OUTFILE_IBR_IDC} \
     --imigrad --icemodel ftp-v1 --tilt --effd --effp --ibr --idc --qs $GCD \
     ${OUTFILE_IBR}
