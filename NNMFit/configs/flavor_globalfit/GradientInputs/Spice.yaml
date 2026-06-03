@@ -1,0 +1,7 @@
+snowstorm_simulated_ranges:
+    DOMEfficiency: [0.9, 1.1]
+    IceAbsorption: [0.9, 1.1]
+    IceScattering: [0.9, 1.1]
+    IceAnisotropyScale: [0.0, 2.0]
+    HoleIceForward_p0: [-0.84, 0.3]
+    HoleIceForward_p1 : [-0.134, 0.05]
