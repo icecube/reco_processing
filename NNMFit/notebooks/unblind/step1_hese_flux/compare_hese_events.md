@@ -1,3 +1,42 @@
+
+
+# Summary
+
+Only event I am missing in v2 compared to v1:
+```
+	dataset	run	event	reco_energy
+0	IC86_2014	125914	75630389	72763.011514
+```
+where v1 is based on `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE`, which contains all HESE runs, empty for when no event was found. In v1:
+```
+dataio-shovel /data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE/IC86_2014/Run00125914.i3.zst
+CausalQTot = 6000.12
+```
+
+The other way around, there is quite a bit missing in v1:
+
+Neha folder all: `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE`
+Neha folder event: `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/i3files/NoDeepCore/HESE12/Bfr`
+
+```
+dataset	run	event	reco_energy	hese_causal_qtot	in_neha_all	in_neha_event comment
+0	IC86_2011	119311	430943	3.269002e+05	14156.095864	False	False 
+1	IC86_2011	119583	141609	5.709847e+04	6875.744233	False	False
+2	IC86_2012	121947	7181486	7.449678e+04	9355.539456	True	False empty file, only GCD
+3	IC86_2013	122752	41309299	1.482176e+05	19691.222671	False	True
+4	IC86_2013	123770	442256	4.169044e+06	6157.379055	False	False
+5	IC86_2013	122604	17469985	2.250298e+05	18581.193399	False	True
+6	IC86_2014	126359	9400616	2.526825e+04	6008.448549	True	False, empty file, only GCD
+7	IC86_2015	127751	927145	2.326454e+05	8745.913758	False	False
+8	IC86_2020	134994	1103075	3.565653e+05	10871.700004	False	False
+```
+
+
+
+
+
+OLD
+
 # Compare with Emre
 
 Event 470241 of run 125826 in IC86_2014	seems to be missing from your processing. Both in:
