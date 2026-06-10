@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-version=v3
 main_path=/data/user/tvaneede/GlobalFit/reco_processing/data/hese
 hdf_script=/data/user/tvaneede/GlobalFit/reco_processing/hdf/to_hdf5.sh
+outpath=/data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/emre_new
 
-data_path=${main_path}/output/${version}
+data_path=/data/user/eyildizci/hese_tracks_processing/L5/
 
-for dir in ${data_path}/IC*; do
+for dir in ${data_path}/new_IC*; do
 
-    indir=${dir}/EvtGen
-    outfile=${indir}/EvtGen.h5
+    indir=${dir}
+    outfile=${outpath}/$(basename ${dir}).h5
 
     # Skip if not a directory
     [[ -d "$indir" ]] || continue

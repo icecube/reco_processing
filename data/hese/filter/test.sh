@@ -15,11 +15,49 @@
 #     --GCDfile "${GCD_FILE}" \
 #     --Outputfile "${OUTPUT_FILE}"
 
+# ### One of present files to check the reco, 122649
+# RUN_DIR="/data/exp/IceCube/2013/filtered/level2pass2a/0707/Run00122649/"
+# GCD_FILE="${RUN_DIR}/Level2pass2_IC86.2013_data_Run00122649_0707_1_21_GCD.i3.zst"
+# OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2013"
+# OUTPUT_FILE="${OUTPUT_DIR}/Run00122649.i3.zst"
+
+# mkdir -p "${OUTPUT_DIR}"
+
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+#     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
+#     /data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/filter_HESE.py \
+#     --RunDir "${RUN_DIR}" \
+#     --GCDfile "${GCD_FILE}" \
+#     --Outputfile "${OUTPUT_FILE}"
+
+# ###
+# ### Emre found an event here, but I didn't
+# ###
+
+# ### One of present files to check the reco, 122649
+# RUN_DIR="/data/exp/IceCube/2014/filtered/level2pass2a/1126/Run00125627/"
+# GCD_FILE="${RUN_DIR}/Level2pass2_IC86.2014_data_Run00125627_1126_82_128_GCD.i3.zst"
+# OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2014"
+# OUTPUT_FILE="${OUTPUT_DIR}/Run00125627.i3.zst"
+
+# mkdir -p "${OUTPUT_DIR}"
+
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+#     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
+#     /data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/filter_HESE.py \
+#     --RunDir "${RUN_DIR}" \
+#     --GCDfile "${GCD_FILE}" \
+#     --Outputfile "${OUTPUT_FILE}"
+
+###
+### Check how events are selected in 2020, I don't see HESE_CausalQTot
+###
+
 ### One of present files to check the reco, 122649
-RUN_DIR="/data/exp/IceCube/2013/filtered/level2pass2a/0707/Run00122649/"
-GCD_FILE="${RUN_DIR}/Level2pass2_IC86.2013_data_Run00122649_0707_1_21_GCD.i3.zst"
-OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2013"
-OUTPUT_FILE="${OUTPUT_DIR}/Run00122649.i3.zst"
+RUN_DIR="/data/exp/IceCube/2021/filtered/level2/0213/Run00134994_80"
+GCD_FILE="${RUN_DIR}/Level2_IC86.2020_data_Run00134994_0213_80_580_GCD.i3.zst"
+OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2021"
+OUTPUT_FILE="${OUTPUT_DIR}/Run00134994.i3.zst"
 
 mkdir -p "${OUTPUT_DIR}"
 

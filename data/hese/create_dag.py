@@ -8,13 +8,13 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
 dag_base_path = "/scratch/tvaneede/reco/hese_data"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/data/hese"
 
-submit_jobs = False # actually submit the dag jobs
+submit_jobs = True # actually submit the dag jobs
 
 # data processing version
-version = "v2"
+version = "v2_2016"
 
 # fixed dag paths
-dag_name = f"reco_dag_hese_data_{version}"
+dag_name = f"reco_dag_hese_data_{version}_2016_clean"
 
 dag_path      = f"{dag_base_path}/{dag_name}"
 log_dir       = f"{dag_path}/logs"
@@ -34,13 +34,13 @@ data_path = "/mnt/ceph1-npx/user/tvaneede/GlobalFit/reco_processing/data/hese/fi
 
 # Load livetime table
 runs = {
-    "IC79_2010" : data_path,
+    # "IC79_2010" : data_path,
     # "IC86_2011" : data_path,
     # "IC86_2012" : data_path,
     # "IC86_2013" : data_path,
     # "IC86_2014" : data_path,
     # "IC86_2015" : data_path,
-    # "IC86_2016" : data_path,
+    "IC86_2016" : data_path,
     # "IC86_2017" : data_path,
     # "IC86_2018" : data_path,
     # "IC86_2019" : data_path,

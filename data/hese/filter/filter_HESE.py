@@ -15,14 +15,18 @@ parser.add_argument("--Outputfile", type=str, help="Output file", dest="outputfi
 opts = parser.parse_args()
 
 # Collect all data i3 files in the run directory (exclude GCD and IceTop files)
+# addition: making sure to not look in the files with gaps, the sha512 files and gaps files
 data_files = sorted([
     f for f in glob.glob(os.path.join(opts.rundir, "*.i3*"))
-    if "GCD" not in os.path.basename(f) and "_IT." not in os.path.basename(f)
+    if "GCD" not in os.path.basename(f) and "_IT." not in os.path.basename(f) and "sha512" not in os.path.basename(f) and "gaps" not in os.path.basename(f)
 ])
 
 if not data_files:
     print(f"No data files found in {opts.rundir}")
     sys.exit(1)
+
+for data_file in data_files:
+    print(f"Found data file: {data_file}")
 
 files = [opts.gcdfile] + data_files
 
@@ -30,6 +34,11 @@ n_events = [0]
 
 def count_event(frame):
     n_events[0] += 1
+    print(10*"-", "found", frame["I3EventHeader"].event_id)
+    print('HESE_VHESelfVeto' in frame, frame['HESE_VHESelfVeto'].value)
+    print('HESE_CausalQTot' in frame, frame['HESE_CausalQTot'].value)
+    print('VHESelfVeto' in frame, frame['VHESelfVeto'].value)
+    print('CausalQTot' in frame, frame['CausalQTot'].value)
     return True
 
 tray = I3Tray()

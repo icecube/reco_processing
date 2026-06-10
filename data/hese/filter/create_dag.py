@@ -42,7 +42,7 @@ work_path = "/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter"
 
 submit_jobs = True  # set to True to actually submit
 
-dag_name = f"filter_dag_hese_data_{filter_version}_2ndbatch"
+dag_name = f"filter_dag_hese_data_{filter_version}_forgot2016"
 dag_path = f"{dag_base_path}/{dag_name}"
 log_dir = f"{dag_path}/logs"
 
@@ -57,7 +57,8 @@ JOBS = []
 
 # for year in range(2010, 2023):
 # for year in range(2010, 2016):
-for year in range(2017, 2023):
+# for year in range(2017, 2023):
+for year in range(2016, 2017):
     level = get_level(year)
     config = get_config(year)
     ds_year = f"{config}_{year}"

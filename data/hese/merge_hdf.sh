@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-version=v1
+version=v3
 main_path=/data/user/tvaneede/GlobalFit/reco_processing/data/hese
 
 data_path=${main_path}/output/${version}
