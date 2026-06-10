@@ -1,0 +1,1 @@
+./check_active_strings.sh --version v3 --reco-type Taupede EvtGen --print-rm

@@ -1,0 +1,292 @@
+Processing IC79_2010 ...
+
+--- IC79_2010 (6 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      115994        1        1          79          86             0    PASS  
+      116528        1        1          79          86             0    PASS  
+      116698        1        1          79          86             0    PASS  
+      117371        1        1          79          86             0    PASS  
+      117782        1        1          79          86             0    PASS  
+      118145        1        1          79          86             0    PASS  
+Processing IC86_2011 ...
+
+--- IC86_2011 (21 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      118178        1        1          86          86             0    PASS  
+      118283        1        1          86          86             0    PASS  
+      118381        1        1          86          86             0    PASS  
+      118435        1        1          86          86             0    PASS  
+      118545        1        1          86          86             0    PASS  
+      118549        1        1          86          86             0    PASS  
+      118602        1        1          86          86             0    PASS  
+      118607        1        1          86          86             0    PASS  
+      119196        1        1          86          86             0    PASS  
+      119214        1        1          86          86             0    PASS  
+      119311        1        1          64          64            10    FAIL  
+      119316        1        1          86          86             0    PASS  
+      119352        1        1          86          86             0    PASS  
+      119404        1        1          86          86             0    PASS  
+      119470        1        1          86          86             0    PASS  
+      119474        1        1          86          86             0    PASS  
+      119583        1        1          85          85             0    PASS  
+      119595        1        1          86          86             0    PASS  
+      119674        1        1          86          86             0    PASS  
+      119842        1        1          86          86             0    PASS  
+      120045        1        1          86          86             0    PASS  
+Processing IC86_2012 ...
+
+--- IC86_2012 (9 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      120398        1        1          86          86             0    PASS  
+      120421        1        1          86          86             0    PASS  
+      120638        1        1          86          86             0    PASS  
+      120844        1        1          86          86             0    PASS  
+      120867        1        1          86          86             0    PASS  
+      121240        1        1          86          86             0    PASS  
+      121679        1        1          86          86             0    PASS  
+      121947        1        1          86          86             0    PASS  
+      122152        1        1          86          86             0    PASS  
+Processing IC86_2013 ...
+
+--- IC86_2013 (16 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      122604        1        1          85          85             1    FAIL  
+      122649        1        1          86          86             0    PASS  
+      122752        1        1          85          85             0    PASS  
+      123217        1        1          86          86             0    PASS  
+      123326        1        1          86          86             0    PASS  
+      123770        1        1          47          47            15    FAIL  
+      123867        1        1          86          86             0    PASS  
+      123986        1        1          86          86             0    PASS  
+      124098        1        1          86          86             0    PASS  
+      124244        1        1          86          86             0    PASS  
+      124256        1        1          86          86             0    PASS  
+      124333        1        1          86          86             0    PASS  
+      124455        1        1          86          86             0    PASS  
+      124571        1        1          86          86             0    PASS  
+      124625        1        1          86          86             0    PASS  
+      124648        1        1          86          86             0    PASS  
+Processing IC86_2014 ...
+
+--- IC86_2014 (15 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      124852        1        1          86          86             0    PASS  
+      124927        1        1          86          86             0    PASS  
+      125071        1        1          86          86             0    PASS  
+      125335        1        1          86          86             0    PASS  
+      125365        1        1          86          86             0    PASS  
+      125826        1        1          86          86             0    PASS  
+      125975        1        1          86          86             0    PASS  
+      125979        1        1          86          86             0    PASS  
+      126090        1        1          86          86             0    PASS  
+      126099        1        1          86          86             0    PASS  
+      126283        1        1          86          86             0    PASS  
+      126307        1        1          86          86             0    PASS  
+      126320        1        1          86          86             0    PASS  
+      126359        1        1          86          86             0    PASS  
+      126367        1        1          86          86             0    PASS  
+Processing IC86_2015 ...
+
+--- IC86_2015 (9 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      126406        1        1          86          86             0    PASS  
+      126838        1        1          86          86             0    PASS  
+      126865        1        1          86          86             0    PASS  
+      127210        1        1          86          86             0    PASS  
+      127225        1        1          86          86             0    PASS  
+      127339        1        1          86          86             0    PASS  
+      127751        1        1          47          47            15    FAIL  
+      127762        1        1          86          86             0    PASS  
+      127853        1        1          86          86             0    PASS  
+Processing IC86_2016 ...
+
+--- IC86_2016 (22 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      128027        1        1          86          86             0    PASS  
+      128224        1        1          86          86             0    PASS  
+      128239        1        1          86          86             0    PASS  
+      128290        1        1          86          86             0    PASS  
+      128340        1        1          86          86             0    PASS  
+      128557        1        1          86          86             0    PASS  
+      128582        1        1          86          86             0    PASS  
+      128619        1        1          86          86             0    PASS  
+      128672        1        1          86          86             0    PASS  
+      128695        1        1          86          86             0    PASS  
+      128747        1        1          86          86             0    PASS  
+      128782        1        1          86          86             0    PASS  
+      128809        1        1          86          86             0    PASS  
+      128973        1        1          86          86             0    PASS  
+      129112        1        1          86          86             0    PASS  
+      129253        1        1          86          86             0    PASS  
+      129281        1        1          86          86             0    PASS  
+      129316        1        1          86          86             0    PASS  
+      129402        1        1          86          86             0    PASS  
+      129474        1        1          86          86             0    PASS  
+      129497        1        1          86          86             0    PASS  
+      129510        1        1          86          86             0    PASS  
+Processing IC86_2017 ...
+
+--- IC86_2017 (18 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      129541        1        1          86          86             0    PASS  
+      129678        1        1          86          86             0    PASS  
+      129866        1        1          86          86             0    PASS  
+      129997        1        1          86          86             0    PASS  
+      130111        1        1          86          86             0    PASS  
+      130126        1        1          86          86             0    PASS  
+      130171        1        1          86          86             0    PASS  
+      130219        1        1          86          86             0    PASS  
+      130241        1        1          86          86             0    PASS  
+      130275        1        1          86          86             0    PASS  
+      130322        1        1          86          86             0    PASS  
+      130492        1        1          86          86             0    PASS  
+      130561        1        1          86          86             0    PASS  
+      130590        1        1          86          86             0    PASS  
+      130730        1        1          86          86             0    PASS  
+      130932        1        1          86          86             0    PASS  
+      130937        1        1          86          86             0    PASS  
+      130949        1        1          86          86             0    PASS  
+Processing IC86_2018 ...
+
+--- IC86_2018 (16 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      131404        1        1          86          86             0    PASS  
+      131408        1        1          86          86             0    PASS  
+      131502        1        1          86          86             0    PASS  
+      131505        1        1          86          86             0    PASS  
+      131624        1        1          86          86             0    PASS  
+      131680        1        1          86          86             0    PASS  
+      131913        1        1          86          86             0    PASS  
+      131999        1        1          86          86             0    PASS  
+      132077        1        1          86          86             0    PASS  
+      132143        1        1          86          86             0    PASS  
+      132216        1        1          86          86             0    PASS  
+      132229        1        1          86          86             0    PASS  
+      132379        1        1          86          86             0    PASS  
+      132518        1        1          86          86             0    PASS  
+      132587        1        1          86          86             0    PASS  
+      132628        1        1          86          86             0    PASS  
+Processing IC86_2019 ...
+
+--- IC86_2019 (18 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      132765        1        1          86          86             0    PASS  
+      132886        1        1          86          86             0    PASS  
+      132992        1        1          86          86             0    PASS  
+      133002        1        1          86          86             0    PASS  
+      133062        1        1          86          86             0    PASS  
+      133089        1        1          86          86             0    PASS  
+      133132        1        1          86          86             0    PASS  
+      133340        1        1          86          86             0    PASS  
+      133428        1        1          86          86             0    PASS  
+      133436        1        1          86          86             0    PASS  
+      133601        1        1          86          86             0    PASS  
+      133611        1        1          86          86             0    PASS  
+      133685        1        1          86          86             0    PASS  
+      133715        1        1          86          86             0    PASS  
+      133974        1        1          86          86             0    PASS  
+      133997        1        1          86          86             0    PASS  
+      134004        1        1          86          86             0    PASS  
+      134086        1        1          86          86             0    PASS  
+Processing IC86_2020 ...
+
+--- IC86_2020 (10 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      134533        1        1          86          86             0    PASS  
+      134599        1        1          86          86             0    PASS  
+      134758        1        1          86          86             0    PASS  
+      134866        1        1          86          86             0    PASS  
+      134912        1        1          86          86             0    PASS  
+      134994        1        1          47          47            15    FAIL  
+      135113        1        1          86          86             0    PASS  
+      135136        1        1          86          86             0    PASS  
+      135196        1        1          86          86             0    PASS  
+      135302        1        1          86          86             0    PASS  
+Processing IC86_2021 ...
+
+--- IC86_2021 (12 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      135504        1        1          86          86             0    PASS  
+      135747        1        1          86          86             0    PASS  
+      135946        1        1          86          86             0    PASS  
+      136027        1        1          86          86             0    PASS  
+      136160        1        1          86          86             0    PASS  
+      136348        1        1          86          86             0    PASS  
+      136368        1        1          86          86             0    PASS  
+      136673        1        1          86          86             0    PASS  
+      136692        1        1          86          86             0    PASS  
+      136768        1        1          86          86             0    PASS  
+      136876        1        1          86          86             0    PASS  
+      136889        1        1          86          86             0    PASS  
+Processing IC86_2022 ...
+
+--- IC86_2022 (19 runs) ---
+         Run  Good_i3  Good_it  GRL_Active  GCD_Active   Inactive_OL    Pass  Error
+  ---------------------------------------------------------------------------------
+      136918        1        1          86          86             0    PASS  
+      136985        1        1          86          86             0    PASS  
+      137007        1        1          86          86             0    PASS  
+      137160        1        1          86          86             0    PASS  
+      137167        1        1          86          86             0    PASS  
+      137489        1        1          86          86             0    PASS  
+      137512        1        1          86          86             0    PASS  
+      137527        1        1          86          86             0    PASS  
+      137661        1        1          86          86             0    PASS  
+      137786        1        1          86          86             0    PASS  
+      137845        1        1          86          86             0    PASS  
+      137891        1        1          86          86             0    PASS  
+      137930        1        1          86          86             0    PASS  
+      138035        1        1          86          86             0    PASS  
+      138065        1        1          86          86             0    PASS  
+      138069        1        1          86          86             0    PASS  
+      138125        1        1          86          86             0    PASS  
+      138134        1        1          86          86             0    PASS  
+      138611        1        1          86          86             0    PASS  
+
+================================================================================
+SUMMARY
+================================================================================
+  Dataset           Total   Bad_i3   Bad_it    Pass    Fail  Missing  Errors
+  --------------------------------------------------------------------------
+  IC79_2010             6        0        0       6       0        0  
+  IC86_2011            21        0        0      20       1        0  
+  IC86_2012             9        0        0       9       0        0  
+  IC86_2013            16        0        0      14       2        0  
+  IC86_2014            15        0        0      15       0        0  
+  IC86_2015             9        0        0       8       1        0  
+  IC86_2016            22        0        0      22       0        0  
+  IC86_2017            18        0        0      18       0        0  
+  IC86_2018            16        0        0      16       0        0  
+  IC86_2019            18        0        0      18       0        0  
+  IC86_2020            10        0        0       9       1        0  
+  IC86_2021            12        0        0      12       0        0  
+  IC86_2022            19        0        0      19       0        0  
+  --------------------------------------------------------------------------
+  TOTAL               191        0        0     186       5        0
+================================================================================
+
+# rm commands for runs that fail the active string requirement
+# (10 files). Review before executing.
+
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2011/Taupede/Run00119311.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2011/EvtGen/Run00119311.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2013/Taupede/Run00122604.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2013/EvtGen/Run00122604.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2013/Taupede/Run00123770.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2013/EvtGen/Run00123770.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2015/Taupede/Run00127751.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2015/EvtGen/Run00127751.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2020/Taupede/Run00134994.i3.zst
+rm /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC86_2020/EvtGen/Run00134994.i3.zst
