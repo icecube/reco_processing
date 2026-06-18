@@ -1,0 +1,19 @@
+# Params from /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/dag_scans/flavor_globalfit/hese/unblind/step1_hese_flux/data_fits_debug_bdt//FinalTopology_double_energy_length_binning/nbestfit20_scan_astro_gamma_1D_10steps/Freefit_19
+input_params:
+  CR_grad: 0.05165720664982168
+  astro_norm: 2.0836385642108133
+  barr_h: -0.00012361767859640077
+  barr_w: -0.005800208779475989
+  barr_y: 0.008714734021607953
+  barr_z: 0.008449078682259163
+  conv_norm: 1.0009257026043823
+  delta_gamma: -0.0020249637780651456
+  dom_eff: 1.0460810584443787
+  gamma_astro: 2.866560547801132
+  ice_abs: 1.0140101725887365
+  ice_crystal: 0.9036853791013632
+  ice_holep0: 0.27614789525848965
+  ice_holep1: -0.05568761109158486
+  ice_scat: 0.9827374947859855
+  muongun_norm: 1.1912115943781962
+  prompt_norm: 0.0

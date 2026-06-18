@@ -1,0 +1,31 @@
+analysis_type: pseudoexp
+pseudoexp_type: poisson
+llh: SAYLLH
+detector_configs: [IC86_pass2_SnowStorm_FTP_HESE_Cascades,IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades,IC86_pass2_SnowStorm_FTP_HESE_Tracks]
+input_params:
+  # best fit from scan
+  # hese/unblind/step1_hese_flux/data_fits/force_full_3_nlight_20/nbestfit20_scan_astro_gamma_1D_10steps_round3
+
+  ### signal
+  astro_norm: 2.2442548547245496
+  gamma_astro: 2.81752715186688
+
+  ### flux nuisance
+  conv_norm: 1.0638217360248496
+  prompt_norm: 0.0
+  muongun_norm: 1.4572392109257732
+  CR_grad: -0.30174744927067926
+  barr_h: 0.004260894125801356
+  barr_w: 0.03613960115381407
+  barr_y: 0.11519971610547383
+  barr_z: 0.05936337444350018
+  delta_gamma: -0.002431016314179412
+
+  ### detector nuisance
+  dom_eff: 0.9708232949179527
+  ice_abs: 1.0766800688488438
+  ice_crystal: 0.8530497408529658
+  ice_holep0: 0.04577855321469167
+  ice_holep1: -0.09505178600612336
+  ice_scat: 0.9464817792670911
+

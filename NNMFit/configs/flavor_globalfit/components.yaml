@@ -175,6 +175,12 @@ muontemplate_hese:
   additional:
     template_file: /data/ana/Diffuse/GlobalFit_Flavor/NNMFit_Configs/override/MuonGun/Tracks_KDE.pickle
 
+muon_weight_hese:
+  baseline_weights: MuonWeight
+  class: ConventionalAtmo
+  parameters: [muongun_norm]
+  skip_syst: True
+
 #
 # globalfit
 #

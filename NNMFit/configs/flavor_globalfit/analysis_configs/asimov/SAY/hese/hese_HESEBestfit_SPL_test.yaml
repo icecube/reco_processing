@@ -1,0 +1,30 @@
+analysis_type: asimov
+llh: SAYLLH
+detector_configs: [IC86_pass2_SnowStorm_FTP_HESE_Cascades,IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades,IC86_pass2_SnowStorm_FTP_HESE_Tracks]
+input_params:
+  gamma_astro: 2.87
+  astro_norm: 2.1233
+  # astro_nue_ratio: 1.0
+  # astro_nutau_ratio: 1.0
+  # prompt_norm: 0.0
+  # conv_norm: 1.0
+  # all (other) nuisance parameters at default
+
+  ### flux nuisance
+  conv_norm: 1.0654724717295643
+  prompt_norm: 0.0
+  muongun_norm: 1.432035806437356
+  CR_grad: -0.3051263047392424
+  barr_h: 0.004586504028861521
+  barr_w: 0.03694760097292408
+  barr_y: 0.11988389846585465
+  barr_z: 0.061146472294669546
+  delta_gamma: -0.00278285324246973
+
+  ### detector nuisance
+  dom_eff: 1.05
+  ice_abs: 1.0
+  ice_crystal: 1.0
+  ice_holep0: 0.24901831812365854
+  ice_holep1: -0.05678798504997925
+  ice_scat: 1.0
