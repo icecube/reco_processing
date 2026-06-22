@@ -2,121 +2,52 @@
 
 # Summary
 
-Only event I am missing in v2 compared to v1:
+My processings
+- v1: reconstructed files in `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE/`
+- v2: did my own filtering in filter/output/v2. Turns out I didn't know about the active string requirement
+- v3: include the active string requirement. Based on v2 filtering, manually removed events
+
+Highlights:
+- 188 HESE events
+- 110 after 60 TeV energy cut
+- 19 extra HESE events in 2022, 12 after energy cut
+
+## Compare v3 with v1
+
+Only event I am missing in v3 compared to v1:
 ```
 	dataset	run	event	reco_energy
 0	IC86_2014	125914	75630389	72763.011514
 ```
-where v1 is based on `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE`, which contains all HESE runs, empty for when no event was found. In v1:
+In v1:
 ```
 dataio-shovel /data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE/IC86_2014/Run00125914.i3.zst
 CausalQTot = 6000.12
 ```
+but in my processing 5994.3. One is calculated by the online filter, another by Neha's script. I use the online filter in data and simulations.
 
 The other way around, there is quite a bit missing in v1:
 
-Neha folder all: `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE`
-Neha folder event: `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/i3files/NoDeepCore/HESE12/Bfr`
-
 ```
-dataset	run	event	reco_energy	hese_causal_qtot	in_neha_all	in_neha_event comment
-0	IC86_2011	119311	430943	3.269002e+05	14156.095864	False	False 
-1	IC86_2011	119583	141609	5.709847e+04	6875.744233	False	False
-2	IC86_2012	121947	7181486	7.449678e+04	9355.539456	True	False empty file, only GCD
-3	IC86_2013	122752	41309299	1.482176e+05	19691.222671	False	True
-4	IC86_2013	123770	442256	4.169044e+06	6157.379055	False	False
-5	IC86_2013	122604	17469985	2.250298e+05	18581.193399	False	True
-6	IC86_2014	126359	9400616	2.526825e+04	6008.448549	True	False, empty file, only GCD
-7	IC86_2015	127751	927145	2.326454e+05	8745.913758	False	False
-8	IC86_2020	134994	1103075	3.565653e+05	10871.700004	False	False
+dataset	run	event	reco_energy	hese_causal_qtot
+0	IC86_2011	119583	141609	57098.471286	6875.744233
+1	IC86_2012	121947	7181486	74496.777368	9355.539456
+2	IC86_2013	122752	41309299	148217.639644	19691.222671
+3	IC86_2014	126359	9400616	25268.249814	6008.448549
 ```
 
+They were forgetting in the processing of `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/HESE/`.
+
+## Compare with Neha hd5 (HESE12) files
+
+v3 events (after cut) not in HESE12: 15 (12 in 2022, 3 in overlapping dataset)
+dataset	run	event	reco_energy	hese_causal_qtot
+0	IC86_2012	121947	7181486	74496.777368	9355.539456
+1	IC86_2014	125826	470241	416499.030804	38785.083770
+2	IC86_2016	128672	38561326	83136.722946	7517.631427
 
 
-
-
-OLD
-
-# Compare with Emre
-
-Event 470241 of run 125826 in IC86_2014	seems to be missing from your processing. Both in:
-```
-/data/user/eyildizci/hese_tracks_processing/L5/IC86_2014/
-```
-and in 
-```
-/data/user/eyildizci/hese_tracks_processing/L5/new_IC86_2014/
-```
-This should be a good run, it is listed in: `/data/exp/IceCube/2014/filtered/level2pass2a/IC86_2014_GoodRunInfo.txt`
-
-According to my processing, it has:
-```
-HESE_VHESelfVeto false
-CausalQTot 37147
-```
-
-# Missing in my v2 processing
-
-Two events from 2014 missing in my analysis compared to Emre. In run 125627 and 125914.
-
-Both logs in `/scratch/tvaneede/reco/hese_data_filter/filter_dag_hese_data_v2` tell me:
-```
-less logs/IC86_2014_Run00125627.out
-less logs/IC86_2014_Run00125914.out 
-No HESE events found, skipping output
-```
-
-Only 125627 is missing in my v1 processing, which was based on the files in `/data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/i3files/NoDeepCore/HESE12/Bfr`.
-
-For 125627, I see in the good run list `/data/exp/IceCube/2014/filtered/level2pass2a/IC86_2014_GoodRunInfo.txt`: validated manually. Has lost files. It is also a short run of 4465.19 s. I am rechecking if I should have this event. I check Emre's file, and it's actually empty: `/data/user/eyildizci/hese_tracks_processing/L5/new_IC86_2014/Run00125627_MJD56987.i3.bz2`
-
-Now for 125914. Emre's file has 1 event:
-```
-I3EventHeader [I3EventHeader]:
-[ I3EventHeader:
-        StartTime: 2015-01-14 17:51:02.181,645,208,4 UTC
-         EndTime : 2015-01-14 17:51:02.181,664,546,4 UTC
-           RunID : 125914
-        SubrunID : 0
-         EventID : 75630389
-      SubEventID : 0
-  SubEventStream : InIceSplit
-]
-```
-but it has
-```
-HESE_CausalQTot [I3PODHolder<double>]:
-5994.3
-```
-So I am not sure why he has it in the first place. But in Neha's file, it is:
-```
-dataio-shovel /data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/i3files/NoDeepCore/HESE12/Bfr/IC86_2014/Run00125914_MJD57036_Taupede_out.i3.bz2 
-CausalQTot 6000.12
-```
-
-So far no events missing in my processing!!
-
-# Missing in Neha i3 files
-
-Not even sure if it is Neha's i3 files, because they don't match her h5 files perfectly. 
-
-The three missing events (compared to Emre) are
-```
-0	IC86_2013	122604
-1	IC86_2013	122752
-2	IC86_2014	125627
-```
-where the last one was not an actual event. Just an empty file in Emre's processing. The two events in 2013 actually have sizable energies and QTot
-```
-	dataset	run	event	reco_energy	qtot
-37	IC86_2013	122752	41309299	1.482176e+05	19691.222671
-37	IC86_2013	122752	41309299	1.482176e+05	19691.222671
-```
-
-When I look into her h5 files,
-
-# Events missing/changing after energy cut
-
-## IC86_2011
-
-Run 11931, event 430943
+HESE12 events not in v3 (after cut): 2
+run	event	reco_energy
+0	125914	75630389	70976.904502
+1	127210	51027948	60806.979712
