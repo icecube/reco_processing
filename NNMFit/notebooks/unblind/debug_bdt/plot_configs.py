@@ -27,6 +27,53 @@ COMPONENTS = ["Astro", "Conv", "Muon"]
 
 _PLOT_TEMPLATES = [
 
+    # ---- 11features model: separate detector channels (energy / zenith / bdtprod) ----
+    {
+        "key": "11feat_bdtprod_cascades",
+        "det_config": "IC86_pass2_SnowStorm_FTP_HESE_Cascades",
+        "title": "HESE Cascades — 11feat double-energy bdtprod binning",
+        "scans": [("11features_double_energy_bdtprod_binning", "MC")],
+        "binning": {
+            "reco_energy": np.geomspace(10**4.778, 10**7.1, 24),
+            "reco_zenith": np.linspace(-1, 1, 11),
+        },
+        "dim_info": {
+            "reco_energy": {"log_x": True,  "log_y": True, "x_label": r"$E_{\mathrm{reco}}$ [GeV]",      "sum_axes": 1, "flip": False, "ylim": (1e-2, 1e2)},
+            "reco_zenith": {"log_x": False, "log_y": True, "x_label": r"$\cos(\theta_{\mathrm{reco}})$", "sum_axes": 0, "flip": True,  "ylim": (1e-2, 1e2)},
+        },
+        "show_counts": False, "plot_components": True,
+    },
+    {
+        "key": "11feat_bdtprod_tracks",
+        "det_config": "IC86_pass2_SnowStorm_FTP_HESE_Tracks",
+        "title": "HESE Tracks — 11feat double-energy bdtprod binning",
+        "scans": [("11features_double_energy_bdtprod_binning", "MC")],
+        "binning": {
+            "reco_energy": np.geomspace(10**4.778, 10**7.1, 24),
+            "reco_zenith": np.linspace(-1, 1, 11),
+        },
+        "dim_info": {
+            "reco_energy": {"log_x": True,  "log_y": True, "x_label": r"$E_{\mathrm{reco}}$ [GeV]",      "sum_axes": 1, "flip": False, "ylim": (1e-2, 1e2)},
+            "reco_zenith": {"log_x": False, "log_y": True, "x_label": r"$\cos(\theta_{\mathrm{reco}})$", "sum_axes": 0, "flip": True,  "ylim": (1e-2, 5e2)},
+        },
+        "show_counts": False, "plot_components": True,
+    },
+    {
+        "key": "11feat_bdtprod_dc",
+        "det_config": "IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades",
+        "title": "HESE Double Cascades — 11feat double-energy bdtprod binning",
+        "scans": [("11features_double_energy_bdtprod_binning", "MC")],
+        "binning": {
+            "reco_energy": np.geomspace(10**4.778, 10**7.1, 14),
+            "bdt_product": np.linspace(0.122222211111, 1, 11),
+        },
+        "dim_info": {
+            "reco_energy": {"log_x": True,  "log_y": True, "x_label": r"$E_{\mathrm{reco}}$ [GeV]", "sum_axes": 1, "flip": False, "ylim": (1e-2, 1e2)},
+            "bdt_product": {"log_x": False, "log_y": True, "x_label": "BDT product",                "sum_axes": 0, "flip": False, "ylim": (1e-2, 1e2)},
+        },
+        "show_counts": False, "plot_components": True, "plot_data": False,
+    },
+
     # ---- Best-fit: separate detector channels (energy / zenith) ----
     {
         "key": "cascades_syst",
@@ -728,6 +775,7 @@ def get_plots(model):
 
 
 # ---- Convenience key groups ----
+GROUP_11FEAT_BDTPROD = ["11feat_bdtprod_cascades", "11feat_bdtprod_tracks", "11feat_bdtprod_dc"]
 GROUP_SEPARATE = ["cascades_syst", "tracks_syst", "dc_syst"]
 GROUP_COMBINED_NOSYST = [
     "combined_bdt_scores", "combined_energy_length",
@@ -758,4 +806,4 @@ GROUP_FEATURE_BDT = [
     "bdt_feature_syst_full", "bdt_feature_syst_base", "bdt_feature_syst_milli",
     "bdt_feature_syst_econf", "bdt_feature_syst_evtgen",
 ]
-GROUP_ALL = GROUP_SEPARATE + GROUP_COMBINED_NOSYST + GROUP_COMBINED_SYST + GROUP_FEATURE_BDT
+GROUP_ALL = GROUP_11FEAT_BDTPROD + GROUP_SEPARATE + GROUP_COMBINED_NOSYST + GROUP_COMBINED_SYST + GROUP_FEATURE_BDT
