@@ -1,3 +1,0 @@
-Scan Path: /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/dag_scans/flavor_globalfit/hese/unblind/step1_hese_flux/data_fits_debug_bdt//FinalTopology_double_energy_length_binning/nbestfit20_scan_astro_gamma_1D_10steps
-min LLH: 187.0330832676443
-Saturated LLH: 85.72629764702356

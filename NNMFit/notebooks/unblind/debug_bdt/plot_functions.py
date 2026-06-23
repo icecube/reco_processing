@@ -4,6 +4,7 @@ import glob
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import kstwobign
 
 from unifigs.figures import RatioPlot
 from NNMFit.utilities import load_pickle
@@ -112,6 +113,38 @@ def compute_chi2(mc_dict, data_dict, det_config, binning, dims, plot_dimension):
     return chi2, ndf
 
 
+def compute_ks(mc_dict, data_dict, det_config, binning, dims, plot_dimension):
+    """Two-sample KS test comparing the shape of data and MC distributions.
+
+    Computes CDFs from the normalized (count-independent) histograms, so this
+    is purely a shape comparison — normalization differences do not affect D.
+
+    Returns (D, p_value) where D is the KS statistic and p_value uses the
+    asymptotic two-sample formula with N_eff = sqrt(n_data * n_mc / (n_data + n_mc)).
+    """
+    reshape_shape = tuple(binning[dim].shape[0] - 1 for dim in binning)
+    sum_axis = dims[plot_dimension]["sum_axes"]
+    flip = dims[plot_dimension]["flip"]
+
+    mc_h   = np.sum(np.reshape(mc_dict["histograms"][det_config],   reshape_shape), axis=sum_axis)
+    data_h = np.sum(np.reshape(data_dict["histograms"][det_config], reshape_shape), axis=sum_axis)
+    if flip:
+        mc_h, data_h = np.flip(mc_h), np.flip(data_h)
+
+    n_mc   = float(np.sum(mc_h))
+    n_data = float(np.sum(data_h))
+    if n_mc == 0 or n_data == 0:
+        return float("nan"), float("nan")
+
+    mc_cdf   = np.cumsum(mc_h)   / n_mc
+    data_cdf = np.cumsum(data_h) / n_data
+
+    D = float(np.max(np.abs(data_cdf - mc_cdf)))
+    n_eff = np.sqrt(n_data * n_mc / (n_data + n_mc))
+    p_value = float(kstwobign.sf(D * n_eff))
+    return D, p_value
+
+
 def plot_ratio(ax, mc_dict, data_dict, det_config, plot_dimension, binning, dims,
                include_mc_err=True, label="Ratio", color="black",
                capsize=2, markeredgecolor="black", **kwargs):
@@ -149,7 +182,7 @@ def plot_ratio(ax, mc_dict, data_dict, det_config, plot_dimension, binning, dims
 # High-level plot driver
 # ---------------------------------------------------------------------------
 
-def _render_plot(plot_cfg, histogram_collection, save_path, show=True, show_chi2=False):
+def _render_plot(plot_cfg, histogram_collection, save_path, show=True):
     """Render and save one figure described by `plot_cfg`."""
     det_config      = plot_cfg["det_config"]
     scans           = plot_cfg["scans"]
@@ -158,6 +191,8 @@ def _render_plot(plot_cfg, histogram_collection, save_path, show=True, show_chi2
     plot_data       = plot_cfg.get("plot_data", True)
     show_counts     = plot_cfg.get("show_counts", False)
     plot_components = plot_cfg.get("plot_components", False)
+    show_chi2       = plot_cfg.get("show_chi2", False)
+    show_ks         = plot_cfg.get("show_ks", False)
 
     color_cycle = plt.rcParams["axes.prop_cycle"].by_key()["color"]
     fig, axes = RatioPlot(pad=0.1, vert_pad=0.35).create(ncols=2, dpi=200)
@@ -201,21 +236,26 @@ def _render_plot(plot_cfg, histogram_collection, save_path, show=True, show_chi2
                                    binning, dims, draw_style="stairs",
                                    label=comp_label, color=comp_color)
 
-    # chi-squared annotations
-    if show_chi2 and plot_data:
+    # goodness-of-fit annotations (chi2 and/or KS)
+    if (show_chi2 or show_ks) and plot_data:
         for col, dim in enumerate(dims):
             lines = []
             for scan_name, label in scans:
-                chi2, ndf = compute_chi2(
-                    histogram_collection[scan_name]["mc"],
-                    histogram_collection[scans[0][0]]["data"],
-                    det_config, binning, dims, dim,
-                )
-                lines.append(f"{label}: $\\chi^2$/ndf = {chi2:.1f}/{ndf}")
-            axes[0][col].text(
-                0.03, 0.97, "\n".join(lines),
-                transform=axes[0][col].transAxes,
-                fontsize=6, va="top", ha="left",
+                mc_dict   = histogram_collection[scan_name]["mc"]
+                data_dict = histogram_collection[scans[0][0]]["data"]
+                scan_lines = []
+                if show_chi2:
+                    chi2, ndf = compute_chi2(mc_dict, data_dict, det_config, binning, dims, dim)
+                    scan_lines.append(f"$\\chi^2$/ndf = {chi2:.1f}/{ndf}")
+                if show_ks:
+                    D, p = compute_ks(mc_dict, data_dict, det_config, binning, dims, dim)
+                    scan_lines.append(f"KS D={D:.3f}, p={p:.3f}")
+                lines.append(f"{label}: " + ", ".join(scan_lines))
+            axes[1][col].text(
+                0.03, 1.0, "\n".join(lines),
+                transform=axes[1][col].transAxes,
+                fontsize=6, va="bottom", ha="left",
+                clip_on=False,
                 bbox=dict(boxstyle="round,pad=0.2", fc="white", alpha=0.7),
             )
 
@@ -242,15 +282,14 @@ def _render_plot(plot_cfg, histogram_collection, save_path, show=True, show_chi2
     axes[1][0].set_ylabel("Data / MC")
     fig.suptitle(plot_cfg["title"])
 
-    subfolder = os.path.join(save_path, scans[0][0])
-    os.makedirs(subfolder, exist_ok=True)
-    plt.savefig(os.path.join(subfolder, f"{det_config}.png"), bbox_inches="tight")
+    os.makedirs(save_path, exist_ok=True)
+    plt.savefig(os.path.join(save_path, f"{plot_cfg['key']}.png"), bbox_inches="tight")
     if show:
         plt.show()
     plt.close(fig)
 
 
-def make_all_plots(plots, histogram_collection, save_path, show=True, show_chi2=False):
+def make_all_plots(plots, histogram_collection, save_path, show=True):
     """Render every figure in `plots`, saving PNGs under `save_path`."""
     for plot in plots:
-        _render_plot(plot, histogram_collection, save_path, show=show, show_chi2=show_chi2)
+        _render_plot(plot, histogram_collection, save_path, show=show)
