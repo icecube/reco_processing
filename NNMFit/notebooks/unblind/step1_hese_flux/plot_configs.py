@@ -72,20 +72,20 @@ _separate_plots = []
 for _scan_name, _title_suffix in _SEPARATE_SCANS:
     for _chan_key, _chan_label, _spec in _CHAN_SPECS:
         for _show_count in [True, False]:
-            _entry = {
-                "key":             f"{_scan_name}_{_chan_key}_{_show_count}",
-                "det_config":      _spec["det_config"],
-                "title":           f"HESE {_chan_label} — {_title_suffix}",
-                "scans":           [(_scan_name, "MC")],
-                "binning":         _spec["binning"],
-                "dim_info":        _spec["dim_info"],
-                "show_counts":     _show_count,
-                "plot_components": _spec["plot_components"],
-                "show_chi2":       False,
-                "show_ks":         False,
-            }
-            if "plot_data" in _spec:
-                _entry["plot_data"] = _spec["plot_data"]
+            for _plot_data in [True, False]:
+                _entry = {
+                    "key":             f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}",
+                    "det_config":      _spec["det_config"],
+                    "title":           f"HESE {_chan_label} — {_title_suffix}",
+                    "scans":           [(_scan_name, "MC")],
+                    "binning":         _spec["binning"],
+                    "dim_info":        _spec["dim_info"],
+                    "show_counts":     _show_count,
+                    "plot_data":       _plot_data,
+                    "plot_components": _spec["plot_components"],
+                    "show_chi2":       False,
+                    "show_ks":         False,
+                }
             _separate_plots.append(_entry)
 
 # ---------------------------------------------------------------------------
@@ -300,9 +300,10 @@ PLOTS = _separate_plots + _combined_plots
 _VARS = list(_VAR_CONFIGS.keys())
 
 GROUP_SEPARATE_PLOTTING = [
-    f"11features_plus_rloglmilli_econf_evtgen_{c}_{s}"
+    f"name-11features_plus_rloglmilli_econf_evtgen_channel-{c}_count-{s}_data-{d}"
     for c in ("cascades", "tracks", "dc")
     for s in (True, False)
+    for d in (True, False)
 ]
 
 GROUP_BDT_VARS = [f"11features_plus_rloglmilli_econf_evtgen_{v}" for v in _VARS]
