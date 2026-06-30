@@ -86,7 +86,7 @@ for _scan_name, _title_suffix in _SEPARATE_SCANS:
                     "show_chi2":       False,
                     "show_ks":         False,
                 }
-            _separate_plots.append(_entry)
+                _separate_plots.append(_entry)
 
 # ---------------------------------------------------------------------------
 # Combined plots — BDT variable space (11features model, with Snowstorm systematics)
