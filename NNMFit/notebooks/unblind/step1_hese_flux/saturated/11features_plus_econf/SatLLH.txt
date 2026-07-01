@@ -1,0 +1,3 @@
+Scan Path: /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/dag_scans/flavor_globalfit/hese/unblind/step1_hese_flux/data_fits_debug_bdt_2//mcd-simpletopology_flux-hese_feat-11features_plus_econf/bdt1_0.333333_bdt2_0.366667_length_10/nbestfit20_scan_astro_gamma_1D_10steps
+min LLH: 192.11982375793787
+Saturated LLH: 85.96186371833633

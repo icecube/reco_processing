@@ -11,6 +11,13 @@ import numpy as np
 COMPONENT_COLORS = {"Astro": "tab:red", "Conv": "tab:green", "Muon": "tab:orange"}
 COMPONENTS = ["Astro", "Conv", "Muon"]
 
+FLAVOR_COMPONENTS = ["Astro_NuE", "Astro_NuMu", "Astro_NuTau"]
+FLAVOR_COMPONENT_COLORS = {
+    "Astro_NuE":   "#E69F00",
+    "Astro_NuMu":  "#56B4E9",
+    "Astro_NuTau": "#009E73",
+}
+
 # ---------------------------------------------------------------------------
 # Separate-detector plots (cascades / tracks / dc)
 # ---------------------------------------------------------------------------
@@ -69,12 +76,12 @@ _SEPARATE_SCANS = [
 ]
 
 _separate_plots = []
+_flavor_separate_plots = []
 for _scan_name, _title_suffix in _SEPARATE_SCANS:
     for _chan_key, _chan_label, _spec in _CHAN_SPECS:
         for _show_count in [True, False]:
             for _plot_data in [True, False]:
-                _entry = {
-                    "key":             f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}",
+                _base = {
                     "det_config":      _spec["det_config"],
                     "title":           f"HESE {_chan_label} — {_title_suffix}",
                     "scans":           [(_scan_name, "MC")],
@@ -86,7 +93,17 @@ for _scan_name, _title_suffix in _SEPARATE_SCANS:
                     "show_chi2":       False,
                     "show_ks":         False,
                 }
-                _separate_plots.append(_entry)
+                _separate_plots.append({
+                    **_base,
+                    "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}",
+                    "plot_flavor": False,
+                })
+                _flavor_separate_plots.append({
+                    **_base,
+                    "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}_flavor",
+                    "title":       f"HESE {_chan_label} (flavors) — {_title_suffix}",
+                    "plot_flavor": True,
+                })
 
 # ---------------------------------------------------------------------------
 # Combined plots — BDT variable space (11features model, with Snowstorm systematics)
@@ -271,27 +288,37 @@ _VAR_CONFIGS = {
     },
 }
 
+_COMBINED_BASE = "11features_plus_rloglmilli_econf_evtgen"
+
 _combined_plots = []
 for _var, _vcfg in _VAR_CONFIGS.items():
-    _scan = f"11features_plus_rloglmilli_econf_evtgen_{_var}"
-    _combined_plots.append({
-        "key":             _scan,
-        "det_config":      "IC86_pass2_SnowStorm_FTP_HESE_Combined",
-        "title":           f"HESE Combined {_vcfg['title']} — 11feat+rlogl+econf+evtgen",
-        "scans":           [(_scan, "MC")],
-        "binning":         _vcfg["binning"],
-        "dim_info":        _vcfg["dim_info"],
-        "show_counts":     False,
-        "plot_components": True,
-        "show_chi2":       False,
-        "show_ks":         False,
-    })
+    _scan = f"{_COMBINED_BASE}_{_var}"
+    for _show_count in [True, False]:
+        for _plot_data in [True, False]:
+            for _plot_flavor in [False, True]:
+                _key = f"name-{_COMBINED_BASE}_var-{_var}_count-{_show_count}_data-{_plot_data}"
+                if _plot_flavor:
+                    _key += "_flavor"
+                _combined_plots.append({
+                    "key":             _key,
+                    "det_config":      "IC86_pass2_SnowStorm_FTP_HESE_Combined",
+                    "title":           f"HESE Combined {_vcfg['title']} — 11feat+rlogl+econf+evtgen",
+                    "scans":           [(_scan, "MC")],
+                    "binning":         _vcfg["binning"],
+                    "dim_info":        _vcfg["dim_info"],
+                    "show_counts":     _show_count,
+                    "plot_data":       _plot_data,
+                    "plot_components": True,
+                    "plot_flavor":     _plot_flavor,
+                    "show_chi2":       False,
+                    "show_ks":         False,
+                })
 
 # ---------------------------------------------------------------------------
 # Full plots list
 # ---------------------------------------------------------------------------
 
-PLOTS = _separate_plots + _combined_plots
+PLOTS = _separate_plots + _flavor_separate_plots + _combined_plots
 
 # ---------------------------------------------------------------------------
 # Convenience key groups
@@ -300,12 +327,31 @@ PLOTS = _separate_plots + _combined_plots
 _VARS = list(_VAR_CONFIGS.keys())
 
 GROUP_SEPARATE_PLOTTING = [
-    f"name-11features_plus_rloglmilli_econf_evtgen_channel-{c}_count-{s}_data-{d}"
+    f"name-{_COMBINED_BASE}_channel-{c}_count-{s}_data-{d}"
     for c in ("cascades", "tracks", "dc")
     for s in (True, False)
     for d in (True, False)
 ]
 
-GROUP_BDT_VARS = [f"11features_plus_rloglmilli_econf_evtgen_{v}" for v in _VARS]
+GROUP_SEPARATE_FLAVOR = [
+    f"name-{_COMBINED_BASE}_channel-{c}_count-{s}_data-{d}_flavor"
+    for c in ("cascades", "tracks", "dc")
+    for s in (True, False)
+    for d in (True, False)
+]
 
-GROUP_ALL = GROUP_SEPARATE_PLOTTING + GROUP_BDT_VARS
+GROUP_BDT_VARS = [
+    f"name-{_COMBINED_BASE}_var-{v}_count-{s}_data-{d}"
+    for v in _VARS
+    for s in (True, False)
+    for d in (True, False)
+]
+
+GROUP_BDT_FLAVOR = [
+    f"name-{_COMBINED_BASE}_var-{v}_count-{s}_data-{d}_flavor"
+    for v in _VARS
+    for s in (True, False)
+    for d in (True, False)
+]
+
+GROUP_ALL = GROUP_SEPARATE_PLOTTING + GROUP_SEPARATE_FLAVOR + GROUP_BDT_VARS + GROUP_BDT_FLAVOR
