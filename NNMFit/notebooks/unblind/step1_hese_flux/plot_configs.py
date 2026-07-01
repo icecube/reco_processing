@@ -286,6 +286,53 @@ _VAR_CONFIGS = {
             "RecoERatio_EventGeneratorDC_Max": {"log_x": False, "log_y": True, "x_label": "EvtGen E Ratio",  "sum_axes": 0, "flip": False, "ylim": (1e-1, 1e3)},
         },
     },
+    # ---------------------------------------------------------------------------
+    # Zheyang-binning variants (20 bins)
+    # ---------------------------------------------------------------------------
+    "len_easym_zheyang": {
+        "title": "Taupede Length vs Asymmetry (zheyang 20bins)",
+        "binning": {
+            "Taupede_Distance":  np.geomspace(10**0.1360, 10**3.0133, 21),
+            "Taupede_Asymmetry": np.linspace(-1.001, 1.001, 21),
+        },
+        "dim_info": {
+            "Taupede_Distance":  {"log_x": True,  "log_y": True, "x_label": "Taupede Length",    "sum_axes": 1, "flip": False, "ylim": (1e-1, 1e3)},
+            "Taupede_Asymmetry": {"log_x": False, "log_y": True, "x_label": "Taupede Asymmetry", "sum_axes": 0, "flip": False, "ylim": (1e-1, 1e3)},
+        },
+    },
+    "taumono_econf_zheyang": {
+        "title": "TauMono rlogl vs Econfinement (zheyang 20bins)",
+        "binning": {
+            "TauMonoDiff_rlogl": np.linspace(-8.8396, 0.4251, 21),
+            "econfinement":      np.linspace(-0.001, 1.001, 21),
+        },
+        "dim_info": {
+            "TauMonoDiff_rlogl": {"log_x": False, "log_y": True, "x_label": "Tau-Mono rlogl", "sum_axes": 1, "flip": False, "ylim": (1e-1, 1e3)},
+            "econfinement":      {"log_x": False, "log_y": True, "x_label": "Econfinement",   "sum_axes": 0, "flip": False, "ylim": (1e-1, 1e3)},
+        },
+    },
+    "tauspe_taumilli_zheyang": {
+        "title": "TauSPE vs TauMono Milli rlogl (zheyang 20bins)",
+        "binning": {
+            "TauSPEMilliDiff_rlogl":  np.linspace(-7.0223, 1.1643, 21),
+            "TauMonoMilliDiff_rlogl": np.linspace(-4.5702, 0.2189, 21),
+        },
+        "dim_info": {
+            "TauSPEMilliDiff_rlogl":  {"log_x": False, "log_y": True, "x_label": "Tau-SPE Milli rlogl",  "sum_axes": 1, "flip": False, "ylim": (1e-1, 1e3)},
+            "TauMonoMilliDiff_rlogl": {"log_x": False, "log_y": True, "x_label": "Tau-Mono Milli rlogl", "sum_axes": 0, "flip": False, "ylim": (1e-1, 1e3)},
+        },
+    },
+    "evtgen_recoeratio_zheyang": {
+        "title": "EventGenerator Length vs E Ratio (zheyang 20bins)",
+        "binning": {
+            "EventGeneratorDC_Thijs_length":   np.linspace(-446.7254, 838.6997, 21),
+            "RecoERatio_EventGeneratorDC_Max": np.linspace(-1.1000, 1.0984, 21),
+        },
+        "dim_info": {
+            "EventGeneratorDC_Thijs_length":   {"log_x": False, "log_y": True, "x_label": "EventGen Length", "sum_axes": 1, "flip": False, "ylim": (1e-1, 1e3)},
+            "RecoERatio_EventGeneratorDC_Max": {"log_x": False, "log_y": True, "x_label": "EvtGen E Ratio",  "sum_axes": 0, "flip": False, "ylim": (1e-1, 1e3)},
+        },
+    },
 }
 
 _COMBINED_BASE = "11features_plus_rloglmilli_econf_evtgen"
