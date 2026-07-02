@@ -67,18 +67,59 @@ _CHAN_SPECS = [
     ("dc",       "Double Cascades", _DC_SPEC),
 ]
 
-# (scan_name, human-readable title suffix)
+# Spice DC uses reco_energy vs reco_length instead of reco_energy vs bdt_product
+_DC_SPICE_SPEC = {
+    "det_config": "IC86_pass2_SnowStorm_FTP_HESE_DoubleCascades",
+    "binning": {
+        "reco_energy": np.geomspace(10**4.778, 10**7.1, 14),
+        "reco_length": np.geomspace(10**1, 10**3, 11),
+    },
+    "dim_info": {
+        "reco_energy": {"log_x": True, "log_y": True, "x_label": r"$E_{\mathrm{reco}}$ [GeV]", "sum_axes": 1, "flip": False, "ylim": (1e-2, 1e2)},
+        "reco_length": {"log_x": True, "log_y": True, "x_label": r"$L_{\mathrm{reco}}$ [m]",   "sum_axes": 0, "flip": False, "ylim": (1e-2, 1e2)},
+    },
+    "plot_components": True,
+}
+
+_SPICE_CHAN_SPECS = [
+    ("cascades", "Cascades",        _CASCADES_SPEC),
+    ("tracks",   "Tracks",          _TRACKS_SPEC),
+    ("dc",       "Double Cascades", _DC_SPICE_SPEC),
+]
+
+# (scan_name, human-readable title suffix, channel specs)
 _SEPARATE_SCANS = [
     (
         "11features_plus_rloglmilli_econf_evtgen",
         "11features_plus_rloglmilli_econf_evtgen",
+        _CHAN_SPECS,
+    ),
+    (
+        "spice_12year_bestfit-11features_plus_rloglmilli_econf_evtgen",
+        "spice 12yr bestfit",
+        _SPICE_CHAN_SPECS,
+    ),
+    (
+        "spice_13year_bestfit-11features_plus_rloglmilli_econf_evtgen",
+        "spice 13yr bestfit",
+        _SPICE_CHAN_SPECS,
+    ),
+    (
+        "FinalTopology_13year_bestfit-11features_plus_rloglmilli_econf_evtgen",
+        "FinalTopology 13yr bestfit",
+        _SPICE_CHAN_SPECS,
+    ),
+    (
+        "mcd-simpletopology_flux-hese_feat-11features_plus_rloglmilli_econf_evtgen_13year_bestfit-11features_plus_rloglmilli_econf_evtgen",
+        "model 13yr bestfit",
+        _SPICE_CHAN_SPECS,
     ),
 ]
 
 _separate_plots = []
 _flavor_separate_plots = []
-for _scan_name, _title_suffix in _SEPARATE_SCANS:
-    for _chan_key, _chan_label, _spec in _CHAN_SPECS:
+for _scan_name, _title_suffix, _scan_chan_specs in _SEPARATE_SCANS:
+    for _chan_key, _chan_label, _spec in _scan_chan_specs:
         for _show_count in [True, False]:
             for _plot_data in [True, False]:
                 _base = {
@@ -374,15 +415,17 @@ PLOTS = _separate_plots + _flavor_separate_plots + _combined_plots
 _VARS = list(_VAR_CONFIGS.keys())
 
 GROUP_SEPARATE_PLOTTING = [
-    f"name-{_COMBINED_BASE}_channel-{c}_count-{s}_data-{d}"
-    for c in ("cascades", "tracks", "dc")
+    f"name-{_sn}_channel-{c}_count-{s}_data-{d}"
+    for _sn, _, _sc in _SEPARATE_SCANS
+    for c in [_ck for _ck, _, _ in _sc]
     for s in (True, False)
     for d in (True, False)
 ]
 
 GROUP_SEPARATE_FLAVOR = [
-    f"name-{_COMBINED_BASE}_channel-{c}_count-{s}_data-{d}_flavor"
-    for c in ("cascades", "tracks", "dc")
+    f"name-{_sn}_channel-{c}_count-{s}_data-{d}_flavor"
+    for _sn, _, _sc in _SEPARATE_SCANS
+    for c in [_ck for _ck, _, _ in _sc]
     for s in (True, False)
     for d in (True, False)
 ]
