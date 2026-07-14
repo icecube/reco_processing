@@ -1,0 +1,20 @@
+executable = /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/notebooks/unblind/taupede_likelihood/cascade/run_rec.sh
+
+log    = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).log
+output = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).out
+error  = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).err
+
+universe       = vanilla
+notification   = never
+
+should_transfer_files = NO
+
+Requirements = HAS_CVMFS_icecube_opensciencegrid_org && Machine =!= LastRemoteHost && (GLIDEIN_SITE =!= "ComputeCanada-Cedar") && (GLIDEIN_SITE =!= "LiDO3_Dortmund") && (GLIDEIN_SITE =!= "KIT") && (GLIDEIN_SITE =!= "CHTC")
+
+request_memory = 4GB
+job_lease_duration = 120
++estimated_run_hours = 1
++FileSystemDomain = "notarealdomain"
++WantRHEL7 = True
+
+queue

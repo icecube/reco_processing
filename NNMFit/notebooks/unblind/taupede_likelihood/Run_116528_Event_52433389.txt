@@ -1,0 +1,45 @@
+==========================================================
+Run 1: HESE particles + HESE pulses (baseline, delta = 0)
+==========================================================
+NOTICE (reco.mlpd): {'amplitudetable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_single_spice_ftp-v1_flat_z20_a5.abs.fits',
+ 'effectivedistancetable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.eff.fits',
+ 'effectivedistancetableprob': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.prob.fits',
+ 'effectivedistancetabletmod': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.tmod.fits',
+ 'tiltTableDir': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_9_x86_64_v2/metaprojects/icetray/v1.14.0/share/icetray/ice-models/resources/models/ICEMODEL/spice_ftp-v1/',
+ 'timingtable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_single_spice_ftp-v1_flat_z20_a5.prob.v2.fits'} (mlpd.py:171 in define_splines)
+NOTICE (I3Tray): I3Tray finishing... (I3Tray.cxx:525 in void I3Tray::Execute(bool, unsigned int))
+Reading hypothesis from /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC79_2010/EvtGen/Run00116528.i3.zst ...
+  Loaded 1 hypothesis(es).
+Reading stored FitParams (TaupedeFit_iMIGRAD_PPB0FitParams) from /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC79_2010/EvtGen/Run00116528.i3.zst ...
+  Loaded 1 stored FitParams.
+  Run 116528  Event 52433389  (2 particles):
+    [0]  pos=(432.24, -114.15, 310.42) m  zen=50.661 deg  az=341.091 deg  E=1933.74 GeV  t=9590.94 ns  L=98.53 m
+    [1]  pos=(360.15, -89.45, 247.96) m  zen=50.661 deg  az=341.091 deg  E=63693.27 GeV  t=9919.61 ns  L=0.00 m
+Setting up taupede likelihood with ice model 'ftp-v1' ...
+Run 116528  Event 52433389
+  Evaluated  (TaupedeFit_LLHEvalFitParams):  logl=6609.923520  rlogl=1.042082  ndof=6343
+  Stored     logl=6609.923520  rlogl=5.531317  ndof=1195
+  Delta logl: +0.000000
+
+==========================================================
+Run 2: Finallevel particles + HESE pulses
+==========================================================
+NOTICE (reco.mlpd): {'amplitudetable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_single_spice_ftp-v1_flat_z20_a5.abs.fits',
+ 'effectivedistancetable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.eff.fits',
+ 'effectivedistancetableprob': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.prob.fits',
+ 'effectivedistancetabletmod': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_effectivedistance_spice_ftp-v1_z20.tmod.fits',
+ 'tiltTableDir': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_9_x86_64_v2/metaprojects/icetray/v1.14.0/share/icetray/ice-models/resources/models/ICEMODEL/spice_ftp-v1/',
+ 'timingtable': '/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/../data/photon-tables/splines/cascade_single_spice_ftp-v1_flat_z20_a5.prob.v2.fits'} (mlpd.py:171 in define_splines)
+NOTICE (I3Tray): I3Tray finishing... (I3Tray.cxx:525 in void I3Tray::Execute(bool, unsigned int))
+Reading hypothesis from /data/ana/Diffuse/GlobalFit_Flavor/taupede/data/Pass2/i3files/NoDeepCore/HESE12/Bfr/IC79_2010/Run00116528_MJD55451_Taupede_out.i3.bz2 ...
+  Loaded 1 hypothesis(es).
+Reading stored FitParams (TaupedeFit_iMIGRAD_PPB0FitParams) from /data/user/tvaneede/GlobalFit/reco_processing/data/hese/output/v3/IC79_2010/EvtGen/Run00116528.i3.zst ...
+  Loaded 1 stored FitParams.
+  Run 116528  Event 52433389  (2 particles):
+    [0]  pos=(442.72, -99.48, 292.55) m  zen=59.064 deg  az=351.546 deg  E=1023.08 GeV  t=9628.18 ns  L=96.22 m
+    [1]  pos=(361.08, -87.35, 243.09) m  zen=59.064 deg  az=351.546 deg  E=82037.52 GeV  t=9949.12 ns  L=0.00 m
+Setting up taupede likelihood with ice model 'ftp-v1' ...
+Run 116528  Event 52433389
+  Evaluated  (TaupedeFit_LLHEvalFitParams):  logl=7085.012879  rlogl=1.116981  ndof=6343
+  Stored     logl=6609.923520  rlogl=5.531317  ndof=1195
+  Delta logl: +475.089359

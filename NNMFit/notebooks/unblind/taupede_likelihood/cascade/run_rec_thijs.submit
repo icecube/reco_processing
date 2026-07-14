@@ -1,0 +1,13 @@
+universe = vanilla
+executable = /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/notebooks/unblind/taupede_likelihood/cascade/run_rec.sh
+notification = Never
+IWD = $ENV(HOME)
+request_memory = 4.0 GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT_OR_EVICT
+transfer_output_files = ""
++FileSystemDomain = "notarealdomain"
+log    = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).log
+output = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).out
+error  = /scratch/tvaneede/zheyang_reco/run_rec.$(Cluster).err
+queue 1
