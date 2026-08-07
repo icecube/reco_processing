@@ -11,6 +11,13 @@ This didn't work, so I did my own filtering in the `filter/` folder
 - v2: I ran the reconstruction on my own processing of filtering, which was v2 filter
 - v3: I copied v2 files, but removed runs where we had inactive strings, see active_string_requirement
 
+### filter
+
+- test
+- v1
+- v2: used for my initial analysis
+- v3: running with the pass2b gcds
+
 ## 2022
 
 Data taken from Emre's files, GCDs from:
