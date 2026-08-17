@@ -6,7 +6,7 @@ sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing/data/hese")
 from sum_livetimes import get_level, get_config
 
 RUNINFO_BASE = "/data/exp/IceCube"
-
+GCD_BASE = "/data/ana/IceCube"
 
 def parse_runinfo(path):
     """Return list of (run_num, out_dir) for good runs (Good_i3 == 1)."""
@@ -27,22 +27,24 @@ def parse_runinfo(path):
     return runs
 
 
-def find_gcd(run_dir):
-    """Find the GCD file in a run directory."""
-    gcds = glob.glob(os.path.join(run_dir, "*GCD*.i3*"))
+def find_gcd(year, run_num):
+    """Find the GCD file for a given run in the centralised GCD folder."""
+    gcd_dir = os.path.join(GCD_BASE, str(year), "filtered", "level2pass2b", "GCD")
+    pattern = os.path.join(gcd_dir, f"*Run{run_num:08d}*GCD*.i3*")
+    gcds = glob.glob(pattern)
     if not gcds:
         return None
     return sorted(gcds)[0]
 
 
 # fixed paths
-filter_version = "v2"
+filter_version = "v3"
 dag_base_path = "/scratch/tvaneede/reco/hese_data_filter"
 work_path = "/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter"
 
-submit_jobs = True  # set to True to actually submit
+submit_jobs = False  # set to True to actually submit
 
-dag_name = f"filter_dag_hese_data_{filter_version}_forgot2016"
+dag_name = f"filter_dag_hese_data_{filter_version}_rest"
 dag_path = f"{dag_base_path}/{dag_name}"
 log_dir = f"{dag_path}/logs"
 
@@ -55,10 +57,10 @@ outfile = open(f"{dag_path}/submit.dag", 'w')
 
 JOBS = []
 
-# for year in range(2010, 2023):
+for year in range(2017, 2023):
 # for year in range(2010, 2016):
 # for year in range(2017, 2023):
-for year in range(2016, 2017):
+# for year in range(2010, 2011):
     level = get_level(year)
     config = get_config(year)
     ds_year = f"{config}_{year}"
@@ -77,9 +79,11 @@ for year in range(2016, 2017):
     for run_num, out_dir in runs:
         run_dir = out_dir.rstrip('/')
 
-        gcd_file = find_gcd(run_dir)
+        path_parts = out_dir.split('/')
+        run_year = int(path_parts[path_parts.index('IceCube') + 1])
+        gcd_file = find_gcd(run_year, run_num)
         if gcd_file is None:
-            print(f"WARNING: no GCD found in {run_dir}, skipping")
+            print(f"WARNING: no GCD found for Run{run_num:08d}, skipping")
             continue
 
         filter_out_dir = f"{work_path}/output/{filter_version}/{ds_year}"

@@ -49,17 +49,67 @@
 #     --GCDfile "${GCD_FILE}" \
 #     --Outputfile "${OUTPUT_FILE}"
 
+# ###
+# ### Check how events are selected in 2020, I don't see HESE_CausalQTot
+# ###
+
+# ### One of present files to check the reco, 122649
+# RUN_DIR="/data/exp/IceCube/2021/filtered/level2/0213/Run00134994_80"
+# GCD_FILE="${RUN_DIR}/Level2_IC86.2020_data_Run00134994_0213_80_580_GCD.i3.zst"
+# OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2021"
+# OUTPUT_FILE="${OUTPUT_DIR}/Run00134994.i3.zst"
+
+# mkdir -p "${OUTPUT_DIR}"
+
+# /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+#     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
+#     /data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/filter_HESE.py \
+#     --RunDir "${RUN_DIR}" \
+#     --GCDfile "${GCD_FILE}" \
+#     --Outputfile "${OUTPUT_FILE}"
+
 ###
-### Check how events are selected in 2020, I don't see HESE_CausalQTot
+### Check new GCD
 ###
 
-### One of present files to check the reco, 122649
+### v2 output/v2/IC86_2020/Run00134994.i3.zst
+# CausalQTot [I3PODHolder<double>]:
+# 10872.3
+# HESE_CausalQTot [I3PODHolder<double>]:
+# 10871.7
+
+### rerunning with
+
+---------- found 1103075
+True VHESelfVeto False
+True CausalQTot 10872.312265939778
+True HESE_VHESelfVeto False
+True HESE_CausalQTot 10871.700004322454
+
+
 RUN_DIR="/data/exp/IceCube/2021/filtered/level2/0213/Run00134994_80"
 GCD_FILE="${RUN_DIR}/Level2_IC86.2020_data_Run00134994_0213_80_580_GCD.i3.zst"
-OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/test/IC86_2021"
+OUTPUT_DIR="/data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/output/gcd_test"
 OUTPUT_FILE="${OUTPUT_DIR}/Run00134994.i3.zst"
 
 mkdir -p "${OUTPUT_DIR}"
+
+/cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
+    /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \
+    /data/user/tvaneede/GlobalFit/reco_processing/data/hese/filter/filter_HESE.py \
+    --RunDir "${RUN_DIR}" \
+    --GCDfile "${GCD_FILE}" \
+    --Outputfile "${OUTPUT_FILE}"
+
+### now changing the GCD, gives exactly same ouput. GCD is not properly used
+# ---------- found 1103075
+# True VHESelfVeto False
+# True CausalQTot 10872.312265939778
+# True HESE_VHESelfVeto False
+# True HESE_CausalQTot 10871.700004322454
+
+GCD_FILE=/data/ana/IceCube/2021/filtered/level2pass2b/0213/Run00134994/Level2pass2b_IC86.2020_data_Run00134994_0213_80_580_GCD.i3.zst
+OUTPUT_FILE="${OUTPUT_DIR}/Run00134994_pass2b.i3.zst"
 
 /cvmfs/icecube.opensciencegrid.org/py3-v4.4.1/RHEL_7_x86_64_v2/metaprojects/icetray/v1.14.0/bin/icetray-shell \
     /cvmfs/icecube.opensciencegrid.org/users/tvaneede/venv/py3-v4.4.1_reco-v1.1.0/bin/python \

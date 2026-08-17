@@ -5,9 +5,6 @@ from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 import glob
 import sys, os
 
-sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
-from segments.VHESelfVeto import SelfVetoWrapper
-
 parser = ArgumentParser(description=__doc__, formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument("--RunDir", type=str, help="Run directory containing i3 subrun files", dest="rundir")
 parser.add_argument("--GCDfile", type=str, help="GCD file for this run", dest="gcdfile")
@@ -35,14 +32,60 @@ n_events = [0]
 def count_event(frame):
     n_events[0] += 1
     print(10*"-", "found", frame["I3EventHeader"].event_id)
-    print('HESE_VHESelfVeto' in frame, frame['HESE_VHESelfVeto'].value)
-    print('HESE_CausalQTot' in frame, frame['HESE_CausalQTot'].value)
-    print('VHESelfVeto' in frame, frame['VHESelfVeto'].value)
-    print('CausalQTot' in frame, frame['CausalQTot'].value)
+    print('VHESelfVeto' in frame, "VHESelfVeto",frame['VHESelfVeto'].value)
+    print('CausalQTot' in frame, "CausalQTot",frame['CausalQTot'].value)
+    print('HESE_VHESelfVeto' in frame, "HESE_VHESelfVeto",frame['HESE_VHESelfVeto'].value)
+    print('HESE_CausalQTot' in frame, "HESE_CausalQTot",frame['HESE_CausalQTot'].value)
     return True
 
 tray = I3Tray()
 tray.Add("I3Reader", FileNameList=files)
+
+################################################################
+############## Tray ###########
+################################################################
+
+# sys.path.append("/data/user/tvaneede/GlobalFit/reco_processing")
+# from segments.VHESelfVeto import SelfVetoWrapper
+
+from icecube import dataio, icetray, dataclasses, DomTools
+from icecube import phys_services, photonics_service, millipede, VHESelfVeto
+from icecube.photonics_service import I3PhotoSplineService
+from icecube.dataclasses import I3Double, I3Particle, I3Direction, I3Position, I3VectorI3Particle, I3Constants, I3VectorOMKey
+from icecube.dataclasses import I3RecoPulse, I3RecoPulseSeriesMap, I3RecoPulseSeriesMapMask, I3TimeWindow, I3TimeWindowSeriesMap
+from icecube.icetray import I3Units, I3Frame, I3ConditionalModule, traysegment
+from I3Tray import I3Tray
+@traysegment
+def SelfVetoWrapper(tray,name ):
+    
+    
+    pulses = 'SplitInIcePulses'
+
+    """
+    full self veto
+    """
+    tray.AddModule('HomogenizedQTot', 
+                   'qtot_total', 
+                   Pulses=pulses,
+                   Output="QTot")
+    # run the veto modules
+    tray.AddModule('I3LCPulseCleaning', 
+                   'cleaning', 
+                   OutputHLC='HLCPulses', 
+                   OutputSLC='', 
+                   Input=pulses)
+    tray.AddModule('VHESelfVeto', 
+                   'selfveto', 
+                   Pulses='HLCPulses',
+                   Geometry="I3Geometry",
+                   OutputBool = 'VHESelfVeto')
+    tray.AddModule('HomogenizedQTot', 
+                   'qtot_causal', 
+                   Pulses=pulses, 
+                   Output='CausalQTot', 
+                   VertexTime='VHESelfVetoVertexTime')
+    
+
 
 ################################################################
 ############## HESE Event selection ###########
