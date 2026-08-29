@@ -99,6 +99,18 @@ _SEPARATE_SCANS = [
         "11features_plus_rloglmilli_econf_evtgen_noMuonPrior",
         _CHAN_SPECS,
     ),
+
+    (
+        "11features_plus_rloglmilli_econf_evtgen_PassingNeha",
+        "11features_plus_rloglmilli_econf_evtgen_PassingNeha",
+        _CHAN_SPECS,
+    ),
+    (
+        "11features_plus_rloglmilli_econf_evtgen_PassingHESE",
+        "11features_plus_rloglmilli_econf_evtgen_PassingHESE",
+        _CHAN_SPECS,
+    ),
+
     (
         "spice_12year_bestfit-11features_plus_rloglmilli_econf_evtgen",
         "spice 12yr bestfit",
