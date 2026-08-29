@@ -1,0 +1,18 @@
+executable = /data/user/tvaneede/GlobalFit/reco_processing/NNMFit/notebooks/unblind/passing_fraction/plights_tianlu/nuveto_cluster_script.sh
+
+IWD = $(logdir)
+arguments = $(cos_theta) $(output_file) $(neutrino_kind) $(depth) $(prpl_dir)
+
+notification = Never
+request_disk = 1GB
+request_memory = 4GB
+
+should_transfer_files = yes
+when_to_transfer_output = ON_EXIT_OR_EVICT
+
+priority = 0
+output = $(logdir)/$(jobid)_$(cluster).out
+error  = $(logdir)/$(jobid)_$(cluster).err
+log    = $(logdir)/$(jobid)_$(cluster).log
+
+queue

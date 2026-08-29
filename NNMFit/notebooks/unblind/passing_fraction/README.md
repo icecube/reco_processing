@@ -180,9 +180,73 @@ step-function detector response (muon detected with probability 1 if it
 exceeds threshold, 0 otherwise). This is physically different and will produce
 systematically different passing fractions, especially at intermediate energies.
 
-The HESE depth-dependent prpl files are custom to N. Lad's setup and were
-found in `/home/rnaab/software/virtualenvs/nuveto/`. They are not part of the
-standard nuVeto package and are not available in the current analysis venv.
+The HESE depth-dependent prpl files are custom to N. Lad's setup. They live in
+rnaab's old Python 3.6 venv and are not part of the standard nuVeto package:
+
+```
+/home/rnaab/software/virtualenvs/nuveto/lib/python3.6/site-packages/nuVeto/data/prpl/
+  ice_allm97_hese_depth_NNN.pkl   (39 files)
+```
+
+where `NNN = z = 1948 - depth_m` (negative for deep ice, e.g. depth 2500 m →
+`NNN = -552`). They are not available in the current analysis venv.
+
+#### How each prpl pickle was generated
+
+The pipeline is implemented in two files inside rnaab's nuVeto installation:
+
+```
+.../nuVeto/resources/mu/pl.py   — P_light functions
+.../nuVeto/resources/mu/mu.py   — convolves P_reach × P_light → pickle
+```
+
+**Step A — MMC muon propagation simulation**
+
+The raw input to `mu.py` is a pre-computed histogram of muon propagation through
+ice using the **ALLM97** photonuclear cross-section model, stored as:
+
+```
+.../nuVeto/resources/mu/mmc/ice_allm97.pklz
+```
+
+This encodes `P_reach(ei → ef | l)`: for a muon with initial energy `ei`
+travelling through an ice column of length `l`, the distribution of surviving
+final energies `ef`.
+
+**Step B — P_light function (Tianlu Chen fits)**
+
+For each depth slice, `pl.py` defines a `pl_hese_depth_NNN` function that gives
+the probability that a muon arriving at IceCube with energy `emu` triggers the
+HESE veto:
+
+```python
+def sigmoid_Tianlu(emu, k0, x0, c):
+    return (1 - c) / (1 + exp(-k0 * (log10(emu) - x0))) + c
+```
+
+The three parameters (`k0`, `x0`, `c`) were fitted by Tianlu Chen for each of
+the 39 depth slices. `c` is a floor probability at low muon energy; it is
+largest (~0.79) near the centre of IceCube and smallest (~0.61) at very deep
+or very shallow positions. The notebook `plot_sigmoid_tianlu.ipynb` in this
+directory visualises all 39 curves.
+
+**Step C — Convolution**
+
+`mu.py` integrates `P_reach × P_light` over `ef` at each `(ei, l)` grid point
+and saves a `scipy.interpolate.RegularGridInterpolator` as a pickle:
+
+```bash
+python mu.py ice_allm97.pklz --plight pl_hese_depth_NNN -o ice_allm97_hese_depth_NNN.pkl
+```
+
+**Compatibility note**
+
+The current analysis venv uses a newer nuVeto that stores prpl files in `.npz`
+format; the old `.pkl` files cannot be loaded directly. Recreating the
+depth-dependent prpl in `.npz` format would require running `mu.py` with each
+`sigmoid_Tianlu` function from rnaab's venv, then converting or regenerating in
+the new format. The `create_spline/` subdirectory uses `ice_allm97_step_1`
+(a 1 TeV step-function) as a stand-in.
 
 ### 2. Hadronic interaction model
 
