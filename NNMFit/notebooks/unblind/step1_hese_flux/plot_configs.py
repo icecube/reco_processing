@@ -139,29 +139,32 @@ for _scan_name, _title_suffix, _scan_chan_specs in _SEPARATE_SCANS:
     for _chan_key, _chan_label, _spec in _scan_chan_specs:
         for _show_count in [True, False]:
             for _plot_data in [True, False]:
-                _base = {
-                    "det_config":      _spec["det_config"],
-                    "title":           f"HESE {_chan_label} — {_title_suffix}",
-                    "scans":           [(_scan_name, "MC")],
-                    "binning":         _spec["binning"],
-                    "dim_info":        _spec["dim_info"],
-                    "show_counts":     _show_count,
-                    "plot_data":       _plot_data,
-                    "plot_components": _spec["plot_components"],
-                    "show_chi2":       False,
-                    "show_ks":         False,
-                }
-                _separate_plots.append({
-                    **_base,
-                    "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}",
-                    "plot_flavor": False,
-                })
-                _flavor_separate_plots.append({
-                    **_base,
-                    "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}_flavor",
-                    "title":       f"HESE {_chan_label} (flavors) — {_title_suffix}",
-                    "plot_flavor": True,
-                })
+                for _no_syst in [False, True]:
+                    _base = {
+                        "det_config":      _spec["det_config"],
+                        "title":           f"HESE {_chan_label} — {_title_suffix}",
+                        "scans":           [(_scan_name, "MC")],
+                        "binning":         _spec["binning"],
+                        "dim_info":        _spec["dim_info"],
+                        "show_counts":     _show_count,
+                        "plot_data":       _plot_data,
+                        "plot_components": _spec["plot_components"],
+                        "show_chi2":       False,
+                        "show_ks":         False,
+                        "no_syst":         _no_syst,
+                    }
+                    _key_suffix = "_nosyst" if _no_syst else ""
+                    _separate_plots.append({
+                        **_base,
+                        "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}{_key_suffix}",
+                        "plot_flavor": False,
+                    })
+                    _flavor_separate_plots.append({
+                        **_base,
+                        "key":         f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}{_key_suffix}_flavor",
+                        "title":       f"HESE {_chan_label} (flavors) — {_title_suffix}",
+                        "plot_flavor": True,
+                    })
 
 # ---------------------------------------------------------------------------
 # Combined plots — BDT variable space (11features model, with Snowstorm systematics)
@@ -432,11 +435,12 @@ PLOTS = _separate_plots + _flavor_separate_plots + _combined_plots
 _VARS = list(_VAR_CONFIGS.keys())
 
 GROUP_SEPARATE_PLOTTING = [
-    f"name-{_sn}_channel-{c}_count-{s}_data-{d}"
+    f"name-{_sn}_channel-{c}_count-{s}_data-{d}{ns}"
     for _sn, _, _sc in _SEPARATE_SCANS
     for c in [_ck for _ck, _, _ in _sc]
     for s in (True, False)
     for d in (True, False)
+    for ns in ("", "_nosyst")
 ]
 
 GROUP_SEPARATE_FLAVOR = [
