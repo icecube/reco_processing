@@ -152,6 +152,7 @@ for _scan_name, _title_suffix, _scan_chan_specs in _SEPARATE_SCANS:
                         "show_chi2":       False,
                         "show_ks":         False,
                         "no_syst":         _no_syst,
+                        "show_mc_err":     _show_count,
                     }
                     _key_suffix = "_nosyst" if _no_syst else ""
                     _separate_plots.append({
