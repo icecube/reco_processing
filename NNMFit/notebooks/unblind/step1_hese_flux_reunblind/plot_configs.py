@@ -62,8 +62,9 @@ _CHAN_SPECS = [
     ("dc",       "Double Cascades", _DC_SPEC),
 ]
 
-# best fit with the PassingHESE passing fractions
-_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE"
+# best fit with the PassingHESE passing fractions, with the detector priors applied (fixed `prior` key)
+# (previous fit without detector priors: nbestfit50_all_param_2sigma_1D_10steps_PassingHESE)
+_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
 # graphs with the crystal density scaling (ice_crystal) fixed by hand
 _CRYSTAL_VALUES = [0.9, 1.0, 1.1, 1.2]
 
@@ -142,5 +143,7 @@ GROUP_OLD_PASSING_FRACTIONS_NOSYST = _group(f"{_SCAN}_old_passing_fractions", "_
 GROUP_ICE_CRYSTAL        = [k for v in _CRYSTAL_VALUES for k in _group(f"{_SCAN}_ice_crystal_{v}", "")]
 GROUP_ICE_CRYSTAL_NOSYST = [k for v in _CRYSTAL_VALUES for k in _group(f"{_SCAN}_ice_crystal_{v}", "_nosyst")]
 
-GROUP_ALL = (GROUP_SEPARATE_PLOTTING + GROUP_SEPARATE_FLAVOR + GROUP_SEPARATE_NOSYST + GROUP_SEPARATE_FLAVOR_NOSYST
-             + GROUP_OLD_PASSING_FRACTIONS + GROUP_OLD_PASSING_FRACTIONS_NOSYST + GROUP_ICE_CRYSTAL)
+# variant graphs (old passing fractions, ice_crystal) are only built with MAKE_VARIANT_GRAPHS = True in
+# reco_space_graphs.ipynb, so they are not part of GROUP_ALL
+GROUP_VARIANTS = GROUP_OLD_PASSING_FRACTIONS + GROUP_OLD_PASSING_FRACTIONS_NOSYST + GROUP_ICE_CRYSTAL
+GROUP_ALL = GROUP_SEPARATE_PLOTTING + GROUP_SEPARATE_FLAVOR + GROUP_SEPARATE_NOSYST + GROUP_SEPARATE_FLAVOR_NOSYST
