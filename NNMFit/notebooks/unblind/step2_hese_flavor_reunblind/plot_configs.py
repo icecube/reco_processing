@@ -62,35 +62,56 @@ _CHAN_SPECS = [
     ("dc",       "Double Cascades", _DC_SPEC),
 ]
 
-# best fit with the PassingHESE passing fractions
-_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE"
+# best fit with the PassingHESE passing fractions, with the detector priors applied (fixed `prior` key)
+# (previous fit without detector priors: nbestfit50_all_param_2sigma_1D_10steps_PassingHESE)
+_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
 
-# (graph name, human-readable title suffix, plot_flavor)
+# (graph name, plot_flavor); plots have no title, the graph name is in the folder and file name
 #   - graph with the astro parametrization of the fit: component plots
 #   - graph with the equivalent 3-flavor parametrization (best-fit composition): astro split into NuE/NuMu/NuTau
 _SEPARATE_SCANS = [
-    (_SCAN,              "step2 re-unblinding best fit",                False),
-    (f"{_SCAN}_3flavor", "step2 best fit, 3-flavor parametrization",    True),
+    (_SCAN,              False),
+    (f"{_SCAN}_3flavor", True),
 ]
 
+# graphs with one detector systematic at a time scanned over its fit range (5 steps + its best fit),
+# all other detector systematics at nominal (values written by run_post_fit_scripts.ipynb)
+import json
+_DETSYST_FILE = ("/data/user/tvaneede/GlobalFit/reco_processing/NNMFit/configs/flavor_globalfit/analysis_configs/data/hese/"
+                 f"step2_hese_flavor_reunblind/plotting/{_SCAN}/{_SCAN}_detsyst_values.json")
+with open(_DETSYST_FILE) as _f:
+    _detsyst = json.load(_f)
+_DETSYST_VALUES  = _detsyst["values"]
+
+# the detsyst graphs use the 3-flavor parametrization: component plots and flavor plots from the same graph
+_SEPARATE_SCANS += [
+    (f"{_SCAN}_detsyst_{p}_{v:.4g}", plot_flavor)
+    for p, values in _DETSYST_VALUES.items() for v in values for plot_flavor in (False, True)
+]
+
+def _lower_ylim(dim_info, decades=2):
+    """Copy of dim_info with the lower y limit of every dimension lowered by `decades` decades."""
+    return {dim: {**info, "ylim": (info["ylim"][0] / 10**decades, info["ylim"][1])} if "ylim" in info else info
+            for dim, info in dim_info.items()}
+
 _separate_plots = []
-for _scan_name, _title_suffix, _plot_flavor in _SEPARATE_SCANS:
+for _scan_name, _plot_flavor in _SEPARATE_SCANS:
     for _chan_key, _chan_label, _spec in _CHAN_SPECS:
+        # all step2 plots: small components visible down to two decades lower
+        _dim_info = _lower_ylim(_spec["dim_info"])
         for _show_count in [True, False]:
             for _plot_data in [True, False]:
                 # no_syst: same best fit, but without the Snowstorm gradient shift
                 for _no_syst in [False, True]:
                     _flavor_key   = "_flavor" if _plot_flavor else ""
-                    _flavor_title = " (flavors)" if _plot_flavor else ""
                     _syst_key     = "_nosyst" if _no_syst else ""
-                    _syst_title   = " (no SnowStorm syst.)" if _no_syst else ""
                     _separate_plots.append({
                         "key":             f"name-{_scan_name}_channel-{_chan_key}_count-{_show_count}_data-{_plot_data}{_flavor_key}{_syst_key}",
                         "det_config":      _spec["det_config"],
-                        "title":           f"HESE {_chan_label}{_flavor_title} — {_title_suffix}{_syst_title}",
+                        "title":           "",
                         "scans":           [(_scan_name, "MC")],
                         "binning":         _spec["binning"],
-                        "dim_info":        _spec["dim_info"],
+                        "dim_info":        _dim_info,
                         "show_counts":     _show_count,
                         "plot_data":       _plot_data,
                         "plot_components": _spec["plot_components"],
@@ -125,4 +146,12 @@ GROUP_SEPARATE_NOSYST        = _group(_SCAN, "_nosyst")
 # flavor plots, graph with the 3-flavor parametrization
 GROUP_SEPARATE_FLAVOR        = _group(f"{_SCAN}_3flavor", "_flavor")
 GROUP_SEPARATE_FLAVOR_NOSYST = _group(f"{_SCAN}_3flavor", "_flavor_nosyst")
+# one detector systematic scanned: component and flavor plots, with and without the Snowstorm shift
+# (the nosyst plots are the same for every value, the detector systematics only enter the Snowstorm shift)
+GROUP_DETSYST = [k for p, values in _DETSYST_VALUES.items() for v in values
+                 for suffix in ("", "_nosyst", "_flavor", "_flavor_nosyst")
+                 for k in _group(f"{_SCAN}_detsyst_{p}_{v:.4g}", suffix)]
+# variant graphs (detector systematic scans) are only built with MAKE_VARIANT_GRAPHS = True in
+# reco_space_graphs.ipynb, so they are not part of GROUP_ALL
+GROUP_VARIANTS = GROUP_DETSYST
 GROUP_ALL = GROUP_SEPARATE_PLOTTING + GROUP_SEPARATE_FLAVOR + GROUP_SEPARATE_NOSYST + GROUP_SEPARATE_FLAVOR_NOSYST
