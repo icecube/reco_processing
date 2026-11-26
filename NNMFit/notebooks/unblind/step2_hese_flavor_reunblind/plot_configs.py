@@ -64,7 +64,8 @@ _CHAN_SPECS = [
 
 # best fit with the PassingHESE passing fractions, with the detector priors applied (fixed `prior` key)
 # (previous fit without detector priors: nbestfit50_all_param_2sigma_1D_10steps_PassingHESE)
-_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
+# fixed priors and the new muon template (1 sigma template_fluctuation); previous: "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
+_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior_newmuon"
 
 # (graph name, plot_flavor); plots have no title, the graph name is in the folder and file name
 #   - graph with the astro parametrization of the fit: component plots
