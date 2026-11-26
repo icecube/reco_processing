@@ -64,7 +64,8 @@ _CHAN_SPECS = [
 
 # best fit with the PassingHESE passing fractions, with the detector priors applied (fixed `prior` key)
 # (previous fit without detector priors: nbestfit50_all_param_2sigma_1D_10steps_PassingHESE)
-_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
+# fixed priors and the new muon template (1 sigma template_fluctuation); previous: "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior"
+_SCAN = "nbestfit50_all_param_2sigma_1D_10steps_PassingHESE_fixedprior_newmuon"
 # graphs with the crystal density scaling (ice_crystal) fixed by hand
 _CRYSTAL_VALUES = [0.9, 1.0, 1.1, 1.2]
 
