@@ -98,8 +98,8 @@ def _lower_ylim(dim_info, decades=2):
 _separate_plots = []
 for _scan_name, _plot_flavor in _SEPARATE_SCANS:
     for _chan_key, _chan_label, _spec in _CHAN_SPECS:
-        # all step2 plots: small components visible down to two decades lower
-        _dim_info = _lower_ylim(_spec["dim_info"])
+        # detector systematic scans: small components visible down to two decades lower; best-fit plots keep the default ylim
+        _dim_info = _lower_ylim(_spec["dim_info"]) if "_detsyst_" in _scan_name else _spec["dim_info"]
         for _show_count in [True, False]:
             for _plot_data in [True, False]:
                 # no_syst: same best fit, but without the Snowstorm gradient shift
