@@ -13,3 +13,7 @@ With the priors the signal barely moves (astro_norm 1.65 → 1.68, γ 2.81 → 2
 ## compare_newmuon.ipynb
 Compares the step1 fit with fixed detector priors to the same fit with the new muon template (`..._fixedprior_newmuon`, `override/muon/muontemplate_combined_hese_sigma.yaml`: 1σ instead of 2σ template uncertainty, same rate): a SAY table with HESE-7.5, HESE-12 flavor, SAY fixed priors and SAY new muon, a SAY vs Poisson table for the new muon template (pandas and LaTeX), and the 2D (γ, Φ0) scans with HESE-7.5 in the background (`plots_compare_newmuon/`).
 The signal is unchanged (astro_norm 1.683 → 1.680, γ 2.816) while the SAY muon norm rises from 0.58 to 0.72, closing most of the gap to Poisson (0.81); SAY and Poisson agree on the signal (astro_norm 1.680 vs 1.686) and their 2D contours nearly coincide.
+
+## analysis_histograms.ipynb
+Draws 2D heatmaps of the MC expectation in the analysis binning (cascades, tracks, double cascades next to each other) for the latest step1 best fit (`..._fixedprior_newmuon`: fixed detector priors, new muon template), with and without the SnowStorm gradient shift. It counts per channel the bins with an MC expectation of exactly 0 and below 0 and stores them in `plots_analysis_histograms/bin_counts.csv`.
+No bin is negative; with the SnowStorm shift a few bins are clipped to exactly 0 (3/230 cascades, 8/230 tracks, 4/130 double cascades), while without the shift no bin is 0.
